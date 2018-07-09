@@ -1,0 +1,47 @@
+{
+   "master":{
+      "m_width":"500",
+      "m_bgcolor":"#f2f2f2",
+      "m_links":"#000000"
+   },
+   "static":[
+      {
+         "location":"html/static/bodyOpen.html",
+         "content":{
+            "bgcolor":"#fff"
+         }
+      },
+      {
+         "location":"html/static/head.html",
+         "content":{
+            "bgcolor":"#fff"
+         }
+      }
+   ],
+   "partials":[
+      {
+         "name":"Open In Browser",
+         "location":"html/partials/0_openInBrowser.html",
+         "content":{
+            "bgcolor":"#ffbe76",
+            "color":"#e056fd"
+         }
+      },
+      {
+         "name":"Security Panel",
+         "location":"html/partials/1_securityPanel.html",
+         "content":{
+            "bgcolor":"#ffbe76",
+            "color":"#e056fd"
+         }
+      },      
+      {
+         "name":"Disclosure",
+         "location":"html/partials/9_disclosure.html",
+         "content":{
+            "bgcolor":"#ffbe76",
+            "color":"#e056fd"
+         }
+      }
+   ]
+}

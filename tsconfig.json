@@ -1,0 +1,26 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es6",
+    "module": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false,
+    "allowJs": true
+  },
+  "exclude": [
+    "src/phaser/*",
+    "build",
+    "lib",
+    "node_modules",
+    "typings/main",
+    "typings/main.d.ts"
+  ],
+  "typeRoots": [ 
+    "typings/png.d.ts" 
+  ]
+
+}

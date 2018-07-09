@@ -1,0 +1,22 @@
+/*  NORMALIZE AND SKELETON CSS FOR BASIC STYLES */
+@import './normalize.css';
+@import './skeleton.css';
+
+
+/*  BASIC CUSTOM STYLINGS */
+a, .is-cursor{
+  cursor: pointer
+}
+
+.center-text{
+  text-align: center
+}
+
+.is-bold{
+  font-weight: bold;
+  font-size: 1.25em;
+}
+
+.outline{
+  border: 1px solid red ;
+}

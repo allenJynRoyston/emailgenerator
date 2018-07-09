@@ -1,0 +1,5 @@
+To enable auto .ts -> .js compiling, remember to start the following command:
+$ tsc -w
+
+This has to executed seperately from (and they cannot be combined):
+$ npm run dev
