@@ -1,0 +1,28 @@
+{
+  "globals": [
+    {
+      "title": "width",
+      "key": "m_width",
+      "value": "600",
+      "type": "input"
+    },
+    {
+      "title": "color",
+      "key": "m_color",
+      "value": "#82ccdd",
+      "type": "input"
+    },
+    {
+      "title": "bgcolor",
+      "key": "m_bgcolor",
+      "value": "#f2f2f2",
+      "type": "input"
+    },
+    {
+      "title": "links",
+      "key": "m_links",
+      "value": "white",
+      "type": "input"
+    }
+  ]
+}

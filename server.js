@@ -34,9 +34,7 @@ app.get('/api/test', (req, res) => {
 
 // save json
 app.post('/api/buildJSON', (req, res) => {
-  console.log("hit endpoint")
-  fs.writeFile('./instructions/build.json', JSON.stringify(req.body), 'utf8', () => {
-    console.log('WRITE COMPLETE')
+  fs.writeFile('./instructions/build.json', JSON.stringify(req.body), 'utf8', () => {    
     res.send(JSON.stringify(req.body))
   });
 })

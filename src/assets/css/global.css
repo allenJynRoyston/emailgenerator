@@ -20,3 +20,56 @@ a, .is-cursor{
 .outline{
   border: 1px solid red ;
 }
+
+hr{
+  padding: 0px;
+  margin: 10px
+}
+
+input, select{
+  width: 70%;
+  padding: 5px;
+  margin-bottom: 5px
+}
+
+
+textarea{
+  width: 100%;
+  min-height: 35px;
+  font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New;
+  font-size: 12px;
+  padding: 10px;
+  resize: vertical;
+  transition: .25s;
+}
+
+.textarea-open{
+  height: 200px;
+  transition: .25s;
+}
+
+.pointer {
+  cursor: pointer
+}
+
+.red {
+  color: #e84118
+}
+
+.green {
+  color: #079992
+}
+
+.show{
+  visibility: visible
+}
+
+.hide{
+  visibility: hidden
+}
+
+.disabled{
+  color: #3c6382;
+  opacity: 0.25;
+  cursor: not-allowed
+}

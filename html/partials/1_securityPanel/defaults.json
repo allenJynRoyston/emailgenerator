@@ -1,0 +1,31 @@
+{
+  "name": "Security Panel",
+  "location": "html/partials/1_securityPanel/1_securityPanel.html",
+  "content": [
+    {
+      "title": "width",
+      "key": "width",
+      "value": "300",
+      "type": "input"
+    },
+    {
+      "title": "color",
+      "key": "color",
+      "value": "#f2f2f2",
+      "type": "input"
+    },
+    {
+      "title": "bgcolor",
+      "key": "bgcolor",
+      "value": "#4a69bd",
+      "type": "input"
+    },
+    {
+      "title": "content",
+      "key": "content",
+      "value": "We have included your postcode at the top so you can be sure this email is from <strong> The team at B<\/strong>. To see how you can stay safe online, visit the <a style='color: [m_links]; text-decoration: underline;' href='https:\/\/www.youandb.co.uk\/help\/?cid=eml_00184' target='_blank'> <strong>Security&nbsp;Centre<\/strong><\/a>.",
+      "type": "textarea",
+      "focused": false
+    }
+  ]
+}
