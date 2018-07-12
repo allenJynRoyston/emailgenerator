@@ -1,6 +1,5 @@
 {
   "name": "Security Panel",
-  "location": "html/partials/1_securityPanel/1_securityPanel.html",
   "content": [
     {
       "title": "width",

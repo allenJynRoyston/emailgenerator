@@ -9,22 +9,81 @@ export default {
       jsonIsReady: false,
       jsonFile: null,
       templateExists: false,
-      componentOptions: [
-        {name: 'Open In Browser', location: "html/partials/0_openInBrowser.html"},
-        {name: 'Security Panel', location: "html/partials/1_securityPanel.html"},
-        {name: 'Disclosure', location: "html/partials/9_disclosure.html"},
-      ]
+      devBuild: false,
+      openModal: false,
+      timerId: null,
+      error: {
+        hasError: false,
+        message: null
+      },
+      indexStored: null,      
+      componentOptions: []
     }
   },
-  mounted:function(){
-    this.refreshIframe();
-    
-    
+  watch: {
+    // whenever question changes, this function will run
+    jsonFile:{
+      handler(val){        
+        const debounce = this.debounced(1000, () => {
+          this.createOutput()
 
-    axios.get('./instructions/build.json')
+          // delay so file can be created and then checked
+          setTimeout(() => {
+            axios.get('./output/template.html')
+              .then((response) => {                      
+                this.templateExists = true        
+              })
+              .catch((error) => {
+                this.templateExists = false
+              });    
+          }, 750)        
+          
+        });    
+        debounce()          
+      },
+      deep: true
+    }
+  },  
+  mounted:function(){
+    this.fetchDefaultList()
+    this.fetchCurrentBuild()
+    this.refreshIframe()            
+  },
+  methods: {
+    debounced(delay, fn){      
+      return (...args) => {
+        if (this.timerId) {
+          clearTimeout(this.timerId);
+        }
+        this.timerId = setTimeout(() => {
+          fn(...args);
+          this.timerId = null;
+        }, delay);
+      }
+    },
+
+    fetchDefaultList(repurpose = false){
+      axios.get('/api/builddefault')
+      .then((response) => {            
+        response.data.partials.map(partial => {
+          // uses default build list if build.json doesn't exists
+          if(repurpose){
+            this.jsonFile = response.data;   
+            this.jsonIsReady = true;  
+          }
+        })      
+        this.createComponentList(JSON.stringify(response.data))                 
+      })
+      .catch((error) => {
+        this.devBuild = true
+        this.fetchDummyData()
+      }); 
+    },
+
+
+    fetchCurrentBuild(){
+      axios.get('./instructions/build.json')
       .then((response) => {    
-        
-        
         // add focus property to textareas
         response.data.partials.map(partial => {
           partial.content.map(item => {
@@ -33,36 +92,66 @@ export default {
             }
           })
         })                
-
         // bind object
         this.jsonFile = response.data;   
         this.jsonIsReady = true;                 
       })
       .catch((error) => {
-        console.log(error);
+        this.fetchDefaultList(true)        
       });  
-      
-      this.checkForTemplate()
-  },
-  methods: {
+    },
 
-    focusTest(item){
-      item.focused = true
+
+    fetchDummyData(){
+      axios.get('./instructions/default.json')
+      .then((response) => {                    
+        // add focus property to textareas
+        response.data.partials.map(partial => {
+          partial.content.map(item => {
+            if(item.type === 'textarea'){
+              item.focused = false
+            }
+          })
+        })    
+        this.createComponentList(JSON.stringify(response.data))
+        
+        // bind object
+        this.jsonFile = response.data;   
+        this.jsonIsReady = true;                 
+      })
+      .catch((error) => {
+        this.error.hasError = true
+        this.error.message = "Dummy data does not exists.  Run $gulp default once to create it."
+      });  
+    },
+
+    createComponentList(list:any){
+      let partials = JSON.parse(list).partials;
+      partials.map(partial => {
+        partial.active = false
+        this.componentOptions.push(partial)   
+      })   
+    },
+
+    selectedOption(selected:any){
+      this.openModal = false;
+      let {content, location, name} = selected
+
+      if(this.indexStored !== 'new'){
+        this.jsonFile.partials[this.indexStored].content = content;
+        this.jsonFile.partials[this.indexStored].name = name;
+        this.jsonFile.partials[this.indexStored].location = location;
+      } else {
+        let newContent = {content, name, location}
+        this.jsonFile.partials.push(newContent)        
+      }
     },
 
     addNewSection(){
-      let newSection = {
-        content: {
-          bgcolor: "#f2f2f2",
-          color: "#e056fd"
-        },
-        location: this.componentOptions[0].location,
-        name: this.componentOptions[0].name
-      }
-
-      this.jsonFile.partials.push(newSection)
+      this.indexStored = 'new';
+      this.openModal = true;
     },
-
+  
     array_move(arr, old_index, new_index) {
       if (new_index >= arr.length) {
           var k = new_index - arr.length + 1;
@@ -88,35 +177,15 @@ export default {
     },
 
     removeItem(index:number){
-
-    },
-
-    onChange(){
-      this.jsonFile.partials.map((partial) => {
-        let match = this.componentOptions.find(option => {
-          return partial.name === option.name
-        })
-        partial.location = match.location
-        partial.name = match.name
-      })
-    },
-
-    async checkForTemplate(){
-      await axios.get('./output/template.html')
-        .then((response) => {                      
-          this.templateExists = true        
-        })
-        .catch((error) => {
-          this.templateExists = false
-        });  
+      this.jsonFile.partials.splice(index, 1)
     },
 
     refreshIframe(){
-      // setInterval(() => {    
-      //   setTimeout(() => {              
-      //     this.iframeIsReady = true
-      //   })
-      // }, 1000)
+      setInterval(() => {    
+        setTimeout(() => {              
+          this.iframeIsReady = true
+        })
+      }, 1000)
     },
 
 
@@ -130,21 +199,6 @@ export default {
           console.log(error);
         });
     },
-
-
-
-    checkFieldText(name:string){
-      switch(name.toLowerCase()) {
-        case 'm_width':
-          return 'width'          
-        case 'm_bgcolor':
-          return 'bgcolor'           
-        case 'm_links':
-          return 'links'                     
-        default: 
-          return name          
-      }      
-    }
 
   },  
 }

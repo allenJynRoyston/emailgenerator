@@ -1,7 +1,21 @@
 <template lang="pug">
   .section
+    #emailmodal(v-bind:class='openModal ? "show-modal" : "close-modal"')
+      .modal-panel
+        .cancel-btn
+          i.fas.fa-times.fa-2x(@click='openModal = false')
+        .row
+          h3 Select a partial        
+          button.button(v-for="option in componentOptions" @click='selectedOption(option)' v-bind:class='option.active ? "button-primary" : ""' v-on:mouseover="option.active = true" v-on:mouseout="option.active = false") {{option.name}}          
+          hr
+        .row
+          p * Changing a partial will overwrite your existing properties
+
     #emailGenerator
-      .row
+      .row.devwarning(v-if='devBuild')
+        h3.center-text DEV MODE ENABLED - BUILD FUNCTION DISABLED 
+            
+      .row(v-if='!devBuild')
         h2.center-text Email Generator       
       .row        
         .four.columns(v-if='jsonIsReady')
@@ -11,28 +25,27 @@
           
 
           // MASTER CONTENT EDITOR
-          div(v-if='activeTab === 0')
-            .row(v-for="global in jsonFile.globals")
+          div(v-if='activeTab === 0')             
+            .row(v-for="content in jsonFile.globals.content")              
               .four.columns 
-                label.left {{global.title}}
+                label.left {{content.title}}
               .eight.columns 
-                input(v-model='global.value')
+                input(v-model='content.value')
             hr
           
           // PARTIAL CONTENT EDITOR
-          div(v-if='activeTab === 1')
-            div(v-for='(partial, index) in jsonFile.partials')
+          div(v-if='activeTab === 1')             
+            div(v-for='(partial, index) in jsonFile.partials')      
               .row.flex-row
-                .nine.columns
-                  select(v-model="partial.name" v-on:change="onChange()" style='width: 100%; margin: 0px')
-                    option(v-for="option in componentOptions" v-bind:value="option.name")
-                      p {{ option.name }}
+                .nine.columns                  
+                  button(@click='indexStored = index; openModal = true') 
+                    | {{partial.name}} &nbsp;&nbsp;&nbsp;
+                    i.fas.fa-caret-square-down(style='color: orange')
                 .two.columns(style='display: flex; justify-content: space-around')                         
                   i.fas.fa-angle-double-up.pointer.green(@click='moveItemUp(index)' v-bind:class='index === 0 ? "disabled" : ""')             
                   i.fas.fa-angle-double-down.pointer.green(@click='moveItemDown(index)' v-bind:class='index === jsonFile.partials.length -1 ? "disabled" : ""')             
                 .one.columns
                   i.far.fa-times-circle.pointer.red(@click='removeItem(index)')                     
-
 
               .row(v-for="field in partial.content")   
                 .three.columns 
@@ -49,10 +62,8 @@
           
           // BUILD BUTTON
           div(v-if='activeTab < 2')
-
-            div
             .twelve.columns.minor-padding
-                button.full-width(@click='createOutput()') Build
+              button.full-width(@click='createOutput()') Build
 
 
           // PARTIAL CONTENT EDITOR
@@ -82,8 +93,59 @@
 <script src='./emailGenerator.js'></script>
 
 <style lang="sass" scoped>  
+    #emailmodal      
+      position: fixed
+      top: 0
+      height: 100%
+      width: 100%
+      background-color: rgba(0, 0, 0, .5)
+      color: white
+      display: flex
+      align-items: center
+      justify-content: center
+         
+      .modal-panel
+        position: relative
+        width: auto
+        height: auto
+        padding: 50px
+        background-color: white
+        color: black
+
+        .cancel-btn
+          position: absolute
+          right: 20px
+          top: 20px   
+          cursor: pointer
+          color: orange        
+        
+    .show-modal
+      pointer-events: auto
+      opacity: 1
+      transition: 0.25s
+
+    .close-modal
+      pointer-events: none
+      opacity: 0
+      transition: 0.1s      
+
+
     #emailGenerator
       padding: 50px!important
+
+      .devwarning
+        background-color: orange
+        display: flex
+        flex-wrap: wrap
+        flex-direction: row
+        align-items: center
+        justify-content: center
+        margin-bottom: 20px
+        margin-top: -50px
+        h3 
+          padding: 20px
+          margin: 0px
+
 
       .flex-row
         display: flex;
@@ -144,5 +206,7 @@
       .select
         width: 100%
         margin: 0px
+
+
 
 </style>

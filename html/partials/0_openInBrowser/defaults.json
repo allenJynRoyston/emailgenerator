@@ -1,13 +1,6 @@
 {
   "name": "Open In Browser",
-  "location": "html/partials/0_openInBrowser/0_openInBrowser.html",
   "content": [
-    {
-      "title": "width",
-      "key": "width",
-      "value": "300",
-      "type": "input"
-    },
     {
       "title": "color",
       "key": "color",

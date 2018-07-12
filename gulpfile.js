@@ -72,7 +72,7 @@ const swapContent = (content, location, applyGlobals = false) => {
   // apply master globals
   if(applyGlobals){
     let _globals = []
-    buildJSON.globals.forEach((obj, index) => {    
+    buildJSON.globals.content.forEach((obj, index) => {    
       let regex = new RegExp(`\\[${obj.key}]`,"g"); 
       content = content.replace(regex, obj.value)
     })
@@ -141,15 +141,15 @@ gulp.task('browser-sync', ['start-server'], () => {
 	})
 
   // IF ANY OF THESE FILES HAVE BEEN CHANGED, COMPILE THEN START TRIGGER-SYNC, WHICH KICKS OFF BROWSERSYNC
-  var queue = sequence(100);  // SMALL DELAY SO CLEARHTML DOESN'T BREAK
+  const queue = sequence(100);  // SMALL DELAY SO CLEARHTML DOESN'T BREAK
 
   /* WATCH FOR CHANGES */
-  watch('src/**/*.*', {
+  watch(['src/components/**/*.*', 'src/assets/**/*.*'], {
     emitOnGlob: false
   }, queue.getHandler('rebuild-webpack'));
 
 	/* SERVER */
-  watch('dist/server.js', {
+  watch('server.js', {
     emitOnGlob: false
   }, queue.getHandler('trigger-sync'));
 
@@ -159,6 +159,32 @@ gulp.task('browser-sync', ['start-server'], () => {
   }, queue.getHandler('emails'));  
 })
 //--------------------------------------
+
+//--------------------------  
+gulp.task('server', () =>  {
+
+  runSequence('start-server', () => {  
+    // AFTER STARTER HAS BEEN STARTED, START BROWSERSYNC
+    browserSync.init(null, {
+      proxy: "http://localhost:3000",
+          files: ["server.js", "bsync.js"],
+          port: 3030,
+          reloadDelay: 2000,
+    })
+    
+    const queue = sequence(100);  // SMALL DELAY SO CLEARHTML DOESN'T BREAK
+      
+    watch('server.js', {
+      emitOnGlob: false
+    }, queue.getHandler('trigger-sync'));
+
+  })
+
+})
+//--------------------------
+
+
+
 
 //--------------------------  
 gulp.task('test', () =>  {
