@@ -28,16 +28,27 @@ app.use('/output', express.static(path.join(__dirname, './output')))
 app.use('/instructions', express.static(path.join(__dirname, './instructions')))
 app.use('/node_modules', express.static(path.join(__dirname, './node_modules')))
 
+
+// save json
+app.post('/api/buildJSON', (req, res) => {
+  console.log('build BUILD JSON')
+  fs.writeFile('./instructions/build.json', JSON.stringify(req.body), 'utf8', () => {    
+    res.send(JSON.stringify(req.body))
+  });
+})
+
+
+
 // for routes / api
 app.get('/api/test', (req, res) => {
   res.send("<h1>API TEST</h1>")
 })
 
-// save json
-app.post('/api/buildJSON', (req, res) => {
-  fs.writeFile('./instructions/build.json', JSON.stringify(req.body), 'utf8', () => {    
-    res.send(JSON.stringify(req.body))
-  });
+
+app.get('/api/template', (req, res) => {
+  setTimeout(() => {
+    res.send(fs.readFileSync(path.join(__dirname, './output/template.html'), 'utf8'))
+  }, 2000)
 })
 
 

@@ -1,5 +1,24 @@
 <template lang="pug">
   .section
+    #successModal(v-bind:class='openSuccessModal ? "show-modal" : "close-modal"')
+      .modal-panel(style='text-align: center')  
+        h3 {{wittyRetort}}
+        i.fas.fa-thumbs-up.fa-5x
+    #previewModal(v-bind:class='openPreviewModal ? "show-modal" : "close-modal"')
+      .modal-panel  
+        h3 HTML Preview        
+        .htmlpreview-container
+          pre
+            code(v-if='iframeIsReady && templateExists' style='width: 3000px;')
+              p {{htmlPreview}}
+        .cancel-btn
+          i.fas.fa-times.fa-2x(@click='openPreviewModal = false')
+        br
+        .row.flex-row          
+          a.button.button-primary(href='/output/template.html' download) Download HTML
+          a.button(@click='copyToClipboard()') Copy To Clipboard
+          a(href='/output/template.html' target="_blank") View in new window
+
     #emailmodal(v-bind:class='openModal ? "show-modal" : "close-modal"')
       .modal-panel
         .cancel-btn
@@ -13,7 +32,8 @@
 
     #emailGenerator
       .row.devwarning(v-if='devBuild')
-        h3.center-text DEV MODE ENABLED - BUILD FUNCTION DISABLED 
+        h3.center-text DEV MODE ENABLED         
+        p This mode is for developing the UI/UX - PREVIEW WILL NOT BE UPDATED
             
       .row(v-if='!devBuild')
         h2.center-text Email Generator       
@@ -21,14 +41,14 @@
         .four.columns(v-if='jsonIsReady')
           a.button.tabs(@click='activeTab = 0' v-bind:class='activeTab === 0 ? "button-primary" : ""') Master
           a.button.tabs(@click='activeTab = 1' v-bind:class='activeTab === 1 ? "button-primary" : ""') Partials
-          a.button.tabs(@click='activeTab = 2' v-bind:class='activeTab === 2 ? "button-primary" : ""') Reset
+          a.button.tabs(@click='activeTab = 2' v-bind:class='activeTab === 2 ? "button-primary" : ""') Options
           
 
           // MASTER CONTENT EDITOR
           div(v-if='activeTab === 0')             
-            .row(v-for="content in jsonFile.globals.content")              
+            .row.flex-row(v-for="content in jsonFile.globals.content")              
               .four.columns 
-                label.left {{content.title}}
+                p.text-right.is-label {{content.title}}
               .eight.columns 
                 input(v-model='content.value')
             hr
@@ -47,9 +67,9 @@
                 .one.columns
                   i.far.fa-times-circle.pointer.red(@click='removeItem(index)')                     
 
-              .row(v-for="field in partial.content")   
+              .row.flex-row(v-for="field in partial.content")   
                 .three.columns 
-                  label.left {{field.key}}
+                  p.text-right.is-label {{field.key}}
                 .eight.columns 
                   input(v-model='field.value' v-if='field.type === "input"')  
                   textarea(v-bind:class='field.focused ? "textarea-open" : ""' placeholder='Insert HTML here' v-model='field.value' v-if='field.type === "textarea"' @focus='field.focused = true' @blur='field.focused = false')                  
@@ -60,27 +80,42 @@
             hr               
           
           
-          // BUILD BUTTON
-          div(v-if='activeTab < 2')
-            .twelve.columns.minor-padding
-              button.full-width(@click='createOutput()') Build
-
-
           // PARTIAL CONTENT EDITOR
           div(v-if='activeTab === 2')
-            .twelve.columns.minor-padding
-              button.full-width(@click='addNewSection()') Restore Defaults Layout                  
-            hr 
-            div
-            .twelve.columns.minor-padding
-              button.full-width.button-primary(@click='createOutput()') Restore Default Colors  
+            .row.flex-row(v-for='option in options' )
+              .four.columns
+                p.text-right.is-label(v-if='option.viisibleif()') {{option.title}}
+              .six.columns
+                  button.button(v-if='option.type === "boolean"' v-bind:class='option.value ? "button-primary" : ""' @click='option.value = !option.value; setUserOptions()') {{option.value}}
+                  input(v-if='option.type === "number"' type='number' @change='setUserOptions()' v-model='option.value' v-show='option.viisibleif()') 
+            .row
+              hr
+            .row.flex-row              
+              button.button(@click='resetBuild()' style='width: 100%') Reset Partials
+                
+              
+            // .twelve.columns.minor-padding
+            //   button.full-width(@click='addNewSection()') Restore Defaults Layout                  
+            // hr             
+            // .twelve.columns.minor-padding
+            //   button.full-width.button-primary(@click='createOutput()') Restore Default Colors  
 
 
         // PREVIEW SECTION
-        .eight.columns
+        #preview-container.eight.columns
           h5.center-text.no-padding Preview
-          div
-            iframe.fullframe(v-if='iframeIsReady && templateExists' src="./output/template.html")
+          button.button.preview-btn(@click='openPreviewModal = true') PREVIEW HTML
+          // iframe.fullframe(v-if='iframeIsReady && templateExists' v-bind:src="htmlPreview")
+          div(v-if='!iframeIsReady || !templateExists'  style='text-align: center; margin-top: 40px')            
+            h3
+              i.fas.fa-spinner.fa-spin 
+
+            
+
+      // BUILD BUTTON
+      .autobuild-btn(v-if='!setOptions.autobuild')
+        button.full-width(@click='createOutput()') Build
+
 
       .row   
         br
@@ -93,6 +128,43 @@
 <script src='./emailGenerator.js'></script>
 
 <style lang="sass" scoped>  
+    #successModal
+      position: fixed
+      top: 0
+      height: 100%
+      width: 100%
+      background-color: rgba(0, 0, 0, .5)
+      color: white
+      display: flex
+      align-items: center
+      justify-content: center
+      z-index: 15
+
+    #previewModal      
+      position: fixed
+      top: 0
+      height: 100%
+      width: 100%
+      background-color: rgba(0, 0, 0, .5)
+      color: white
+      display: flex
+      align-items: center
+      justify-content: center
+      z-index: 10
+
+      .htmlpreview-container
+        width: 800px
+        height: 800px
+        overflow-y: scroll
+
+      .button
+        float: right
+        margin-left: 20px
+      
+      a 
+        text-decoration: none
+        margin-top: -10px
+
     #emailmodal      
       position: fixed
       top: 0
@@ -103,21 +175,23 @@
       display: flex
       align-items: center
       justify-content: center
+      z-index: 10
          
-      .modal-panel
-        position: relative
-        width: auto
-        height: auto
-        padding: 50px
-        background-color: white
-        color: black
+    .modal-panel
+      position: relative
+      width: auto
+      height: auto
+      padding: 30px
+      background-color: white
+      color: black
+      border-radius: 10px
 
-        .cancel-btn
-          position: absolute
-          right: 20px
-          top: 20px   
-          cursor: pointer
-          color: orange        
+      .cancel-btn
+        position: absolute
+        right: 20px
+        top: 20px   
+        cursor: pointer
+        color: orange        
         
     .show-modal
       pointer-events: auto
@@ -129,15 +203,23 @@
       opacity: 0
       transition: 0.1s      
 
+    #preview-container
+      min-height: 1200px
+      position: relative
+      z-index: 1
+      .preview-btn
+        position: absolute
+        left: 15px
+        top: 10px
+
 
     #emailGenerator
       padding: 50px!important
 
       .devwarning
         background-color: orange
-        display: flex
-        flex-wrap: wrap
-        flex-direction: row
+        display: flex        
+        flex-direction: column
         align-items: center
         justify-content: center
         margin-bottom: 20px
@@ -152,6 +234,11 @@
         align-items: center;
         justify-content: left; 
         padding: 10px     
+        p
+          padding: 0px
+          margin: 0px
+        button
+          margin: 0px
 
       .tabs
         border-radius: 0px!important
@@ -207,6 +294,31 @@
         width: 100%
         margin: 0px
 
+      .text-right
+        text-align: right
+      
+      .is-label
+        text-transform: uppercase
+        color: #0a3d62        
+
+
+      .autobuild-btn
+        position: fixed
+        bottom: 0px
+        left: 0px
+        width: 100%    
+        z-index: 1      
+        button
+          height: 75px
+          margin: 0px
+          padding: 0px  
+          border-radius: 0px  
+          background-color: #8395a7
+          color: white
+          border: none
+        button:hover
+          background-color: #576574       
+          color: white        
 
 
 </style>

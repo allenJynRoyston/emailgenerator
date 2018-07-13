@@ -8,36 +8,40 @@ export default {
       iframeIsReady: true,
       jsonIsReady: false,
       jsonFile: null,
+      resetFile: null,
       templateExists: false,
       devBuild: false,
       openModal: false,
+      openPreviewModal: false,
+      openSuccessModal: false,
+      wittyRetort: null,
       timerId: null,
+      options:[
+        {id: 'autobuild', title: 'Auto Build', value: true, type: 'boolean', viisibleif: () => {
+          return true 
+        }}, 
+        {id: 'builddelay', title: 'Build Delay', value: 1000, type: 'number', viisibleif: () => {
+          return this.setOptions.autobuild 
+        }},        
+      ],
+      setOptions: {
+        autobuild: true,
+        buildDelay: null
+      },
       error: {
         hasError: false,
         message: null
       },
       indexStored: null,      
       componentOptions: []
-    }
+    }    
   },
   watch: {
     // whenever question changes, this function will run
     jsonFile:{
-      handler(val){        
-        const debounce = this.debounced(1000, () => {
-          this.createOutput()
-
-          // delay so file can be created and then checked
-          setTimeout(() => {
-            axios.get('./output/template.html')
-              .then((response) => {                      
-                this.templateExists = true        
-              })
-              .catch((error) => {
-                this.templateExists = false
-              });    
-          }, 750)        
-          
+      handler(val){     
+        const debounce = this.debounced(this.setOptions.buildDelay, () => {
+          this.createOutput()        
         });    
         debounce()          
       },
@@ -45,11 +49,62 @@ export default {
     }
   },  
   mounted:function(){
+    this.setUserOptions()
     this.fetchDefaultList()
-    this.fetchCurrentBuild()
-    this.refreshIframe()            
+    this.fetchCurrentBuild()    
   },
   methods: {
+    //---------------------------------
+    copyToClipboard(){
+      const responses = ['Nice job hero.', 'Got it.', 'No prob.', 'Nailed that button click.', 'Easy peasy.', 'Copied.', 'Paste away.', 'It\'s done son.', 'Nae botha.', 'Success!']
+      this.wittyRetort = responses[Math.floor(Math.random() * responses.length)];
+
+      (navigator as any).clipboard.writeText(this.htmlPreview).then(() => {
+        this.openSuccessModal = true
+        setTimeout( () => {
+          this.openSuccessModal = false
+        }, 1000)
+      }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+      });         
+    },
+    //---------------------------------
+
+    //---------------------------------
+    setUserOptions(){
+      let autobuild = this.options.filter(item => {
+        return item.id === 'autobuild'
+      })  
+
+      let delay = this.options.filter(item => {
+        return item.id === 'builddelay'
+      })    
+      
+      this.setOptions.autobuild = autobuild[0].value
+      this.setOptions.buildDelay = delay[0].value
+    },
+    //---------------------------------
+
+    //---------------------------------
+    async fetchPreview(){
+      this.iframeIsReady = false
+
+      try{
+        let res = await axios.get('/api/template')
+        this.htmlPreview = res.data
+        this.templateExists = true        
+        this.iframeIsReady = true         
+      }
+      catch{
+        let res = await axios.get('/output/test.html')
+        this.htmlPreview = res.data
+        this.templateExists = true        
+        this.iframeIsReady = true      
+      }
+    },
+    //---------------------------------
+
+    //---------------------------------
     debounced(delay, fn){      
       return (...args) => {
         if (this.timerId) {
@@ -61,15 +116,16 @@ export default {
         }, delay);
       }
     },
+    //---------------------------------
 
+    //---------------------------------
     fetchDefaultList(repurpose = false){
       axios.get('/api/builddefault')
       .then((response) => {            
         response.data.partials.map(partial => {
           // uses default build list if build.json doesn't exists
           if(repurpose){
-            this.jsonFile = response.data;   
-            this.jsonIsReady = true;  
+            this.assignJsonFile(response.data)
           }
         })      
         this.createComponentList(JSON.stringify(response.data))                 
@@ -79,8 +135,9 @@ export default {
         this.fetchDummyData()
       }); 
     },
+    //---------------------------------
 
-
+    //---------------------------------
     fetchCurrentBuild(){
       axios.get('./instructions/build.json')
       .then((response) => {    
@@ -93,38 +150,58 @@ export default {
           })
         })                
         // bind object
-        this.jsonFile = response.data;   
-        this.jsonIsReady = true;                 
+        this.assignJsonFile(response.data)
+
       })
       .catch((error) => {
         this.fetchDefaultList(true)        
       });  
     },
+    //---------------------------------
 
-
+    //---------------------------------
     fetchDummyData(){
       axios.get('./instructions/default.json')
-      .then((response) => {                    
-        // add focus property to textareas
-        response.data.partials.map(partial => {
-          partial.content.map(item => {
-            if(item.type === 'textarea'){
-              item.focused = false
-            }
-          })
-        })    
-        this.createComponentList(JSON.stringify(response.data))
-        
-        // bind object
-        this.jsonFile = response.data;   
-        this.jsonIsReady = true;                 
-      })
-      .catch((error) => {
-        this.error.hasError = true
-        this.error.message = "Dummy data does not exists.  Run $gulp default once to create it."
-      });  
-    },
+        .then((response) => {               
+          
+          // set resetdata
+          this.resetFile = response.data
 
+          // add focus property to textareas
+          response.data.partials.map(partial => {
+            partial.content.map(item => {
+              if(item.type === 'textarea'){
+                item.focused = false
+              }
+            })
+          })    
+          this.createComponentList(JSON.stringify(response.data))
+          
+          // bind object
+          this.assignJsonFile(response.data)
+          
+        })
+        .catch((error) => {
+          this.error.hasError = true
+          this.error.message = "Dummy data does not exists.  Run $gulp default once to create it."
+        });  
+    },
+    //---------------------------------
+
+    //---------------------------------
+    fetchHTMLPreview(){
+
+    },
+    //---------------------------------
+
+    //---------------------------------
+    assignJsonFile(data:any){
+      this.jsonFile = data;   
+      this.jsonIsReady = true;    
+    },
+    //---------------------------------
+
+    //---------------------------------
     createComponentList(list:any){
       let partials = JSON.parse(list).partials;
       partials.map(partial => {
@@ -132,10 +209,13 @@ export default {
         this.componentOptions.push(partial)   
       })   
     },
+    //---------------------------------
 
+    //---------------------------------
     selectedOption(selected:any){
       this.openModal = false;
-      let {content, location, name} = selected
+      let delinked = JSON.stringify(selected)
+      let {content, location, name} = JSON.parse(delinked)
 
       if(this.indexStored !== 'new'){
         this.jsonFile.partials[this.indexStored].content = content;
@@ -146,12 +226,16 @@ export default {
         this.jsonFile.partials.push(newContent)        
       }
     },
+    //---------------------------------
 
+    //---------------------------------
     addNewSection(){
       this.indexStored = 'new';
       this.openModal = true;
     },
-  
+    //---------------------------------
+    
+    //---------------------------------
     array_move(arr, old_index, new_index) {
       if (new_index >= arr.length) {
           var k = new_index - arr.length + 1;
@@ -162,43 +246,51 @@ export default {
       arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
       return arr; // for testing
     },
+    //---------------------------------
 
-
+    //---------------------------------
     moveItemUp(index:number){      
       if(index > 0){
         this.array_move(this.jsonFile.partials, index, index-1)        
       }
     },
+    //---------------------------------
 
+    //---------------------------------
     moveItemDown(index:number){
       if(index < this.jsonFile.partials.length - 1){
         this.array_move(this.jsonFile.partials, index, index+1)        
       }
     },
+    //---------------------------------
 
+    //---------------------------------
     removeItem(index:number){
       this.jsonFile.partials.splice(index, 1)
     },
+    //---------------------------------
 
-    refreshIframe(){
-      setInterval(() => {    
-        setTimeout(() => {              
-          this.iframeIsReady = true
-        })
-      }, 1000)
+    //---------------------------------
+    resetBuild(){
+      if (confirm("Continuing will reset all partial data.")) {
+        this.jsonFile = this.resetFile;
+        this.createOutput();
+      }       
     },
+    //---------------------------------
 
-
-    async createOutput(){     
+    //---------------------------------
+    createOutput(){     
       this.iframeIsReady = false;       
-      await axios.post('/api/buildJSON', this.jsonFile)
-        .then((response) => {          
-          console.log(response);          
+      axios.post('/api/buildJSON', this.jsonFile)
+        .then(() => {    
+          this.fetchPreview()
         })
         .catch((error) => {
-          console.log(error);
+          this.fetchPreview()
         });
     },
+    //---------------------------------
 
   },  
 }

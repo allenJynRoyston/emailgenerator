@@ -144,14 +144,14 @@ gulp.task('browser-sync', ['start-server'], () => {
   const queue = sequence(100);  // SMALL DELAY SO CLEARHTML DOESN'T BREAK
 
   /* WATCH FOR CHANGES */
-  watch(['src/components/**/*.*', 'src/assets/**/*.*'], {
-    emitOnGlob: false
-  }, queue.getHandler('rebuild-webpack'));
+  // watch(['src/components/**/*.*', 'src/assets/**/*.*'], {
+  //   emitOnGlob: false
+  // }, queue.getHandler('rebuild-webpack'));
 
 	/* SERVER */
-  watch('server.js', {
-    emitOnGlob: false
-  }, queue.getHandler('trigger-sync'));
+  // watch('server.js', {
+  //   emitOnGlob: false
+  // }, queue.getHandler('trigger-sync'));
 
 	/* EMAIL */
   watch(['html/**/*.*', 'instructions/build.json'], {
@@ -182,8 +182,6 @@ gulp.task('server', () =>  {
 
 })
 //--------------------------
-
-
 
 
 //--------------------------  

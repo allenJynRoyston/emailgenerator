@@ -2,6 +2,14 @@
 @import './normalize.css';
 @import './skeleton.css';
 
+html{
+  overflow-x: hidden
+}
+
+pre{
+  margin: 0px;
+  padding: 0px;
+}
 
 /*  BASIC CUSTOM STYLINGS */
 a, .is-cursor{
