@@ -1,0 +1,47 @@
+{
+  "name": "Button",
+  "content": [
+    {
+      "title": "width",
+      "key": "width",
+      "value": "300",
+      "type": "input"
+    },
+    {
+      "title": "bgcolor",
+      "key": "bgcolor",
+      "value": "#e55039",
+      "type": "input"
+    },    
+    {
+      "title": "buttoncolor",
+      "key": "buttoncolor",
+      "value": "#e55039",
+      "type": "input"
+    },
+    {
+      "title": "bordercolor",
+      "key": "bordercolor",
+      "value": "#e55039",
+      "type": "input"
+    },   
+    {
+      "title": "buttonradius",
+      "key": "buttonradius",
+      "value": "10px",
+      "type": "input"
+    },       
+    {
+      "title": "buttontext",
+      "key": "buttontext",
+      "value": "Button Text",
+      "type": "input"  
+    },
+    {
+      "title": "textcolor",
+      "key": "textcolor",
+      "value": "#f2f2f2",
+      "type": "input"
+    }    
+  ]
+}

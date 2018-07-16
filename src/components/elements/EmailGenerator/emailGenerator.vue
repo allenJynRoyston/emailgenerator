@@ -24,10 +24,13 @@
         .cancel-btn
           i.fas.fa-times.fa-2x(@click='openModal = false')
         .row
-          h3 Select a partial        
-          button.button(v-for="option in componentOptions" @click='selectedOption(option)' v-bind:class='option.active ? "button-primary" : ""' v-on:mouseover="option.active = true" v-on:mouseout="option.active = false") {{option.name}}          
-          hr
-        .row
+          .columns.twelve
+            h3 Select a partial        
+          .columns.twelve(v-for="option in componentOptions" style='padding: 0px 10px; width: 25%')
+            button.button(@click='selectedOption(option)' style='width: 100%' v-bind:class='option.active ? "button-primary" : ""' v-on:mouseover="option.active = true" v-on:mouseout="option.active = false") {{option.name}}                    
+          .columns.twelve
+            hr
+        .row          
           p * Changing a partial will overwrite your existing properties
 
     #emailGenerator
@@ -59,15 +62,17 @@
               .row.flex-row
                 .nine.columns                  
                   button(@click='indexStored = index; openModal = true') 
-                    | {{partial.name}} &nbsp;&nbsp;&nbsp;
-                    i.fas.fa-caret-square-down(style='color: orange')
+                    | {{partial.name}} &nbsp;&nbsp;&nbsp;  
+                    i.fas.fa-caret-square-down(style='color: orange')                  
+                  button(style='margin-left: 10px; float: right' @click='partial.showProps = !partial.showProps') 
+                    i(v-bind:class='partial.showProps ? "fas" : "far"').fa-edit
                 .two.columns(style='display: flex; justify-content: space-around')                         
                   i.fas.fa-angle-double-up.pointer.green(@click='moveItemUp(index)' v-bind:class='index === 0 ? "disabled" : ""')             
                   i.fas.fa-angle-double-down.pointer.green(@click='moveItemDown(index)' v-bind:class='index === jsonFile.partials.length -1 ? "disabled" : ""')             
                 .one.columns
                   i.far.fa-times-circle.pointer.red(@click='removeItem(index)')                     
 
-              .row.flex-row(v-for="field in partial.content")   
+              .row.flex-row(v-for="field in partial.content" v-show='partial.showProps')   
                 .three.columns 
                   p.text-right.is-label {{field.key}}
                 .eight.columns 
@@ -115,12 +120,6 @@
       // BUILD BUTTON
       .autobuild-btn(v-if='!setOptions.autobuild')
         button.full-width(@click='createOutput()') Build
-
-
-      .row   
-        br
-        .twelve.columns(style='padding: 10px')
-          p {{this.jsonFile}}
 
 
 </template>

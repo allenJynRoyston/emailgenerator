@@ -39,10 +39,12 @@ export default {
     // whenever question changes, this function will run
     jsonFile:{
       handler(val){     
-        const debounce = this.debounced(this.setOptions.buildDelay, () => {
-          this.createOutput()        
-        });    
-        debounce()          
+        if(this.setOptions.autobuild){
+          const debounce = this.debounced(this.setOptions.buildDelay, () => {
+            this.createOutput()        
+          });    
+          debounce()          
+        }
       },
       deep: true
     }
@@ -85,14 +87,26 @@ export default {
     //---------------------------------
 
     //---------------------------------
-    async fetchPreview(){          
+    async fetchPreview(){              
       try{
         let res = await axios.get('/output/template.html')
-        this.htmlPreview = res.data
-        this.iframeIsReady = true    
+        let match = res.data.includes('<div id="app"></div>')
+        if(!match){
+          this.htmlPreview = res.data
+          this.iframeIsReady = true    
+        }
+        else{
+          // delay between attempts to find template.html
+          setTimeout(() => {
+            this.fetchPreview()        
+          }, 500)
+        }
       }
       catch{        
-        this.fetchPreview()        
+        // delay between attempts to find template.html
+        setTimeout(() => {
+          this.fetchPreview()        
+        }, 500)
       }
     },
     //---------------------------------
@@ -112,84 +126,67 @@ export default {
     //---------------------------------
 
     //---------------------------------
-    fetchDefaultList(repurpose = false){
-      axios.get('/api/builddefault')
-      .then((response) => {            
-        response.data.partials.map(partial => {
+    async fetchDefaultList(repurpose = false){
+      try{
+        let res = await axios.get('/api/builddefault')
+        res.data.partials.map(partial => {
           // uses default build list if build.json doesn't exists
           if(repurpose){
-            this.assignJsonFile(response.data)
+            this.assignJsonFile(res.data)
           }
         })      
-        this.createComponentList(JSON.stringify(response.data))                 
-      })
-      .catch((error) => {
+        this.createComponentList(JSON.stringify(res.data))             
+      }
+      catch{
         this.devBuild = true
         this.fetchDummyData()
-      }); 
+      }
     },
     //---------------------------------
 
     //---------------------------------
-    fetchCurrentBuild(){
-      axios.get('./instructions/build.json')
-      .then((response) => {    
-        // add focus property to textareas
-        response.data.partials.map(partial => {
-          partial.content.map(item => {
-            if(item.type === 'textarea'){
-              item.focused = false
-            }
-          })
-        })                
+    async fetchCurrentBuild(){
+      try{
+        let res = await axios.get('./instructions/build.json')
         // bind object
-        this.assignJsonFile(response.data)
-
-      })
-      .catch((error) => {
+        this.assignJsonFile(res.data)
+      }
+      catch(err){
         this.fetchDefaultList(true)        
-      });  
+      }
     },
     //---------------------------------
 
     //---------------------------------
-    fetchDummyData(){
-      axios.get('./instructions/default.json')
-        .then((response) => {               
-          
-          // set resetdata
-          this.resetFile = response.data
+    async fetchDummyData(){
+      try{
+        let res = await axios.get('./instructions/default.json')
+        // console.log(res.data)
+        this.assignJsonFile(res.data)      
+        // // set resetdata
+        this.resetFile = res.data
+        this.createComponentList(JSON.stringify(res.data))        
+      }
+      catch(err){
+        this.error.hasError = true
+        this.error.message = "Dummy data does not exists.  Run $gulp default once to create it."
+      }
 
-          // add focus property to textareas
-          response.data.partials.map(partial => {
-            partial.content.map(item => {
-              if(item.type === 'textarea'){
-                item.focused = false
-              }
-            })
-          })    
-          this.createComponentList(JSON.stringify(response.data))
-          
-          // bind object
-          this.assignJsonFile(response.data)
-          
+    },
+    //---------------------------------
+    
+    //---------------------------------
+    assignJsonFile(data:any){      
+      data.partials.map(partial => {
+        partial.showProps = false
+        partial.content.map(item => {
+          if(item.type === 'textarea'){
+            item.focused = false
+          }
         })
-        .catch((error) => {
-          this.error.hasError = true
-          this.error.message = "Dummy data does not exists.  Run $gulp default once to create it."
-        });  
-    },
-    //---------------------------------
-
-    //---------------------------------
-    fetchHTMLPreview(){
-
-    },
-    //---------------------------------
-
-    //---------------------------------
-    assignJsonFile(data:any){
-      this.jsonFile = data;   
+      })     
+            
+      this.jsonFile = data;         
       this.jsonIsReady = true;    
     },
     //---------------------------------
@@ -273,19 +270,20 @@ export default {
     //---------------------------------
 
     //---------------------------------
-    createOutput(){     
+    async createOutput(){     
       this.iframeIsReady = false;       
-      axios.post('/api/buildJSON', this.jsonFile)
-        .then(() => {    
-          setTimeout(() => {
-            this.fetchPreview()
-          }, 2000)
-        })
-        .catch((error) => {
-          setTimeout(() => {
-            this.fetchPreview()
-          }, 2000)
-        });
+      const delay = 500 // <!-- 500 seems to be the minimal threshold that will work - do not change
+      try{
+        await axios.post('/api/buildJSON', this.jsonFile)
+      }
+      catch(err){
+        // will result in error if on dev build - just ignore  
+        console.log(err)
+      }
+      setTimeout(() => {
+        this.fetchPreview()
+      }, delay)        
+      
     },
     //---------------------------------
 

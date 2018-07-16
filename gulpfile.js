@@ -156,7 +156,7 @@ gulp.task('browser-sync', ['start-server'], () => {
 	/* EMAIL */
   watch(['html/**/*.*', 'instructions/build.json'], {
     emitOnGlob: false
-  }, queue.getHandler('emails'));  
+  }, queue.getHandler('build'));  
 })
 //--------------------------------------
 
@@ -189,16 +189,16 @@ gulp.task('test', () =>  {
   var queue = sequence(100);  // SMALL DELAY SO CLEARHTML DOESN'T BREAK
   watch(['html/**/*.*', 'instructions/build.json'], {
     emitOnGlob: false
-  }, queue.getHandler('emails'));  
+  }, queue.getHandler('build'));  
 
 });
 //--------------------------
 
 //--------------------------  
-gulp.task('emails', () =>  {
+gulp.task('build', () =>  {
   loadJsonFile('./instructions/build.json').then(json => {
     buildJSON = json; 
-    runSequence('clean', 'copy', 'delay', 'build', 'applyglobals', 'cleantmp', () => {                
+    runSequence('clean', 'copy', 'delay', 'buildtemplate', 'applyglobals', 'cleantmp', () => {                
       // reset globals after build
       buildJSON = {};
       fileIds = [];
@@ -247,7 +247,7 @@ gulp.task('cleantmp', () => {
 //--------------------------
 
 //--------------------------
-gulp.task('build', () =>  {
+gulp.task('buildtemplate', () =>  {
   let files = buildContent(true);
   let i = 0;
   return gulp.src(files)

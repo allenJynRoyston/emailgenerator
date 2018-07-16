@@ -29,26 +29,22 @@ app.use('/instructions', express.static(path.join(__dirname, './instructions')))
 app.use('/node_modules', express.static(path.join(__dirname, './node_modules')))
 
 
+
+// POSTS **************************
 // save json
 app.post('/api/buildJSON', (req, res) => {
-  console.log('build BUILD JSON')
-  fs.writeFile('./instructions/build.json', JSON.stringify(req.body), 'utf8', () => {    
+  fs.writeFile('./instructions/build.json', JSON.stringify(req.body), 'utf8', () => {  
+    // setTimeout for template
     res.send(JSON.stringify(req.body))
   });
 })
+// end POSTS 
 
 
-
+// GETS **************************
 // for routes / api
 app.get('/api/test', (req, res) => {
   res.send("<h1>API TEST</h1>")
-})
-
-
-app.get('/api/template', (req, res) => {
-  setTimeout(() => {
-    res.send(fs.readFileSync(path.join(__dirname, './output/template.html'), 'utf8'))
-  }, 2000)
 })
 
 
@@ -128,6 +124,8 @@ app.get('/api/builddefault', (req, res) => {
 app.get('*', (req, res) => {
   res.send(fs.readFileSync(path.join(__dirname, './index.html'), 'utf8'))
 })
+// end GETS 
+
 
 // Serve the files on port 3000.
 app.listen(process.env.PORT || 3000, function () {
