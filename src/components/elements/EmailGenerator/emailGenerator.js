@@ -12,11 +12,10 @@ export default {
         return {
             store: this.$store,
             activeTab: 0,
-            iframeIsReady: true,
+            iframeIsReady: false,
             jsonIsReady: false,
             jsonFile: null,
             resetFile: null,
-            templateExists: false,
             devBuild: false,
             openModal: false,
             openPreviewModal: false,
@@ -90,18 +89,13 @@ export default {
         //---------------------------------
         fetchPreview() {
             return __awaiter(this, void 0, void 0, function* () {
-                this.iframeIsReady = false;
                 try {
-                    let res = yield axios.get('/api/template');
+                    let res = yield axios.get('/output/template.html');
                     this.htmlPreview = res.data;
-                    this.templateExists = true;
                     this.iframeIsReady = true;
                 }
                 catch (_a) {
-                    let res = yield axios.get('/output/test.html');
-                    this.htmlPreview = res.data;
-                    this.templateExists = true;
-                    this.iframeIsReady = true;
+                    this.fetchPreview();
                 }
             });
         },
@@ -266,10 +260,14 @@ export default {
             this.iframeIsReady = false;
             axios.post('/api/buildJSON', this.jsonFile)
                 .then(() => {
-                this.fetchPreview();
+                setTimeout(() => {
+                    this.fetchPreview();
+                }, 2000);
             })
                 .catch((error) => {
-                this.fetchPreview();
+                setTimeout(() => {
+                    this.fetchPreview();
+                }, 2000);
             });
         },
     },

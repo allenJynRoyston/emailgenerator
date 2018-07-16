@@ -5,11 +5,10 @@ export default {
     return {
       store: this.$store,
       activeTab: 0,
-      iframeIsReady: true,
+      iframeIsReady: false,
       jsonIsReady: false,
       jsonFile: null,
-      resetFile: null,
-      templateExists: false,
+      resetFile: null,      
       devBuild: false,
       openModal: false,
       openPreviewModal: false,
@@ -86,20 +85,14 @@ export default {
     //---------------------------------
 
     //---------------------------------
-    async fetchPreview(){
-      this.iframeIsReady = false
-
+    async fetchPreview(){          
       try{
-        let res = await axios.get('/api/template')
+        let res = await axios.get('/output/template.html')
         this.htmlPreview = res.data
-        this.templateExists = true        
-        this.iframeIsReady = true         
+        this.iframeIsReady = true    
       }
-      catch{
-        let res = await axios.get('/output/test.html')
-        this.htmlPreview = res.data
-        this.templateExists = true        
-        this.iframeIsReady = true      
+      catch{        
+        this.fetchPreview()        
       }
     },
     //---------------------------------
@@ -284,10 +277,14 @@ export default {
       this.iframeIsReady = false;       
       axios.post('/api/buildJSON', this.jsonFile)
         .then(() => {    
-          this.fetchPreview()
+          setTimeout(() => {
+            this.fetchPreview()
+          }, 2000)
         })
         .catch((error) => {
-          this.fetchPreview()
+          setTimeout(() => {
+            this.fetchPreview()
+          }, 2000)
         });
     },
     //---------------------------------

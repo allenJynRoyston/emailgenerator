@@ -9,7 +9,7 @@
         h3 HTML Preview        
         .htmlpreview-container
           pre
-            code(v-if='iframeIsReady && templateExists' style='width: 3000px;')
+            code(v-if='iframeIsReady' style='width: 3000px;')
               p {{htmlPreview}}
         .cancel-btn
           i.fas.fa-times.fa-2x(@click='openPreviewModal = false')
@@ -105,8 +105,8 @@
         #preview-container.eight.columns
           h5.center-text.no-padding Preview
           button.button.preview-btn(@click='openPreviewModal = true') PREVIEW HTML
-          // iframe.fullframe(v-if='iframeIsReady && templateExists' v-bind:src="htmlPreview")
-          div(v-if='!iframeIsReady || !templateExists'  style='text-align: center; margin-top: 40px')            
+          iframe.fullframe(v-if='iframeIsReady' src="/output/template.html")
+          div(v-if='!iframeIsReady'  style='text-align: center; margin-top: 40px')            
             h3
               i.fas.fa-spinner.fa-spin 
 
