@@ -88,9 +88,9 @@
           // PARTIAL CONTENT EDITOR
           div(v-if='activeTab === 2')
             .row.flex-row(v-for='option in options' )
-              .four.columns
+              .five.columns
                 p.text-right.is-label(v-if='option.viisibleif()') {{option.title}}
-              .six.columns
+              .seven.columns
                   button.button(v-if='option.type === "boolean"' v-bind:class='option.value ? "button-primary" : ""' @click='option.value = !option.value; setUserOptions()') {{option.value}}
                   input(v-if='option.type === "number"' type='number' @change='setUserOptions()' v-model='option.value' v-show='option.viisibleif()') 
             .row

@@ -2,11 +2,11 @@
   "name": "Disclosure",
   "content": [
     {
-      "title": "width",
-      "key": "width",
-      "value": "300",
+      "title": "padding",
+      "key": "padding",
+      "value": "25px 30px",
       "type": "input"
-    },
+    },    
     {
       "title": "color",
       "key": "color",
@@ -20,11 +20,22 @@
       "type": "input"
     },
     {
-      "title": "content",
-      "key": "content",
-      "value": "",
-      "type": "textarea",
-      "focused": false
-    }
+      "title": "textfont",
+      "key": "textfont",
+      "value": "Arial, Helvetica, sans-serif",
+      "type": "input"
+    },
+    {
+      "title": "textsize",
+      "key": "textsize",
+      "value": "12px",
+      "type": "input"
+    },
+    {
+      "title": "linkcolor",
+      "key": "linkcolor",
+      "value": "white",
+      "type": "input"
+    }        
   ]
 }

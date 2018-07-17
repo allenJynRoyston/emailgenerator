@@ -2,29 +2,76 @@
   "name": "Social Media Buttons",
   "content": [
     {
-      "title": "width",
-      "key": "width",
-      "value": "300",
-      "type": "input"
-    },
-    {
-      "title": "color",
-      "key": "color",
-      "value": "#f2f2f2",
-      "type": "input"
-    },
-    {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "#e55039",
+      "value": "#fff",
       "type": "input"
     },
     {
-      "title": "content",
-      "key": "content",
-      "value": "",
-      "type": "textarea",
-      "focused": false
-    }
+      "title": "alignment",
+      "key": "alignment",
+      "value": "center",
+      "type": "input"
+    },    
+    {
+      "title": "gap",
+      "key": "gap",
+      "value": "20",
+      "type": "input"
+    },
+    {
+      "title": "iconsize",
+      "key": "iconsize",
+      "value": "34",
+      "type": "input"
+    },
+    {
+      "title": "fblink",
+      "key": "fblink",
+      "value": "https://www.facebook.com/youandb",
+      "type": "input"      
+    },
+    {
+      "title": "fbimage",
+      "key": "fbimage",
+      "value": "https://s3.eu-west-2.amazonaws.com/cyb-239/images/facebook-black.png",
+      "type": "input"      
+    },    
+    {
+      "title": "twitterlink",
+      "key": "twitterlink",
+      "value": "https://twitter.com/HelloB",
+      "type": "input"
+    },
+    {
+      "title": "twitterimage",
+      "key": "twitterimage",
+      "value": "https://s3.eu-west-2.amazonaws.com/cyb-239/images/twitter-black.png",
+      "type": "input"      
+    },       
+    {
+      "title": "youtubelink",
+      "key": "youtubelink",
+      "value": "https://www.youtube.com/channel/UCg_mnQfUUE_veP6LXydTybQ",
+      "type": "input"      
+    },
+    {
+      "title": "youtubeimage",
+      "key": "youtubeimage",
+      "value": "https://s3.eu-west-2.amazonaws.com/cyb-239/images/youtube-black.png",
+      "type": "input"      
+    },       
+    {
+      "title": "instagramlink",
+      "key": "instagramlink",
+      "value": "https://www.instagram.com/youandb/",
+      "type": "input"      
+    },
+    {
+      "title": "instagramimage",
+      "key": "instagramimage",
+      "value": "https://s3.eu-west-2.amazonaws.com/cyb-239/images/instagram-black.png",
+      "type": "input"      
+    }        
   ]
 }

@@ -2,9 +2,9 @@
   "name": "Security Panel",
   "content": [
     {
-      "title": "width",
-      "key": "width",
-      "value": "300",
+      "title": "padding",
+      "key": "padding",
+      "value": "10px 20px",
       "type": "input"
     },
     {

@@ -2,46 +2,82 @@
   "name": "Button",
   "content": [
     {
-      "title": "width",
+      "title": "btnwidth",
       "key": "width",
       "value": "300",
       "type": "input"
-    },
+    },   
+    {
+      "title": "btnheight",
+      "key": "height",
+      "value": "50",
+      "type": "input"
+    },          
+    {
+      "title": "padding",
+      "key": "padding",
+      "value": "0px 0px 0px 0px",
+      "type": "input"
+    },      
     {
       "title": "bgcolor",
       "key": "bgcolor",
       "value": "#e55039",
       "type": "input"
-    },    
+    },      
     {
-      "title": "buttoncolor",
+      "title": "btn color",
       "key": "buttoncolor",
       "value": "#e55039",
       "type": "input"
     },
     {
-      "title": "bordercolor",
-      "key": "bordercolor",
+      "title": "btn border",
+      "key": "buttonborder",
       "value": "#e55039",
       "type": "input"
     },   
     {
-      "title": "buttonradius",
+      "title": "btn radius",
       "key": "buttonradius",
       "value": "10px",
       "type": "input"
-    },       
+    },
     {
-      "title": "buttontext",
+      "title": "btn radius color",
+      "key": "buttonradiuscolor",
+      "value": "blue",
+      "type": "input"
+    },    
+    {
+      "title": "btn font",
+      "key": "buttonfont",
+      "value": "Arial, Helvetica, sans-serif",
+      "type": "input"  
+    },           
+    {
+      "title": "btn text",
       "key": "buttontext",
       "value": "Button Text",
       "type": "input"  
     },
     {
-      "title": "textcolor",
-      "key": "textcolor",
+      "title": "btn text size",
+      "key": "buttontxtsize",
+      "value": "20px",
+      "type": "input"  
+    },    
+    {
+      "title": "btn text color",
+      "key": "buttontextcolor",
       "value": "#f2f2f2",
       "type": "input"
-    }    
+    },
+    {
+      "title": "link",
+      "key": "link",
+      "value": "#href",
+      "type": "input"
+    }        
   ]
 }
