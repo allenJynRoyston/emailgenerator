@@ -1,0 +1,17 @@
+{
+  "name": "Gap",
+  "content": [
+    {
+      "title": "height",
+      "key": "height",
+      "value": "20",
+      "type": "input"
+    },
+    {
+      "title": "bgcolor",
+      "key": "bgcolor",
+      "value": "#efeeee",
+      "type": "input"
+    }    
+  ]
+}

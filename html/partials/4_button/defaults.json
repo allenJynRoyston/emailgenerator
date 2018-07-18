@@ -74,6 +74,12 @@
       "type": "input"
     },
     {
+      "title": "btn padding",
+      "key": "buttonpadding",
+      "value": "10px",
+      "type": "input"
+    },    
+    {
       "title": "link",
       "key": "link",
       "value": "#href",
