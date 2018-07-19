@@ -1,28 +1,40 @@
 {
   "content": [
     {
-      "title": "width",
+      "title": "email width",
       "key": "m_width",
       "value": "600",
       "type": "input"
     },
     {
-      "title": "color",
-      "key": "m_color",
-      "value": "#82ccdd",
+      "title": "global color 1",
+      "key": "g_color1",
+      "value": "#2c3e50",
       "type": "input"
     },
     {
-      "title": "bgcolor",
-      "key": "m_bgcolor",
-      "value": "#f2f2f2",
+      "title": "global color 2",
+      "key": "g_color2",
+      "value": "#95a5a6",
       "type": "input"
     },
     {
-      "title": "links",
-      "key": "m_links",
-      "value": "white",
+      "title": "global color 3",
+      "key": "g_color3",
+      "value": "#e74c3c",
       "type": "input"
-    }
+    },
+    {
+      "title": "global color 4",
+      "key": "g_color4",
+      "value": "#2980b9",
+      "type": "input"
+    },
+    {
+      "title": "global color 5",
+      "key": "g_color5",
+      "value": "#8e44ad",
+      "type": "input"
+    }                   
   ]
 }

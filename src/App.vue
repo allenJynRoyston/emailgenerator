@@ -1,5 +1,6 @@
 <template lang='pug'>
-  #app-layout    
+  #app-layout   
+    PixiComponent.bg-canvas(v-bind:files='pixiFiles' fullscreen autoplay orderdelay='1' style='z-index: -1; position: fixed; top: 0; left: 0')  
     SiteOverlay
     DrawerComponent
     SiteHeader
@@ -18,6 +19,7 @@ export default {
   data() {
     return {
       store: this.$store,
+      pixiFiles:  ['src/_pixi/bg/script.js'],
       images: [
         test_image
       ]

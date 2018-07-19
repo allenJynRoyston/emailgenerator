@@ -1,0 +1,60 @@
+{
+  "name": "Text Section",
+  "content": [
+    {
+      "title": "HTML",
+      "key": "content",
+      "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "type": "textarea"
+    },
+    {
+      "title": "text color",
+      "key": "textcolor",
+      "value": "#000",
+      "type": "inputcolor"
+    },    
+    {
+      "title": "font family",
+      "key": "fontfamily",
+      "value": "Georgia, serif",
+      "type": "inputfont"
+    }, 
+    {
+      "title": "font size",
+      "key": "fontsize",
+      "value": "16",
+      "type": "inputpx"
+    }, 
+    {
+      "title": "font weight",
+      "key": "fontweight",
+      "value": "normal",
+      "type": "inputfontweight"
+    },   
+    {
+      "title": "line height",
+      "key": "lineheight",
+      "value": "18",
+      "type": "inputpx"
+    },       
+    {
+      "title": "padding",
+      "key": "padding",
+      "value": "10px 10px 10px 10px",
+      "type": "input"
+    },     
+    {
+      "title": "alignment",
+      "key": "alignment",
+      "value": "left",
+      "type": "dropdownalignment"
+    },
+    {
+      "title": "bgcolor",
+      "key": "bgcolor",
+      "value": "#f2f2f2",
+      "type": "inputcolor"
+    }        
+  ]
+}
+

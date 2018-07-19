@@ -3,10 +3,11 @@
       a.left-link(@click='setHeader(true)')
         router-link(to="/" )
           img(v-bind:src='logo.default' style='height: 80px; width: auto; margin-top: -30px')
+      a(@click='setDrawer(!drawerIsOpen)')
+        i.fas.fa-bars               
       a.links(v-for='route in routes' v-on:click='setHeader(route.expand)')
         router-link(v-bind:to="route.goto") {{route.title}}
-      a(@click='setDrawer(!drawerIsOpen)')
-       i.fas.fa-bars        
+   
 </template>
 
 <script src='./navigation.js'></script>

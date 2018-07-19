@@ -1,9 +1,39 @@
 <template lang="pug">
   .section
+    #loadModal(v-bind:class='openLoadModal ? "show-modal" : "close-modal"')
+      .modal-panel(style='text-align: center; width: 400px')  
+        .cancel-btn
+          i.fas.fa-times.fa-2x(@click='openLoadModal = false; io.loadSelected = io.filename')      
+        h3 Load File
+        .row.flex-row
+          .columns.two
+            label Filename
+          .columns.ten
+            select(v-model='io.loadSelected')
+              option(v-for="file in io.currentFiles") {{file.name}}       
+          .twelve.columns
+            br
+            button.full-width.button-primary(@click='loadFile()' v-show='io.loadSelected !== "default"') Load  
+
+    #saveModal(v-bind:class='openSaveModal ? "show-modal" : "close-modal"')
+      .modal-panel(style='text-align: center; width: 400px')  
+        .cancel-btn
+          i.fas.fa-times.fa-2x(@click='openSaveModal = false')      
+        h3 Save As...
+        .row.flex-row
+          .columns.two
+            label Filename
+          .columns.ten
+            input(v-model='io.saveSelected')        
+          .twelve.columns
+            br
+            button.full-width.button-primary(@click='saveFile()' v-show='io.saveSelected !== "default"') Save        
+        
     #successModal(v-bind:class='openSuccessModal ? "show-modal" : "close-modal"')
       .modal-panel(style='text-align: center')  
         h3 {{wittyRetort}}
         i.fas.fa-thumbs-up.fa-5x
+
     #previewModal(v-bind:class='openPreviewModal ? "show-modal" : "close-modal"')
       .modal-panel  
         h3 HTML Preview        
@@ -37,18 +67,22 @@
       .row.devwarning(v-if='devBuild')
         h3.center-text DEV MODE ENABLED         
         p This mode is for developing the UI/UX - PREVIEW WILL NOT BE UPDATED
-            
-      .row(v-if='!devBuild')
-        h2.center-text Email Generator       
+          
       .row        
         .four.columns(v-if='jsonIsReady')
-          a.button.tabs(@click='activeTab = 0' v-bind:class='activeTab === 0 ? "button-primary" : ""') Master
-          a.button.tabs(@click='activeTab = 1' v-bind:class='activeTab === 1 ? "button-primary" : ""') Partials
-          a.button.tabs(@click='activeTab = 2' v-bind:class='activeTab === 2 ? "button-primary" : ""') Options
+          a.button.tabs(v-for='(option, index) in menuOptions' @click='activeTab = index; addToUrlParams(option)' v-bind:class='activeTab === index ? "button-primary" : ""') {{option.title}}        
+
           
+          // MASTER CONTENT EDITOR
+          div(v-if='activeTab === 0')
+            .twelve.columns.minor-padding
+              button.full-width(@click='fetchSavedFiles(); openLoadModal = true') Load
+            .twelve.columns.minor-padding
+              button.full-width.button-primary(@click='openSaveModal = true') Save
+
 
           // MASTER CONTENT EDITOR
-          div(v-if='activeTab === 0')             
+          div(v-if='activeTab === 1')             
             .row.flex-row(v-for="content in jsonFile.globals.content")              
               .four.columns 
                 p.text-right.is-label {{content.title}}
@@ -57,13 +91,12 @@
             hr
           
           // PARTIAL CONTENT EDITOR
-          div(v-if='activeTab === 1')             
+          div(v-if='activeTab === 2')             
             div(v-for='(partial, index) in jsonFile.partials')      
               .row.flex-row
                 .nine.columns                  
                   button(@click='indexStored = index; openModal = true') 
-                    | {{partial.name}} &nbsp;&nbsp;&nbsp;  
-                    i.fas.fa-caret-square-down(style='color: orange')                  
+                    | {{partial.name}}             
                   button(style='margin-left: 10px; float: right' @click='partial.showProps = !partial.showProps') 
                     i(v-bind:class='partial.showProps ? "fas" : "far"').fa-edit
                 .two.columns(style='display: flex; justify-content: space-around')                         
@@ -73,10 +106,28 @@
                   i.far.fa-times-circle.pointer.red(@click='removeItem(index)')                     
 
               .row.flex-row(v-for="field in partial.content" v-show='partial.showProps')   
-                .three.columns 
-                  p.text-right.is-label {{field.key}}
-                .eight.columns 
-                  input(v-model='field.value' v-if='field.type === "input"')  
+                .four.columns 
+                  p.is-label {{field.title}}
+                .seven.columns 
+                  // INPUT 
+                  input(v-model='field.value' v-if='field.type === "input"')       
+                  // INPUT COLOR
+                  input(v-model='field.value' v-if='field.type === "inputcolor"')                                  
+                  // INPUTFONT
+                  select(v-model='field.value' v-if='field.type === "inputfont"')
+                    option(v-for='font in dropdowns.fontfamilies') {{font}}
+                  // INPUTPX
+                  input(v-model='field.value' type='number' v-if='field.type === "inputpx"' style='width: 100px')  
+                  input(v-if='field.type === "inputpx"' value='px' style='width: 20px' disabled)  
+                  // INPUTFONTWEIGHT
+                  select(v-model='field.value' v-if='field.type === "inputfontweight"')
+                    option(v-for='weight in dropdowns.fontweight') {{weight}}
+                  // INPUTALIGNMENT
+                  select(v-model='field.value' v-if='field.type === "dropdownalignment"')
+                    option(v-for='weight in dropdowns.alignment') {{weight}}                    
+                  p(v-if='field.key === "content"') Blah blah
+
+                  // TEXTAREA
                   textarea(v-bind:class='field.focused ? "textarea-open" : ""' placeholder='Insert HTML here' v-model='field.value' v-if='field.type === "textarea"' @focus='field.focused = true' @blur='field.focused = false')                  
               hr           
 
@@ -85,14 +136,14 @@
             hr               
           
           
-          // PARTIAL CONTENT EDITOR
-          div(v-if='activeTab === 2')
+          // OPTIONS EDITOR
+          div(v-if='activeTab === 3')
             .row.flex-row(v-for='option in options' )
               .five.columns
-                p.text-right.is-label(v-if='option.viisibleif()') {{option.title}}
+                p.text-right.is-label(v-if='option.visibleif()') {{option.title}}
               .seven.columns
                   button.button(v-if='option.type === "boolean"' v-bind:class='option.value ? "button-primary" : ""' @click='option.value = !option.value; setUserOptions()') {{option.value}}
-                  input(v-if='option.type === "number"' type='number' @change='setUserOptions()' v-model='option.value' v-show='option.viisibleif()') 
+                  input(v-if='option.type === "number"' type='number' @change='setUserOptions()' v-model='option.value' v-show='option.visibleif()') 
             .row
               hr
             .row.flex-row              
@@ -108,9 +159,16 @@
 
         // PREVIEW SECTION
         #preview-container.eight.columns
-          h5.center-text.no-padding Preview
+          h5.center-text.no-padding Preview 
+          p.center-text current file: 
+            strong {{io.filename}}.html
           button.button.preview-btn(@click='openPreviewModal = true') PREVIEW HTML
-          iframe.fullframe(v-if='iframeIsReady' src="/output/template.html")
+          button.button.zoomout-btn(@click='setZoomLevel(-1)')
+            i.fas.fa-minus-circle
+          button.button.zoomin-btn(@click='setZoomLevel(1)') 
+            i.fas.fa-plus-circle
+          #iframecontainer(v-bind:class='iframeZoom === 0 ? "fullframe-xs" : "fullframe-md"')
+            iframe(v-if='iframeIsReady' src="/output/template.html" style='width: 100%; height: 100%' v-bind:class='iframeZoom === 0 ? "iframe-xs" : ""')
           div(v-if='!iframeIsReady'  style='text-align: center; margin-top: 40px')            
             h3
               i.fas.fa-spinner.fa-spin 
@@ -127,7 +185,7 @@
 <script src='./emailGenerator.js'></script>
 
 <style lang="sass" scoped>  
-    #successModal
+    #saveModal, #loadModal, #successModal, #emailmodal
       position: fixed
       top: 0
       height: 100%
@@ -163,22 +221,11 @@
       a 
         text-decoration: none
         margin-top: -10px
-
-    #emailmodal      
-      position: fixed
-      top: 0
-      height: 100%
-      width: 100%
-      background-color: rgba(0, 0, 0, .5)
-      color: white
-      display: flex
-      align-items: center
-      justify-content: center
-      z-index: 10
          
     .modal-panel
       position: relative
       width: auto
+      max-width: 900px
       height: auto
       padding: 30px
       background-color: white
@@ -210,6 +257,14 @@
         position: absolute
         left: 15px
         top: 10px
+      .zoomout-btn
+        position: absolute
+        right: 15px
+        top: 10px
+      .zoomin-btn
+        position: absolute
+        right: 100px
+        top: 10px        
 
 
     #emailGenerator
@@ -241,7 +296,7 @@
 
       .tabs
         border-radius: 0px!important
-        width: 33.334%
+        width: 25%
         color: #0a3d62
       
       .full-width
@@ -267,12 +322,7 @@
         color: #2f3640
         overflow: hidden
       
-      .fullframe
-        width: 95%
-        height: 1200px
-        margin-left: 15px     
-        margin-bottom: 20px  
-      
+
       .center-text
         text-align: center
       
@@ -289,8 +339,8 @@
         text-transform: uppercase
         font-weight: bold
 
-      .select
-        width: 100%
+      select, input, textarea
+        width: 90%
         margin: 0px
 
       .text-right
@@ -319,5 +369,16 @@
           background-color: #576574       
           color: white        
 
+      .iframe-xs
+        transform: scale(.50)
+        margin-top: -750px
+
+      #iframecontainer
+        margin-left: 15px     
+        margin-bottom: 20px  
+        width: 95%
+        height: 3000px          
+
+      
 
 </style>

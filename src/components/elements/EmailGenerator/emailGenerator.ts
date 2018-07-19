@@ -11,17 +11,57 @@ export default {
       resetFile: null,      
       devBuild: false,
       openModal: false,
+      openSaveModal: false,
+      openLoadModal: false,
       openPreviewModal: false,
       openSuccessModal: false,
+      iframeZoom: 1,
       wittyRetort: null,
       timerId: null,
+      dropdowns: {
+        fontfamilies: [          
+          'Georgia, serif',
+          '\'Palatino Linotype\', \'Book Antiqua\', Palatino, serif',
+          '\'Times New Roman\', Times, serif',
+          'Arial, Helvetica, sans-serif',
+          '\'Arial Black\', Gadget, sans-serif',
+          '\'Comic Sans MS\', cursive, sans-serif',
+          '\'Lucida Sans Unicode\', \'Lucida Grande\', sans-serif',
+          'Verdana, Geneva, sans-serif',
+          '\'Courier New\', Courier, monospace',
+          '\'Lucida Console\', Monaco, monospace'
+        ],
+        fontweight: [
+          'normal',
+          'bold',
+          'light'
+        ],
+        alignment: [
+          'left',
+          'center',
+          'right',
+          'justify'
+        ]        
+      },
+      io: {
+        saveSelected: 'default',
+        filename: 'default',
+        loadSelected: 'default',
+        currentFiles: []
+      },
       options:[
-        {id: 'autobuild', title: 'Auto Build', value: true, type: 'boolean', viisibleif: () => {
+        {id: 'autobuild', title: 'Auto Build', value: true, type: 'boolean', visibleif: () => {
           return true 
         }}, 
-        {id: 'builddelay', title: 'Build Delay', value: 1000, type: 'number', viisibleif: () => {
+        {id: 'builddelay', title: 'Build Delay', value: 1000, type: 'number', visibleif: () => {
           return this.setOptions.autobuild 
         }},        
+      ],
+      menuOptions: [
+        {title: 'file', index: 0},
+        {title: 'globals', index: 1},
+        {title: 'partials', index: 2},
+        {title: 'options', index: 3},
       ],
       setOptions: {
         autobuild: true,
@@ -49,12 +89,57 @@ export default {
       deep: true
     }
   },  
-  mounted:function(){
+  mounted:function(){    
+    // check local storage for filename, else default to 'default'
+    if(localStorage.getItem("filename") !== null){
+      let filename = localStorage.getItem("filename")
+      this.io.filename = filename
+      this.io.saveSelected = filename
+      this.io.loadSelected = filename
+    }
+    this.getCurrentRoute()
     this.setUserOptions()
     this.fetchDefaultList()
     this.fetchCurrentBuild()    
   },
   methods: {
+    //---------------------------------
+    setFilename(filename){
+      localStorage.setItem("filename", filename)
+      this.io.filename = filename
+      this.io.saveSelected = filename
+      this.io.loadSelected = filename
+    },
+    //---------------------------------
+
+    //---------------------------------
+    setZoomLevel(val:number){
+      if(val < 0 && this.iframeZoom > 0){
+        this.iframeZoom += val
+      }
+      if(val > 0 && this.iframeZoom < 1){
+        this.iframeZoom += val
+      }
+    },
+    //---------------------------------
+
+    //---------------------------------
+    getCurrentRoute(){
+      let routeMatch = this.menuOptions.filter(option => {
+        return option.title === this.$route.query.section
+      })
+      if(routeMatch.length > 0){
+        this.activeTab = routeMatch[0].index
+      }      
+    },
+    //---------------------------------
+
+    //---------------------------------
+    addToUrlParams(item:any){      
+      this.$router.push({ query: { section: item.title }})
+    },
+    //---------------------------------
+
     //---------------------------------
     copyToClipboard(){
       const responses = ['Nice job hero.', 'Got it.', 'No prob.', 'Nailed that button click.', 'Easy peasy.', 'Copied.', 'Paste away.', 'It\'s done son.', 'Nae botha.', 'Success!']
@@ -87,32 +172,7 @@ export default {
     //---------------------------------
 
     //---------------------------------
-    async fetchPreview(){              
-      try{
-        let res = await axios.get('/output/template.html')
-        let match = res.data.includes('<div id="app"></div>')
-        if(!match){
-          this.htmlPreview = res.data
-          this.iframeIsReady = true    
-        }
-        else{
-          // delay between attempts to find template.html
-          setTimeout(() => {
-            this.fetchPreview()        
-          }, 500)
-        }
-      }
-      catch{        
-        // delay between attempts to find template.html
-        setTimeout(() => {
-          this.fetchPreview()        
-        }, 500)
-      }
-    },
-    //---------------------------------
-
-    //---------------------------------
-    debounced(delay, fn){      
+    debounced(delay:number, fn:any){      
       return (...args) => {
         if (this.timerId) {
           clearTimeout(this.timerId);
@@ -125,56 +185,6 @@ export default {
     },
     //---------------------------------
 
-    //---------------------------------
-    async fetchDefaultList(repurpose = false){
-      try{
-        let res = await axios.get('/api/builddefault')
-        res.data.partials.map(partial => {
-          // uses default build list if build.json doesn't exists
-          if(repurpose){
-            this.assignJsonFile(res.data)
-          }
-        })      
-        this.createComponentList(JSON.stringify(res.data))             
-      }
-      catch{
-        this.devBuild = true
-        this.fetchDummyData()
-      }
-    },
-    //---------------------------------
-
-    //---------------------------------
-    async fetchCurrentBuild(){
-      try{
-        let res = await axios.get('./instructions/build.json')
-        // bind object
-        this.assignJsonFile(res.data)
-      }
-      catch(err){
-        this.fetchDefaultList(true)        
-      }
-    },
-    //---------------------------------
-
-    //---------------------------------
-    async fetchDummyData(){
-      try{
-        let res = await axios.get('./instructions/default.json')
-        // console.log(res.data)
-        this.assignJsonFile(res.data)      
-        // // set resetdata
-        this.resetFile = res.data
-        this.createComponentList(JSON.stringify(res.data))        
-      }
-      catch(err){
-        this.error.hasError = true
-        this.error.message = "Dummy data does not exists.  Run $gulp default once to create it."
-      }
-
-    },
-    //---------------------------------
-    
     //---------------------------------
     assignJsonFile(data:any){      
       data.partials.map(partial => {
@@ -267,8 +277,151 @@ export default {
         this.createOutput();
       }       
     },
+    //---------------------------------    
+
+    //---------------------------------
+    async fetchSavedFiles(){
+      let build; 
+      try{
+        let res = await axios.get('/api/fetchSavedList')
+        build = res.data.folders        
+      }catch(err){
+        console.log(`Error issue: failed to GET.  Error message:  ${err}`)
+        build = ['default', 'test']
+      }      
+
+      // add as property and remove default 
+      this.io.currentFiles = build.map(item => {
+        return {name: item}
+      }).filter(item => {
+        if(item.name !== 'default'){
+          return item
+        }
+      })      
+    },
+    //---------------------------------    
+
+    //---------------------------------
+    async loadFile(){    
+      let check = confirm('Loading a file will overwrite your current progress.  Proceed?')    
+      if(check){
+        try{          
+          this.iframeIsReady = false;       
+          let res = await axios.post('/api/loadFile', {filename: this.io.loadSelected})
+          this.openLoadModal = false                                              
+          this.setFilename(this.io.loadSelected)          
+          this.fetchCurrentBuild()
+          setTimeout(() => {
+            this.iframeIsReady = true      
+          }, 500)
+        }catch(err){
+          this.iframeIsReady = true;     
+          console.log(`Error issue: failed to POST.  Error message:  ${err}`)
+        }      
+      }
+
+    },
+    //---------------------------------   
+
+    //---------------------------------
+    async saveFile(){
+      let matches = this.io.currentFiles.filter(filename => {
+        return filename === this.io.saveSelected
+      })
+
+      let check = true;
+      if(matches.length > 0){
+        check = confirm('Are you sure you want to save this thing into the database?')
+      }
+
+      if(check){
+        try{
+          await axios.post('/api/saveFile', {filename: this.io.saveSelected})
+          this.setFilename(this.io.saveSelected)
+          this.openSaveModal = false
+        }catch(err){
+          console.log(`Error issue: failed to POST.  Error message:  ${err}`)
+        }      
+      }
+      
+    },
+    //---------------------------------    
+
+    //---------------------------------
+    async fetchPreview(){              
+      try{
+        let res = await axios.get('/output/template.html')
+        let match = res.data.includes('<div id="app"></div>')
+        if(!match){
+          this.htmlPreview = res.data
+          this.iframeIsReady = true    
+        }
+        else{
+          // delay between attempts to find template.html
+          setTimeout(() => {
+            this.fetchPreview()        
+          }, 500)
+        }
+      }
+      catch{        
+        // delay between attempts to find template.html
+        setTimeout(() => {
+          this.fetchPreview()        
+        }, 500)
+      }
+    },
     //---------------------------------
 
+    //---------------------------------
+    async fetchDefaultList(repurpose:Boolean = false){
+      try{
+        let res = await axios.get('/api/builddefault')
+        res.data.partials.map(partial => {
+          // uses default build list if build.json doesn't exists
+          if(repurpose){
+            this.assignJsonFile(res.data)
+          }
+        })      
+        this.createComponentList(JSON.stringify(res.data))             
+      }
+      catch{
+        this.devBuild = true
+        this.fetchDummyData()
+      }
+    },
+    //---------------------------------
+
+    //---------------------------------
+    async fetchCurrentBuild(){
+      try{
+        let res = await axios.get('./instructions/build.json')
+        // bind object
+        this.assignJsonFile(res.data)
+      }
+      catch(err){
+        this.fetchDefaultList(true)        
+      }
+    },
+    //---------------------------------
+
+    //---------------------------------
+    async fetchDummyData(){
+      try{
+        let res = await axios.get('./instructions/default.json')
+        // console.log(res.data)
+        this.assignJsonFile(res.data)      
+        // // set resetdata
+        this.resetFile = res.data
+        this.createComponentList(JSON.stringify(res.data))        
+      }
+      catch(err){
+        this.error.hasError = true
+        this.error.message = "Dummy data does not exists.  Run $gulp default once to create it."
+      }
+
+    },
+    //---------------------------------
+    
     //---------------------------------
     async createOutput(){     
       this.iframeIsReady = false;       

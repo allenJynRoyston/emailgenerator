@@ -7,11 +7,16 @@ const app = express()
 const nodemailer = require('nodemailer');
 const bodyParser = require("body-parser");
 const jsonfile = require('jsonfile')
+const mkdirp = require('mkdirp');
+
+
 
 // setup compression
 app.use(compression())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+
 
 // set cache headers / expiration headers
 app.use(function (req, res, next) {
@@ -20,6 +25,8 @@ app.use(function (req, res, next) {
   if (!res.getHeader('Cache-Control')) res.setHeader('Cache-Control', 'public, max-age=' + (day * numberOfDays));
   next()
 })
+
+
 
 // allows server to fetch/read from these folders
 app.use('/src', express.static(path.join(__dirname, './src')))
@@ -30,6 +37,19 @@ app.use('/node_modules', express.static(path.join(__dirname, './node_modules')))
 
 
 
+// UTILITIES  **********************
+const copyFile = (src, dest) => {
+  let readStream = fs.createReadStream(src);
+  readStream.once('error', (err) => {
+    console.log(err);
+  });
+  readStream.once('end', () => {
+    console.log('done copying');
+  });  
+  readStream.pipe(fs.createWriteStream(dest));
+}
+
+
 // POSTS **************************
 // save json
 app.post('/api/buildJSON', (req, res) => {
@@ -38,7 +58,45 @@ app.post('/api/buildJSON', (req, res) => {
     res.send(JSON.stringify(req.body))
   });
 })
+
+app.post('/api/saveFile', (req, res) => {  
+  let target = `/saved/${req.body.filename}/`
+  let saveDir = path.join(__dirname, target)
+  let templateFile =  path.join(__dirname, '/output/template.html')
+  let jsonFile =  path.join(__dirname, '/instructions/build.json')
+
+  if (!fs.existsSync(saveDir)){
+    mkdirp(saveDir, (err) => { 
+      copyFile(templateFile, `${saveDir}/template.html`);
+      copyFile(jsonFile, `${saveDir}/build.json`);
+    });
+  }
+  else{
+    copyFile(templateFile, `${saveDir}/template.html`);
+    copyFile(jsonFile, `${saveDir}/build.json`);
+  }
+
+  res.send({status: true, message: 'Files created'})
+})
+
+
+app.post('/api/loadFile', (req, res) => {    
+  let _template_target = `/saved/${req.body.filename}/template.html`
+  let templateFile = path.join(__dirname, _template_target)
+  let _json_target = `/saved/${req.body.filename}/build.json`
+  let jsonFile = path.join(__dirname, _json_target)  
+  if( fs.existsSync(templateFile) && fs.existsSync(jsonFile) ){
+      copyFile(templateFile, path.join(__dirname, `/output/template.html`));
+      copyFile(jsonFile, path.join(__dirname, `/instructions/build.json`));
+      res.send({status: true, message: 'Files load successfully'})
+  }
+  else{
+    res.send({status: false, message: 'File or files not found'})
+  }
+})
+
 // end POSTS 
+
 
 
 // GETS **************************
@@ -46,6 +104,19 @@ app.post('/api/buildJSON', (req, res) => {
 app.get('/api/test', (req, res) => {
   res.send("<h1>API TEST</h1>")
 })
+
+
+app.get('/api/fetchSavedList', (req, res) => {
+  let target = `/saved/`
+  let savedFolders = path.join(__dirname, target)
+
+  let list = fs.readdirSync(savedFolders).filter((file) => {
+    return fs.statSync(savedFolders).isDirectory();
+  });
+
+  res.send({status: true, folders: list})
+})
+
 
 
 // builds default json out of all available static and partial components
@@ -120,11 +191,14 @@ app.get('/api/builddefault', (req, res) => {
   init();
 })
 
+
+
 // default route
 app.get('*', (req, res) => {
   res.send(fs.readFileSync(path.join(__dirname, './index.html'), 'utf8'))
 })
 // end GETS 
+
 
 
 // Serve the files on port 3000.

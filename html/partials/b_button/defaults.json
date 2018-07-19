@@ -1,0 +1,83 @@
+{
+  "name": "Button Section",
+  "content": [
+    {
+      "title": "Text",
+      "key": "buttontext",
+      "value": "Button Text",
+      "type": "input"  
+    },
+    {
+      "title": "text color",
+      "key": "buttontextcolor",
+      "value": "#fff",
+      "type": "inputcolor"
+    },
+    {
+      "title": "font family",
+      "key": "buttonfont",
+      "value": "Georgia, serif",
+      "type": "inputfont"
+    },     
+    {
+      "title": "font size",
+      "key": "buttontxtsize",
+      "value": "20",
+      "type": "inputpx"  
+    },      
+    {
+      "title": "font weight",
+      "key": "fontweight",
+      "value": "normal",
+      "type": "inputfontweight"
+    },       
+    {
+      "title": "btnwidth",
+      "key": "width",
+      "value": "300",
+      "type": "inputpx"
+    },        
+    {
+      "title": "btn color",
+      "key": "buttoncolor",
+      "value": "#000",
+      "type": "inputcolor"
+    },          
+    {
+      "title": "btn radius",
+      "key": "buttonradius",
+      "value": "10px 10px 10px 10px",
+      "type": "input"
+    },
+    {
+      "title": "btn border color",
+      "key": "buttonradiuscolor",
+      "value": "#000",
+      "type": "input"
+    },       
+    {
+      "title": "btn padding",
+      "key": "buttonpadding",
+      "value": "10",
+      "type": "inputpx"
+    },    
+    {
+      "title": "padding",
+      "key": "padding",
+      "value": "20px 20px 20px 20px",
+      "type": "input"
+    },      
+    {
+      "title": "bgcolor",
+      "key": "bgcolor",
+      "value": "#f2f2f2",
+      "type": "inputcolor"
+    },      
+    {
+      "title": "Link to",
+      "key": "link",
+      "value": "https://www.google.com/",
+      "type": "input"
+    }        
+  ]
+}

@@ -4,13 +4,13 @@
     {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "#e55039",
+      "value": "#f2f2f2",
       "type": "input"
     },
     {
       "title": "padding",
       "key": "padding",
-      "value": "20px",
+      "value": "20px 20px 20px 20px",
       "type": "input"
     },
     {
@@ -29,37 +29,37 @@
       "title": "imagewidth",
       "key": "imagewidth",
       "value": "160",
-      "type": "input"
+      "type": "inputpx"
     },     
     {
       "title": "imageheight",
       "key": "imageheight",
       "value": "99",
-      "type": "input"
+      "type": "inputpx"
     },            
     {
       "title": "text",
       "key": "text",
-      "value": "Powered by Clydesdale Bank <br> and Yorkshire Bank",
+      "value": "I am a visual reference",
       "type": "input"
     },
     {
       "title": "textfont",
       "key": "textfont",
       "value": "Arial, Helvetica, sans-serif",
-      "type": "input"
+      "type": "inputfont"
     },
     {
       "title": "textcolor",
       "key": "textcolor",
-      "value": "white",
-      "type": "input"
+      "value": "#000",
+      "type": "inputcolor"
     },    
     {
       "title": "fontsize",
       "key": "fontsize",
       "value": "20",
-      "type": "input"
+      "type": "inputpx"
     }        
   ]
 }
