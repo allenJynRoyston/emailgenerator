@@ -223,8 +223,8 @@ export default {
         this.jsonFile.partials[this.indexStored].name = name;
         this.jsonFile.partials[this.indexStored].location = location;
       } else {
-        let newContent = {content, name, location}
-        this.jsonFile.partials.push(newContent)        
+        let newContent = {content, name, location, showProps: false}
+        this.jsonFile.partials.push(newContent)            
       }
     },
     //---------------------------------

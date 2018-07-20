@@ -217,7 +217,7 @@ export default {
                 this.jsonFile.partials[this.indexStored].location = location;
             }
             else {
-                let newContent = { content, name, location };
+                let newContent = { content, name, location, showProps: false };
                 this.jsonFile.partials.push(newContent);
             }
         },

@@ -69,7 +69,7 @@
         p This mode is for developing the UI/UX - PREVIEW WILL NOT BE UPDATED
           
       .row        
-        .four.columns(v-if='jsonIsReady')
+        .five.columns(v-if='jsonIsReady')
           a.button.tabs(v-for='(option, index) in menuOptions' @click='activeTab = index; addToUrlParams(option)' v-bind:class='activeTab === index ? "button-primary" : ""') {{option.title}}        
 
           
@@ -98,7 +98,7 @@
                   button(@click='indexStored = index; openModal = true') 
                     | {{partial.name}}             
                   button(style='margin-left: 10px; float: right' @click='partial.showProps = !partial.showProps') 
-                    i(v-bind:class='partial.showProps ? "fas" : "far"').fa-edit
+                    i(v-bind:class='partial.showProps ? "fas" : "far"').fa-edit 
                 .two.columns(style='display: flex; justify-content: space-around')                         
                   i.fas.fa-angle-double-up.pointer.green(@click='moveItemUp(index)' v-bind:class='index === 0 ? "disabled" : ""')             
                   i.fas.fa-angle-double-down.pointer.green(@click='moveItemDown(index)' v-bind:class='index === jsonFile.partials.length -1 ? "disabled" : ""')             
@@ -157,7 +157,7 @@
 
 
         // PREVIEW SECTION
-        #preview-container.eight.columns
+        #preview-container.seven.columns
           h5.center-text.no-padding Preview 
           p.center-text current file: 
             strong {{io.filename}}.html
