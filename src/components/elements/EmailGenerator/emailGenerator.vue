@@ -125,8 +125,7 @@
                   // INPUTALIGNMENT
                   select(v-model='field.value' v-if='field.type === "dropdownalignment"')
                     option(v-for='weight in dropdowns.alignment') {{weight}}                    
-                  p(v-if='field.key === "content"') Blah blah
-
+                  p(v-if='field.key === "content"') 
                   // TEXTAREA
                   textarea(v-bind:class='field.focused ? "textarea-open" : ""' placeholder='Insert HTML here' v-model='field.value' v-if='field.type === "textarea"' @focus='field.focused = true' @blur='field.focused = false')                  
               hr           
