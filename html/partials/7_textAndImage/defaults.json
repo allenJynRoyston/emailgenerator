@@ -4,7 +4,7 @@
     {
       "title": "image",
       "key": "image",
-      "value": "http://via.placeholder.com/200x150",
+      "value": "https://picsum.photos/200/150",
       "type": "input"
     },
     {
@@ -34,7 +34,7 @@
     {
       "title": "text color",
       "key": "textcolor",
-      "value": "#000",
+      "value": "[g_white]",
       "type": "inputcolor"
     },    
     {
@@ -70,7 +70,7 @@
     {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "#f2f2f2",
+      "value": "[g_color1]",
       "type": "input"
     },
     {

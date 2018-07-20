@@ -10,7 +10,7 @@
     {
       "title": "text color",
       "key": "buttontextcolor",
-      "value": "#fff",
+      "value": "[g_white]",
       "type": "inputcolor"
     },
     {
@@ -40,7 +40,7 @@
     {
       "title": "btn color",
       "key": "buttoncolor",
-      "value": "#000",
+      "value": "[g_black]",
       "type": "inputcolor"
     },          
     {
@@ -52,7 +52,7 @@
     {
       "title": "btn border color",
       "key": "buttonradiuscolor",
-      "value": "#000",
+      "value": "[g_white]",
       "type": "input"
     },       
     {
@@ -70,7 +70,7 @@
     {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "#f2f2f2",
+      "value": "[g_color2]",
       "type": "inputcolor"
     },      
     {

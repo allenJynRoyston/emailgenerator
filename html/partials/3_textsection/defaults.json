@@ -1,10 +1,10 @@
 {
-  "name": "Security Panel",
+  "name": "Text Section",
   "content": [
     {
       "title": "HTML",
       "key": "content",
-      "value": "We have included your postcode at the top so you can be sure this email is from <strong> The team at B<\/strong>. To see how you can stay safe online, visit the <a style='color: [g_white]; text-decoration: underline;' href='' target='_blank'> <strong>Security&nbsp;Centre<\/strong><\/a>.",
+      "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
       "type": "textarea"
     },
     {
@@ -22,7 +22,7 @@
     {
       "title": "font size",
       "key": "fontsize",
-      "value": "14",
+      "value": "16",
       "type": "inputpx"
     }, 
     {
@@ -46,14 +46,15 @@
     {
       "title": "padding",
       "key": "padding",
-      "value": "0px 20px 10px 20px",
+      "value": "20px 20px 20px 20px",
       "type": "input"
     },     
     {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "[g_color1]",
+      "value": "[g_color2]",
       "type": "inputcolor"
     }        
   ]
 }
+

@@ -4,26 +4,26 @@
     {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "#fff",
+      "value": "[g_color2]",
       "type": "input"
     },
     {
       "title": "alignment",
       "key": "alignment",
       "value": "center",
-      "type": "input"
+      "type": "alignment"
     },    
     {
       "title": "gap",
       "key": "gap",
       "value": "20",
-      "type": "input"
+      "type": "inputpx"
     },
     {
       "title": "iconsize",
       "key": "iconsize",
       "value": "34",
-      "type": "input"
+      "type": "inputpx"
     },
     {
       "title": "fblink",

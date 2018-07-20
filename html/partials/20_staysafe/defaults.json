@@ -1,0 +1,53 @@
+{
+  "name": "Stay Safe",
+  "content": [
+    {
+      "title": "text color",
+      "key": "textcolor",
+      "value": "[g_black]",
+      "type": "inputcolor"
+    },    
+    {
+      "title": "font family",
+      "key": "fontfamily",
+      "value": "Georgia, serif",
+      "type": "inputfont"
+    }, 
+    {
+      "title": "font size",
+      "key": "fontsize",
+      "value": "16",
+      "type": "inputpx"
+    }, 
+    {
+      "title": "font weight",
+      "key": "fontweight",
+      "value": "normal",
+      "type": "inputfontweight"
+    },   
+    {
+      "title": "line height",
+      "key": "lineheight",
+      "value": "18",
+      "type": "inputpx"
+    },     
+    {
+      "title": "bgcolor",
+      "key": "bgcolor",
+      "value": "[g_color2]",
+      "type": "inputcolor"
+    },
+    {
+      "title": "content bg color",
+      "key": "contentbgcolor",
+      "value": "[g_white]",
+      "type": "inputcolor"
+    },    
+    {
+      "title": "block padding",
+      "key": "blockpadding",
+      "value": "20px 20px 20px 20px",
+      "type": "input"   
+    }
+  ]
+}

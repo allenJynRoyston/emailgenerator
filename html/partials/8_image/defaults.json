@@ -1,10 +1,10 @@
 {
-  "name": "Full Image",
+  "name": "Image Only",
   "content": [
     {
       "title": "image",
       "key": "image",
-      "value": "https://picsum.photos/200/300",
+      "value": "https://picsum.photos/500/366",
       "type": "input"
     },
     {
@@ -16,27 +16,26 @@
     {
       "title": "width",
       "key": "width",
-      "value": "200",
-      "type": "input"
+      "value": "560",
+      "type": "inputpx"
     },
     {
       "title": "height",
       "key": "height",
-      "value": "300",
-      "type": "input"
+      "value": "366",
+      "type": "inputpx"
     },
     {
       "title": "padding",
       "key": "padding",
-      "value": "20px",
-      "type": "input",
-      "placeholder": "20px"
+      "value": "20px 20px 20px 20px",
+      "type": "input"      
     },    
     {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "#e55039",
-      "type": "input"
+      "value": "[g_color1]",
+      "type": "inputcolor"
     }
   ]
 }

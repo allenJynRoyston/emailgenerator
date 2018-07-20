@@ -28,6 +28,7 @@ export default {
             dropdowns: {
                 fontfamilies: [
                     'Georgia, serif',
+                    'Calibri, Arial, sans-serif',
                     '\'Palatino Linotype\', \'Book Antiqua\', Palatino, serif',
                     '\'Times New Roman\', Times, serif',
                     'Arial, Helvetica, sans-serif',

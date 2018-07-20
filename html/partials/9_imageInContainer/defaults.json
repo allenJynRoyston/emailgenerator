@@ -1,0 +1,53 @@
+{
+  "name": "Image In Container",
+  "content": [
+    {
+      "title": "image",
+      "key": "image",
+      "value": "https://picsum.photos/520/200",
+      "type": "input"
+    },
+    {
+      "title": "alt",
+      "key": "alt",
+      "value": "Image alt tag",
+      "type": "input"
+    },    
+    {
+      "title": "width",
+      "key": "width",
+      "value": "520",
+      "type": "inputpx"
+    },
+    {
+      "title": "height",
+      "key": "height",
+      "value": "200",
+      "type": "inputpx"
+    },
+    {
+      "title": "padding",
+      "key": "padding",
+      "value": "20px 20px 20px 20px",
+      "type": "input"      
+    },    
+    {
+      "title": "bgcolor",
+      "key": "bgcolor",
+      "value": "[g_color2]",
+      "type": "inputcolor"
+    },
+    {
+      "title": "content bg color",
+      "key": "contentbgcolor",
+      "value": "[g_black]",
+      "type": "inputcolor"
+    },    
+    {
+      "title": "block padding",
+      "key": "blockpadding",
+      "value": "20px 20px 20px 20px",
+      "type": "input"   
+    }    
+  ]
+}

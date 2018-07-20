@@ -2,23 +2,70 @@
   "name": "Open In Browser",
   "content": [
     {
-      "title": "color",
-      "key": "color",
-      "value": "#f2f2f2",
+      "title": "text color",
+      "key": "textcolor",
+      "value": "[g_white]",
+      "type": "inputcolor"
+    },    
+    {
+      "title": "font family",
+      "key": "fontfamily",
+      "value": "Georgia, serif",
+      "type": "inputfont"
+    }, 
+    {
+      "title": "font size",
+      "key": "fontsize",
+      "value": "14",
+      "type": "inputpx"
+    }, 
+    {
+      "title": "font weight",
+      "key": "fontweight",
+      "value": "normal",
+      "type": "inputfontweight"
+    },      
+    {
+      "title": "alignment",
+      "key": "alignment",
+      "value": "center",
+      "type": "dropdownalignment"
+    },      
+    {
+      "title": "padding",
+      "key": "padding",
+      "value": "10px 10px 10px 10px",
       "type": "input"
+    },  
+    {
+      "title": "link 1",
+      "key": "link1",
+      "value": "Open in browser",
+      "type": "input"    
+    },
+    {
+      "title": "link 1 href",
+      "key": "link1href",
+      "value": "http://www.google.com",
+      "type": "input"     
+    },
+    {
+      "title": "link 2",
+      "key": "link2",
+      "value": "Unsubscribe",
+      "type": "input"    
+    },
+    {
+      "title": "link 2 href",
+      "key": "link2href",
+      "value": "http://www.google.com",
+      "type": "input"     
     },
     {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "#6a89cc",
+      "value": "[g_color1]",
       "type": "input"
-    },
-    {
-      "title": "content",
-      "key": "content",
-      "value": "<a style='color: [m_links]' href='http:\/\/x.email1.youandb.co.uk\/ats\/msg.aspx?sg1={(URLSignature1)}' target='_blank'>Open in web browser<\/a><span style='padding: 0 10px;'>|<\/span><a style='color: [m_links];' href='http:\/\/x.email1.youandb.co.uk\/ats\/msg.aspx?sg1={(URLSignature1)}' target='_blank'>Unsubscribe<\/a>",
-      "type": "textarea",
-      "focused": false
-    }
+    }           
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "name": "Text Section",
+  "name": "Text in container",
   "content": [
     {
       "title": "HTML",
@@ -10,7 +10,7 @@
     {
       "title": "text color",
       "key": "textcolor",
-      "value": "#000",
+      "value": "[g_white]",
       "type": "inputcolor"
     },    
     {
@@ -36,25 +36,36 @@
       "key": "lineheight",
       "value": "18",
       "type": "inputpx"
-    },       
-    {
-      "title": "padding",
-      "key": "padding",
-      "value": "10px 10px 10px 10px",
-      "type": "input"
     },     
+    {
+      "title": "bgcolor",
+      "key": "bgcolor",
+      "value": "[g_color1]",
+      "type": "inputcolor"
+    },
+    {
+      "title": "content bg color",
+      "key": "contentbgcolor",
+      "value": "[g_black]",
+      "type": "inputcolor"
+    },    
     {
       "title": "alignment",
       "key": "alignment",
       "value": "left",
       "type": "dropdownalignment"
-    },
+    },       
     {
-      "title": "bgcolor",
-      "key": "bgcolor",
-      "value": "#f2f2f2",
-      "type": "inputcolor"
-    }        
+      "title": "padding",
+      "key": "padding",
+      "value": "20px 20px 20px 20px",
+      "type": "input"   
+    }, 
+    {
+      "title": "block padding",
+      "key": "blockpadding",
+      "value": "20px 20px 20px 20px",
+      "type": "input"   
+    }
   ]
 }
-
