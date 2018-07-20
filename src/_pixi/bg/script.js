@@ -56,7 +56,8 @@ var __pixi = {
             global.renderer = renderer;
             global.stage = stage;
             global.destroyed = false;
-            // set resize and initial scaling        
+            // set resize and initial scaling     
+            console.log(options.resizeBehavior);
             if (options.resizeBehavior !== 'NONE') {
                 window.addEventListener('resize', resizeHandler, false);
                 resizeHandler();
@@ -88,6 +89,7 @@ var __pixi = {
         //-------------------------
         // resize handler
         const resizeHandler = () => {
+            console.log(this.global.options.resizeBehavior);
             if (this.global.options.resizeBehavior === 'SCALE') {
                 const scaleFactor = Math.min(window.innerWidth / options.width, window.innerHeight / options.height);
                 const newWidth = Math.ceil(options.width * scaleFactor);

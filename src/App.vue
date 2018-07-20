@@ -1,6 +1,6 @@
 <template lang='pug'>
   #app-layout   
-    PixiComponent.bg-canvas(v-bind:files='pixiFiles' fullscreen autoplay orderdelay='1' style='z-index: -1; position: fixed; top: 0; left: 0')  
+    PixiComponent.bg-canvas(v-bind:files='pixiFiles' type='GROW' fullscreen autoplay orderdelay='1' style='z-index: -1; position: fixed; top: 0; left: 0')  
     SiteOverlay
     DrawerComponent
     SiteHeader
