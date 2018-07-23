@@ -10,7 +10,12 @@ export default {
       jsonFile: null,
       resetFile: null,      
       devBuild: false,
+      imageSelected: null,
+      imageUrl: 'https://picsum.photos/600/300',
+      imageModalType: 0,
+      imageFile: null,
       openModal: false,
+      openImageModal: false,
       openSaveModal: false,
       openLoadModal: false,
       openPreviewModal: false,
@@ -42,7 +47,8 @@ export default {
           'center',
           'right',
           'justify'
-        ]        
+        ], 
+        images: []     
       },
       io: {
         saveSelected: 'default',
@@ -98,12 +104,59 @@ export default {
       this.io.saveSelected = filename
       this.io.loadSelected = filename
     }
+
     this.getCurrentRoute()
     this.setUserOptions()
     this.fetchDefaultList()
     this.fetchCurrentBuild()    
+    this.fetchImages()
   },
   methods: {
+
+    //---------------------------------
+    async filesChange(fieldName:any, fileList:any){
+      const formData = new FormData();
+
+      if (!fileList.length) return;
+
+      // append the files to FormData
+      Array
+        .from(Array(fileList.length).keys())
+        .map(x => {
+          formData.append(fieldName, fileList[x], fileList[x].name);
+        });
+
+      let res = axios({
+            method: 'POST',
+            url: '/api/uploadimage',
+            data: formData,
+          })
+        
+        console.log(res)
+    },
+    //---------------------------------
+
+    //---------------------------------
+    imageSelect(image:any){      
+      this.imageSelected.value = image.src
+      this.openImageModal = false
+    },
+    //---------------------------------
+
+    //---------------------------------
+    imageSelectUrl(url:string){
+      this.imageSelected.value = url
+      this.openImageModal = false
+      this.imageUrl = 'https://picsum.photos/600/300'
+    },
+    //---------------------------------
+
+    //---------------------------------
+    uploadImage(file:any){
+      console.log(file)
+    },
+    //---------------------------------
+
     //---------------------------------
     setFilename(filename){
       localStorage.setItem("filename", filename)
@@ -281,6 +334,25 @@ export default {
     //---------------------------------    
 
     //---------------------------------
+    async fetchImages(){
+      let build;       
+      try{
+        let res = await axios.get('/api/fetchImages')
+        build = res.data.folders
+      }catch(err){
+        console.log(`Error issue: failed to GET.  Error message:  ${err}`)
+        build = ["B_Logo.jpg", "Image_@2x.jpg", "Image_@2x.jpg"]
+      }        
+      
+      // add as property and remove default 
+      build = build.map(item => {
+        return {name: `${item}`, src: `/assets/${item}`, selected: false}
+      }) 
+      this.dropdowns.images = build;
+    },
+    //---------------------------------    
+
+    //---------------------------------
     async fetchSavedFiles(){
       let build; 
       try{
@@ -288,7 +360,7 @@ export default {
         build = res.data.folders        
       }catch(err){
         console.log(`Error issue: failed to GET.  Error message:  ${err}`)
-        build = ['default', 'test']
+        build = ["default"]
       }      
 
       // add as property and remove default 

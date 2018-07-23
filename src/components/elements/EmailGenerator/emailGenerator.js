@@ -17,7 +17,12 @@ export default {
             jsonFile: null,
             resetFile: null,
             devBuild: false,
+            imageSelected: null,
+            imageUrl: 'https://picsum.photos/600/300',
+            imageModalType: 0,
+            imageFile: null,
             openModal: false,
+            openImageModal: false,
             openSaveModal: false,
             openLoadModal: false,
             openPreviewModal: false,
@@ -49,7 +54,8 @@ export default {
                     'center',
                     'right',
                     'justify'
-                ]
+                ],
+                images: []
             },
             io: {
                 saveSelected: 'default',
@@ -109,8 +115,48 @@ export default {
         this.setUserOptions();
         this.fetchDefaultList();
         this.fetchCurrentBuild();
+        this.fetchImages();
     },
     methods: {
+        //---------------------------------
+        filesChange(fieldName, fileList) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const formData = new FormData();
+                if (!fileList.length)
+                    return;
+                // append the files to FormData
+                Array
+                    .from(Array(fileList.length).keys())
+                    .map(x => {
+                    formData.append(fieldName, fileList[x], fileList[x].name);
+                });
+                let res = axios({
+                    method: 'POST',
+                    url: '/api/uploadimage',
+                    data: formData,
+                });
+                console.log(res);
+            });
+        },
+        //---------------------------------
+        //---------------------------------
+        imageSelect(image) {
+            this.imageSelected.value = image.src;
+            this.openImageModal = false;
+        },
+        //---------------------------------
+        //---------------------------------
+        imageSelectUrl(url) {
+            this.imageSelected.value = url;
+            this.openImageModal = false;
+            this.imageUrl = 'https://picsum.photos/600/300';
+        },
+        //---------------------------------
+        //---------------------------------
+        uploadImage(file) {
+            console.log(file);
+        },
+        //---------------------------------
         //---------------------------------
         setFilename(filename) {
             localStorage.setItem("filename", filename);
@@ -268,6 +314,26 @@ export default {
         },
         //---------------------------------    
         //---------------------------------
+        fetchImages() {
+            return __awaiter(this, void 0, void 0, function* () {
+                let build;
+                try {
+                    let res = yield axios.get('/api/fetchImages');
+                    build = res.data.folders;
+                }
+                catch (err) {
+                    console.log(`Error issue: failed to GET.  Error message:  ${err}`);
+                    build = ["B_Logo.jpg", "Image_@2x.jpg", "Image_@2x.jpg"];
+                }
+                // add as property and remove default 
+                build = build.map(item => {
+                    return { name: `${item}`, src: `/assets/${item}`, selected: false };
+                });
+                this.dropdowns.images = build;
+            });
+        },
+        //---------------------------------    
+        //---------------------------------
         fetchSavedFiles() {
             return __awaiter(this, void 0, void 0, function* () {
                 let build;
@@ -277,7 +343,7 @@ export default {
                 }
                 catch (err) {
                     console.log(`Error issue: failed to GET.  Error message:  ${err}`);
-                    build = ['default', 'test'];
+                    build = ["default"];
                 }
                 // add as property and remove default 
                 this.io.currentFiles = build.map(item => {

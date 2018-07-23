@@ -1,0 +1,127 @@
+{
+  "name": "Table",
+  "content": [
+
+    {
+      "title": "Entry 1 Text",
+      "key": "entry1",
+      "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "type": "textarea"
+    },
+    {
+      "title": "Entry 2 Text",
+      "key": "entry2",
+      "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "type": "textarea"
+    },
+    {
+      "title": "Entry 3 Text",
+      "key": "entry3",
+      "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "type": "textarea"
+    },
+    {
+      "title": "Entry 4 Text",
+      "key": "entry4",
+      "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "type": "textarea"
+    },    
+    {
+      "title": "Entry 1 Image",
+      "key": "image1",
+      "value": "http://wpm.ccmp.eu/wpm/100363/ContentUploads/BconnectedMAY18/setup2x.jpg",
+      "type": "input"
+    },
+    {
+      "title": "Entry 2 Image",
+      "key": "image2",
+      "value": "http://wpm.ccmp.eu/wpm/100363/ContentUploads/BconnectedMAY18/setup2x.jpg",
+      "type": "input"
+    },
+    {
+      "title": "Entry 3 Image",
+      "key": "image3",
+      "value": "http://wpm.ccmp.eu/wpm/100363/ContentUploads/BconnectedMAY18/setup2x.jpg",
+      "type": "input"
+    },
+    {
+      "title": "Entry 4 Image",
+      "key": "image4",
+      "value": "http://wpm.ccmp.eu/wpm/100363/ContentUploads/BconnectedMAY18/setup2x.jpg",
+      "type": "input"
+    },                
+    {
+      "title": "image size",
+      "key": "imagesize",
+      "value": "75",
+      "type": "inputpx"
+    }, 
+
+    {
+      "title": "text color",
+      "key": "textcolor",
+      "value": "[g_black]",
+      "type": "inputcolor"
+    },
+    {
+      "title": "font family",
+      "key": "fontfamily",
+      "value": "Georgia, serif",
+      "type": "inputfont"
+    }, 
+    {
+      "title": "font size",
+      "key": "fontsize",
+      "value": "16",
+      "type": "inputpx"
+    }, 
+    {
+      "title": "font weight",
+      "key": "fontweight",
+      "value": "normal",
+      "type": "inputfontweight"
+    },   
+    {
+      "title": "line height",
+      "key": "lineheight",
+      "value": "18",
+      "type": "inputpx"
+    },           
+    {
+      "title": "table fill",
+      "key": "tablefill",
+      "value": "75%",
+      "type": "input"
+    },       
+    {
+      "title": "tablebordercolor",
+      "key": "tablebordercolor",
+      "value": "[g_white]",
+      "type": "input"
+    },      
+    {
+      "title": "tablecolor",
+      "key": "tablecolor",
+      "value": "[g_white]",
+      "type": "input"
+    },   
+    {
+      "title": "table radius",
+      "key": "tableradius",
+      "value": "5",
+      "type": "inputpx"
+    },        
+    {
+      "title": "bgcolor",
+      "key": "bgcolor",
+      "value": "[g_color1]",
+      "type": "input"
+    },
+    {
+      "title": "padding",
+      "key": "padding",
+      "value": "20px 20px 20px 20px",
+      "type": "input"
+    }     
+  ]
+}

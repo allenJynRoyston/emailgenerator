@@ -31,6 +31,7 @@ app.use(function (req, res, next) {
 // allows server to fetch/read from these folders
 app.use('/src', express.static(path.join(__dirname, './src')))
 app.use('/dist', express.static(path.join(__dirname, './dist')))
+app.use('/assets', express.static(path.join(__dirname, './assets')))
 app.use('/output', express.static(path.join(__dirname, './output')))
 app.use('/instructions', express.static(path.join(__dirname, './instructions')))
 app.use('/node_modules', express.static(path.join(__dirname, './node_modules')))
@@ -95,6 +96,12 @@ app.post('/api/loadFile', (req, res) => {
   }
 })
 
+
+
+app.post('/api/imageupload', (req, res) => {    
+  console.log(req, res)
+})
+
 // end POSTS 
 
 
@@ -106,8 +113,21 @@ app.get('/api/test', (req, res) => {
 })
 
 
+// saved files
 app.get('/api/fetchSavedList', (req, res) => {
   let target = `/saved/`
+  let savedFolders = path.join(__dirname, target)
+
+  let list = fs.readdirSync(savedFolders).filter((file) => {
+    return fs.statSync(savedFolders).isDirectory();
+  });
+
+  res.send({status: true, folders: list})
+})
+
+// saved images
+app.get('/api/fetchImages', (req, res) => {
+  let target = `/assets/`
   let savedFolders = path.join(__dirname, target)
 
   let list = fs.readdirSync(savedFolders).filter((file) => {

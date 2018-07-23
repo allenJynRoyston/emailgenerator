@@ -5,7 +5,7 @@
       "title": "image",
       "key": "image",
       "value": "https://picsum.photos/500/366",
-      "type": "input"
+      "type": "inputimage"
     },
     {
       "title": "alt",

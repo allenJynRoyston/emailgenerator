@@ -49,6 +49,35 @@
           a.button(@click='copyToClipboard()') Copy To Clipboard
           a(href='/output/template.html' target="_blank") View in new window
 
+    #imageModal(v-bind:class='openImageModal ? "show-modal" : "close-modal"')
+      .modal-panel  
+        h3 Images   
+        .row
+          span
+            a(@click='imageModalType  = 0') Select Images
+            | &nbsp;&nbsp;|&nbsp;&nbsp;
+            a(@click='imageModalType  = 1') Use URL 
+            | &nbsp;&nbsp;|&nbsp;&nbsp;
+            a(@click='imageModalType  = 2') Upload New Image
+          br
+          br
+        .row(v-show='imageModalType === 0')
+          a(v-for='image in dropdowns.images' style='position: relative' @click='imageSelect(image)')
+            img.image-selectable(v-bind:src='image.src')  
+            a(style='position: absolute; top: -10px; left: 20px; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;') {{image.name}}
+        .row.flex-row(v-show='imageModalType === 1' style='width: 600px')
+          input(v-model='imageUrl' placeholder='Enter url:  (i.e. https://picsum.photos/600/300)') 
+          span &nbsp;&nbsp;
+          button.button(@click='imageSelectUrl(imageUrl)') Enter
+        .row.flex-row(v-show='imageModalType === 2' style='width: 600px')
+          .dropbox
+            input.input-file(type='file', multiple='' @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file" )
+            // button.button(@click='uploadImage(imageFile)') Upload          
+
+        .cancel-btn
+          i.fas.fa-times.fa-2x(@click='openImageModal = false')
+      
+
     #emailmodal(v-bind:class='openModal ? "show-modal" : "close-modal"')
       .modal-panel
         .cancel-btn
@@ -109,6 +138,9 @@
                 .four.columns 
                   p.is-label {{field.title}}
                 .seven.columns 
+                  // INPUTIMAGES
+                  a(@click='imageSelected = field; openImageModal = true')
+                    img.image-thumbnail(v-if='field.type === "inputimage"' v-bind:src='field.value')           
                   // INPUT 
                   input(v-model='field.value' v-if='field.type === "input"')       
                   // INPUT COLOR
@@ -184,7 +216,7 @@
 <script src='./emailGenerator.js'></script>
 
 <style lang="sass" scoped>  
-    #saveModal, #loadModal, #successModal, #emailmodal
+    #saveModal, #loadModal, #successModal, #emailmodal, #imageModal
       position: fixed
       top: 0
       height: 100%
@@ -195,6 +227,47 @@
       align-items: center
       justify-content: center
       z-index: 15
+
+      .image-selectable
+        width: auto
+        min-width: 100px
+        height: 100px
+        padding: 10px 
+        border: 1px solid #2980b9
+        margin-left: 20px
+        margin-bottom: 20px
+      
+      .image-selectable:hover
+        background-color: #2980b9
+        border: 1px solid white 
+
+      .dropbox 
+        outline: 2px dashed grey
+        outline-offset: -10px
+        background: lightcyan
+        color: dimgray
+        padding: 10px 10px;
+        min-height: 200px
+        position: relative
+        cursor: pointer
+        
+      .input-file 
+        opacity: 0
+        width: 100%
+        height: 200px
+        position: absolute
+        cursor: pointer
+      
+
+      .dropbox:hover 
+        background: lightblue
+      
+
+      .dropbox p 
+        font-size: 1.2em
+        text-align: center
+        padding: 50px 0
+
 
     #previewModal      
       position: fixed
@@ -378,6 +451,11 @@
         width: 95%
         height: 3000px          
 
-      
+      .image-thumbnail
+        max-height: 100px
+        width: auto
+
+
+        
 
 </style>
