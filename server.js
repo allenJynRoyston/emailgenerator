@@ -8,15 +8,12 @@ const nodemailer = require('nodemailer');
 const bodyParser = require("body-parser");
 const jsonfile = require('jsonfile')
 const mkdirp = require('mkdirp');
-
-
+const multer = require('multer');
 
 // setup compression
 app.use(compression())
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit: 1000000}));
 
 // set cache headers / expiration headers
 app.use(function (req, res, next) {
@@ -26,16 +23,15 @@ app.use(function (req, res, next) {
   next()
 })
 
-
-
 // allows server to fetch/read from these folders
+app.use('/html', express.static(path.join(__dirname, './html')))
 app.use('/src', express.static(path.join(__dirname, './src')))
 app.use('/dist', express.static(path.join(__dirname, './dist')))
 app.use('/assets', express.static(path.join(__dirname, './assets')))
+app.use('/uploads', express.static(path.join(__dirname, './uploads')))
 app.use('/output', express.static(path.join(__dirname, './output')))
 app.use('/instructions', express.static(path.join(__dirname, './instructions')))
 app.use('/node_modules', express.static(path.join(__dirname, './node_modules')))
-
 
 
 // UTILITIES  **********************
@@ -55,7 +51,6 @@ const copyFile = (src, dest) => {
 // save json
 app.post('/api/buildJSON', (req, res) => {
   fs.writeFile('./instructions/build.json', JSON.stringify(req.body), 'utf8', () => {  
-    // setTimeout for template
     res.send(JSON.stringify(req.body))
   });
 })
@@ -98,9 +93,20 @@ app.post('/api/loadFile', (req, res) => {
 
 
 
-app.post('/api/imageupload', (req, res) => {    
-  console.log(req, res)
-})
+// FILE UPLOAD
+let storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './assets')
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${file.originalname}`)
+  }
+});
+let upload = multer({storage: storage});
+app.post('/api/upload', upload.any(), (req, res) => {    
+  res.send({status: true, message: 'Images uploaded successfully'})
+});  
+
 
 // end POSTS 
 

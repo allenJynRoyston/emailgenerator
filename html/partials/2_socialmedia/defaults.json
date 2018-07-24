@@ -35,7 +35,7 @@
       "title": "fbimage",
       "key": "fbimage",
       "value": "https://s3.eu-west-2.amazonaws.com/cyb-239/images/facebook-black.png",
-      "type": "input"      
+      "type": "inputimage"      
     },    
     {
       "title": "twitterlink",
@@ -47,7 +47,7 @@
       "title": "twitterimage",
       "key": "twitterimage",
       "value": "https://s3.eu-west-2.amazonaws.com/cyb-239/images/twitter-black.png",
-      "type": "input"      
+      "type": "inputimage"      
     },       
     {
       "title": "youtubelink",
@@ -59,7 +59,7 @@
       "title": "youtubeimage",
       "key": "youtubeimage",
       "value": "https://s3.eu-west-2.amazonaws.com/cyb-239/images/youtube-black.png",
-      "type": "input"      
+      "type": "inputimage"      
     },       
     {
       "title": "instagramlink",
@@ -71,7 +71,7 @@
       "title": "instagramimage",
       "key": "instagramimage",
       "value": "https://s3.eu-west-2.amazonaws.com/cyb-239/images/instagram-black.png",
-      "type": "input"      
+      "type": "inputimage"      
     }        
   ]
 }

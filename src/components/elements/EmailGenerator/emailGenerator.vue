@@ -13,7 +13,7 @@
               option(v-for="file in io.currentFiles") {{file.name}}       
           .twelve.columns
             br
-            button.full-width.button-primary(@click='loadFile()' v-show='io.loadSelected !== "default"') Load  
+            button.button-primary(@click='loadFile()' v-show='io.loadSelected !== "default"') Load  
 
     #saveModal(v-bind:class='openSaveModal ? "show-modal" : "close-modal"')
       .modal-panel(style='text-align: center; width: 400px')  
@@ -27,7 +27,7 @@
             input(v-model='io.saveSelected')        
           .twelve.columns
             br
-            button.full-width.button-primary(@click='saveFile()' v-show='io.saveSelected !== "default"') Save        
+            button.button-primary(@click='saveFile()' v-show='io.saveSelected !== "default"') Save        
         
     #successModal(v-bind:class='openSuccessModal ? "show-modal" : "close-modal"')
       .modal-panel(style='text-align: center')  
@@ -69,11 +69,20 @@
           input(v-model='imageUrl' placeholder='Enter url:  (i.e. https://picsum.photos/600/300)') 
           span &nbsp;&nbsp;
           button.button(@click='imageSelectUrl(imageUrl)') Enter
-        .row.flex-row(v-show='imageModalType === 2' style='width: 600px')
+        .row.flex-row(v-show='imageModalType === 2' style='width: 600px')     
           .dropbox
-            input.input-file(type='file', multiple='' @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file" )
-            // button.button(@click='uploadImage(imageFile)') Upload          
-
+            div(v-show='!upload.processing')
+              input.input-file(type='file', multiple='' name="images" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file" )
+              p(v-show='upload.uploadfiles.length === 0') Upload Images
+              ul(v-show='upload.uploadfiles.length > 0') 
+                li( v-for='files in upload.uploadfiles') {{files.name}}
+            div(v-if='upload.processing'  style='text-align: center; margin-top: 40px')            
+              i.fas.fa-spinner.fa-spin                  
+          br
+          div(v-show='upload.uploadfiles.length > 0 && !upload.hasError && !upload.processing') 
+            button.button(@click='upload.uploadfiles = []') Clear
+            button.button.button-primary(@click='uploadFiles()' style='float: right') Upload     
+          p(v-show='upload.hasError') Cannot upload files right now - please try again.
         .cancel-btn
           i.fas.fa-times.fa-2x(@click='openImageModal = false')
       
@@ -104,10 +113,12 @@
           
           // MASTER CONTENT EDITOR
           div(v-if='activeTab === 0')
-            .twelve.columns.minor-padding
-              button.full-width(@click='fetchSavedFiles(); openLoadModal = true') Load
-            .twelve.columns.minor-padding
-              button.full-width.button-primary(@click='openSaveModal = true') Save
+            .twelve.columns.minor-padding.center-text
+              button.large-buttons(@click='fetchSavedFiles(); openLoadModal = true') Load
+            .twelve.columns.minor-padding.center-text
+              button.button-primary.large-buttons(@click='openSaveModal = true') Save
+            .twelve.columns.minor-padding.center-text
+              button.button.large-buttons(@click='resetBuild()') I broke something - reset everything!               
 
 
           // MASTER CONTENT EDITOR
@@ -116,8 +127,10 @@
               .four.columns 
                 p.text-right.is-label {{content.title}}
               .eight.columns 
-                input(v-model='content.value')
-            hr
+                input(v-model='content.value')                           
+            hr             
+            .twelve.columns.minor-padding.center-text
+              button.large-buttons(@click='restoreGlobalDefaults()') Restore Global Defaults          
           
           // PARTIAL CONTENT EDITOR
           div(v-if='activeTab === 2')             
@@ -162,8 +175,8 @@
                   textarea(v-bind:class='field.focused ? "textarea-open" : ""' placeholder='Insert HTML here' v-model='field.value' v-if='field.type === "textarea"' @focus='field.focused = true' @blur='field.focused = false')                  
               hr           
 
-            .twelve.columns.minor-padding
-              button.full-width.button-primary(@click='addNewSection()') Add More              
+            .twelve.columns.minor-padding.center-text
+              button.button-primary.large-buttons(@click='addNewSection()') Add More              
             hr               
           
           
@@ -175,18 +188,9 @@
               .seven.columns
                   button.button(v-if='option.type === "boolean"' v-bind:class='option.value ? "button-primary" : ""' @click='option.value = !option.value; setUserOptions()') {{option.value}}
                   input(v-if='option.type === "number"' type='number' @change='setUserOptions()' v-model='option.value' v-show='option.visibleif()') 
-            .row
-              hr
-            .row.flex-row              
-              button.button(@click='resetBuild()' style='width: 100%') Reset Partials
-                
               
-            // .twelve.columns.minor-padding
-            //   button.full-width(@click='addNewSection()') Restore Defaults Layout                  
-            // hr             
-            // .twelve.columns.minor-padding
-            //   button.full-width.button-primary(@click='createOutput()') Restore Default Colors  
-
+                
+            
 
         // PREVIEW SECTION
         #preview-container.seven.columns
@@ -204,7 +208,6 @@
             h3
               i.fas.fa-spinner.fa-spin 
 
-            
 
       // BUILD BUTTON
       .autobuild-btn(v-if='!setOptions.autobuild')
@@ -243,7 +246,7 @@
 
       .dropbox 
         outline: 2px dashed grey
-        outline-offset: -10px
+        outline-offset: 0px
         background: lightcyan
         color: dimgray
         padding: 10px 10px;
@@ -258,15 +261,11 @@
         position: absolute
         cursor: pointer
       
-
       .dropbox:hover 
         background: lightblue
       
-
-      .dropbox p 
-        font-size: 1.2em
-        text-align: center
-        padding: 50px 0
+      .dropbox li
+        font-size: 14px
 
 
     #previewModal      
@@ -341,7 +340,7 @@
 
     #emailGenerator
       padding: 50px!important
-
+            
       .devwarning
         background-color: orange
         display: flex        
@@ -372,8 +371,12 @@
         color: #0a3d62
       
       .full-width
-        width: 100%
-
+        width: 100%          
+      
+      .large-buttons
+        width: 80%
+        max-width: 400px
+      
       .minor-padding
         padding: 10px 10px
 
@@ -454,6 +457,7 @@
       .image-thumbnail
         max-height: 100px
         width: auto
+
 
 
         

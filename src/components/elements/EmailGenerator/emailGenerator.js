@@ -30,6 +30,12 @@ export default {
             iframeZoom: 1,
             wittyRetort: null,
             timerId: null,
+            upload: {
+                uploadfiles: [],
+                hasError: false,
+                processing: false,
+                formData: null,
+            },
             dropdowns: {
                 fontfamilies: [
                     'Georgia, serif',
@@ -120,23 +126,19 @@ export default {
     methods: {
         //---------------------------------
         filesChange(fieldName, fileList) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const formData = new FormData();
-                if (!fileList.length)
-                    return;
-                // append the files to FormData
-                Array
-                    .from(Array(fileList.length).keys())
-                    .map(x => {
-                    formData.append(fieldName, fileList[x], fileList[x].name);
-                });
-                let res = axios({
-                    method: 'POST',
-                    url: '/api/uploadimage',
-                    data: formData,
-                });
-                console.log(res);
+            const formData = new FormData();
+            if (!fileList.length)
+                return;
+            this.upload.uploadfiles = [];
+            // append the files to FormData
+            Array
+                .from(Array(fileList.length).keys())
+                .map(x => {
+                let { name } = fileList[x];
+                this.upload.uploadfiles.push({ name });
+                formData.append(fieldName, fileList[x], fileList[x].name);
             });
+            this.upload.formData = formData;
         },
         //---------------------------------
         //---------------------------------
@@ -150,11 +152,6 @@ export default {
             this.imageSelected.value = url;
             this.openImageModal = false;
             this.imageUrl = 'https://picsum.photos/600/300';
-        },
-        //---------------------------------
-        //---------------------------------
-        uploadImage(file) {
-            console.log(file);
         },
         //---------------------------------
         //---------------------------------
@@ -309,10 +306,54 @@ export default {
         resetBuild() {
             if (confirm("Continuing will reset all partial data.")) {
                 this.jsonFile = this.resetFile;
+                this.setFilename('default');
                 this.createOutput();
             }
         },
         //---------------------------------    
+        //---------------------------------    
+        restoreGlobalDefaults() {
+            return __awaiter(this, void 0, void 0, function* () {
+                if (confirm("Continuing will reset all global data.")) {
+                    try {
+                        let res = yield axios.get('./html/globals/globals.json');
+                        this.jsonFile.globals.content = res.data.content;
+                    }
+                    catch (err) {
+                        console.log(`Error: ${err}`);
+                    }
+                }
+            });
+        },
+        //---------------------------------    
+        //---------------------------------
+        uploadFiles() {
+            return __awaiter(this, void 0, void 0, function* () {
+                this.upload.processing = true;
+                try {
+                    let res = yield axios({
+                        method: 'POST',
+                        url: '/api/upload',
+                        data: this.upload.formData
+                    });
+                    setTimeout(() => {
+                        this.fetchImages();
+                        this.imageModalType = 0;
+                        this.upload.uploadFiles = [];
+                        this.upload.processing = false;
+                    }, 1000);
+                }
+                catch (err) {
+                    console.log(`Error issue: failed to POST.  Erorr message ${err}`);
+                    this.upload.hasError = true;
+                    setTimeout(() => {
+                        this.upload.hasError = false;
+                        this.upload.processing = false;
+                    }, 2000);
+                }
+            });
+        },
+        //---------------------------------
         //---------------------------------
         fetchImages() {
             return __awaiter(this, void 0, void 0, function* () {
@@ -433,6 +474,7 @@ export default {
             return __awaiter(this, void 0, void 0, function* () {
                 try {
                     let res = yield axios.get('/api/builddefault');
+                    this.resetFile = res.data;
                     res.data.partials.map(partial => {
                         // uses default build list if build.json doesn't exists
                         if (repurpose) {

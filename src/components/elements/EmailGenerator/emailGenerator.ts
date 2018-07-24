@@ -23,6 +23,12 @@ export default {
       iframeZoom: 1,
       wittyRetort: null,
       timerId: null,
+      upload: {
+        uploadfiles: [],
+        hasError: false,
+        processing: false,
+        formData: null,        
+      },
       dropdowns: {
         fontfamilies: [          
           'Georgia, serif',
@@ -114,25 +120,23 @@ export default {
   methods: {
 
     //---------------------------------
-    async filesChange(fieldName:any, fileList:any){
+    filesChange(fieldName:any, fileList:any){
       const formData = new FormData();
 
       if (!fileList.length) return;
+      
+      this.upload.uploadfiles = []
 
       // append the files to FormData
       Array
         .from(Array(fileList.length).keys())
         .map(x => {
+          let {name} = fileList[x]
+          this.upload.uploadfiles.push({name})
           formData.append(fieldName, fileList[x], fileList[x].name);
         });
 
-      let res = axios({
-            method: 'POST',
-            url: '/api/uploadimage',
-            data: formData,
-          })
-        
-        console.log(res)
+      this.upload.formData = formData;
     },
     //---------------------------------
 
@@ -148,12 +152,6 @@ export default {
       this.imageSelected.value = url
       this.openImageModal = false
       this.imageUrl = 'https://picsum.photos/600/300'
-    },
-    //---------------------------------
-
-    //---------------------------------
-    uploadImage(file:any){
-      console.log(file)
     },
     //---------------------------------
 
@@ -328,10 +326,54 @@ export default {
     resetBuild(){
       if (confirm("Continuing will reset all partial data.")) {
         this.jsonFile = this.resetFile;
+        this.setFilename('default')
         this.createOutput();
       }       
     },
     //---------------------------------    
+
+    //---------------------------------    
+    async restoreGlobalDefaults(){
+      if (confirm("Continuing will reset all global data.")) {
+        try{
+          let res = await axios.get('./html/globals/globals.json')        
+          this.jsonFile.globals.content = res.data.content
+        }
+        catch(err){
+          console.log(`Error: ${err}`)
+        }      
+      }
+    },
+    //---------------------------------    
+
+    //---------------------------------
+    async uploadFiles(){
+      this.upload.processing = true
+      try{        
+        let res = await axios({ 
+          method: 'POST',        
+          url: '/api/upload', 
+          data: this.upload.formData 
+        })
+        setTimeout(() => {
+          this.fetchImages()
+          this.imageModalType = 0        
+          this.upload.uploadFiles = [];
+          this.upload.processing = false      
+        }, 1000);        
+      }
+      catch(err){
+        console.log(`Error issue: failed to POST.  Erorr message ${err}`)
+        this.upload.hasError = true
+        setTimeout(() => {
+          this.upload.hasError = false
+          this.upload.processing = false   
+        }, 2000)
+      }
+      
+
+    },
+    //---------------------------------
 
     //---------------------------------
     async fetchImages(){
@@ -449,6 +491,7 @@ export default {
     async fetchDefaultList(repurpose:Boolean = false){
       try{
         let res = await axios.get('/api/builddefault')
+        this.resetFile = res.data
         res.data.partials.map(partial => {
           // uses default build list if build.json doesn't exists
           if(repurpose){
