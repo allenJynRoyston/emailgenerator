@@ -219,15 +219,10 @@ export default {
         },
         //---------------------------------
         //---------------------------------
-        getWittyRetort() {
-            const responses = ['Nice job hero.', 'Got it.', 'No prob.', 'Nailed that button click.', 'Easy peasy.', 'Copied.', 'Paste away.', 'It\'s done son.', 'Nae botha.', 'Success!'];
-            return responses[Math.floor(Math.random() * responses.length)];
-        },
-        //---------------------------------
-        //---------------------------------
         copyToClipboard() {
             const responses = ['Nice job hero.', 'Got it.', 'No prob.', 'Nailed that button click.', 'Easy peasy.', 'Copied.', 'Paste away.', 'It\'s done son.', 'Nae botha.', 'Success!'];
-            this.wittyRetort = this.getWittyRetort()(navigator).clipboard.writeText(this.htmlPreview).then(() => {
+            this.wittyRetort = responses[Math.floor(Math.random() * responses.length)];
+            navigator.clipboard.writeText(this.htmlPreview).then(() => {
                 this.openSuccessModal = true;
                 setTimeout(() => {
                     this.openSuccessModal = false;

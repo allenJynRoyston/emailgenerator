@@ -64,7 +64,7 @@
     {
       "title": "font family",
       "key": "fontfamily",
-      "value": "Georgia, serif",
+      "value": "Calibri, Arial, sans-serif",
       "type": "inputfont"
     }, 
     {
