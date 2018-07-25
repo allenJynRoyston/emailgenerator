@@ -1,6 +1,8 @@
 <template lang='pug'>
-  #app-layout   
-    PixiComponent.bg-canvas(v-bind:files='pixiFiles' type='GROW' fullscreen autoplay orderdelay='1' style='z-index: -1; position: fixed; top: 0; left: 0')  
+  #app-layout
+    .curtain(v-if='d.tell')
+    PixiComponent.bg-canvas.pixi(v-if='!d.tell' v-bind:files='pixiFiles' type='GROW' fullscreen autoplay orderdelay='1')      
+    youtube.yt(v-if='d.tell' v-bind:video-id="pickrandom()" :player-vars="{ autoplay: 1 }" @ready="ready" v-bind:player-width="d.width" v-bind:player-height="d.height")
     SiteOverlay
     DrawerComponent
     SiteHeader
@@ -20,16 +22,42 @@ export default {
     return {
       store: this.$store,
       pixiFiles:  ['src/_pixi/bg/script.js'],
+      kArray: [],      
       images: [
         test_image
-      ]
+      ],
+      d:{
+        tell: false,
+        width: screen.width,
+        height: screen.height 
+      }
     }
+  },
+  created(){
+    document.addEventListener('keydown', (e) => {
+      if(!this.d.tell){
+        this.kArray.push(e.keyCode)        
+        if (event.keyCode == 13) {
+          let sum = this.kArray.reduce((a, b) => a + b, 0)
+          if(sum === 583){
+            alert('You discovered a secret!')
+            this.d.tell = true
+          }
+          this.kArray = [];
+        }
+      }
+    })
   },
   mounted(){
     this.store.commit('overlay_on')
     this.imageLoader(this.images, this.finishedLoading)
   },
   methods:{
+    pickrandom(){
+      const ytid = ['eqzxBHSKVsQ', 'EBYsx1QWF9A', 'AiHyTJsE3AU']
+      return ytid[Math.floor(Math.random() * ytid.length)];
+    },
+
     imageLoader(Images, Callback){
         let store = this.store;
         let allLoaded = 0;
@@ -77,4 +105,25 @@ export default {
 <style lang="sass" scoped>
   #site-layout
     min-height: 1200px    
+  
+  .pixi
+    z-index: -1
+    position: fixed
+    top: 0
+    left: 0
+  
+  .yt
+    z-index: -1; 
+    position: fixed 
+    top: 0
+    left: 5%
+
+  .curtain
+    z-index: -2 
+    position: fixed 
+    width: 100%
+    height: 100%
+    top: 0 
+    left: 0
+    background-color: black
 </style>

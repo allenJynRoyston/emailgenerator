@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import VueResource from 'vue-resource'
+import VueYouTubeEmbed from 'vue-youtube-embed'
 
 /* IMPORT COMPONENTS */
 // page components
@@ -25,6 +26,7 @@ Vue.component('EmailGeneratorComponent', EmailGeneratorComponent)
 // register router
 Vue.use(Router)
 Vue.use(VueResource);
+Vue.use(VueYouTubeEmbed, { global: true })
 
 
 // set routes

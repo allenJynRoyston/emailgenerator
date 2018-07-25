@@ -46,8 +46,8 @@
     {
       "title": "btn radius",
       "key": "buttonradius",
-      "value": "10px 10px 10px 10px",
-      "type": "input"
+      "value": "10",
+      "type": "inputpx"
     },
     {
       "title": "btn border color",

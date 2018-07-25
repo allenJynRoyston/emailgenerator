@@ -219,10 +219,15 @@ export default {
         },
         //---------------------------------
         //---------------------------------
+        getWittyRetort() {
+            const responses = ['Nice job hero.', 'Got it.', 'No prob.', 'Nailed that button click.', 'Easy peasy.', 'Copied.', 'Paste away.', 'It\'s done son.', 'Nae botha.', 'Success!'];
+            return responses[Math.floor(Math.random() * responses.length)];
+        },
+        //---------------------------------
+        //---------------------------------
         copyToClipboard() {
             const responses = ['Nice job hero.', 'Got it.', 'No prob.', 'Nailed that button click.', 'Easy peasy.', 'Copied.', 'Paste away.', 'It\'s done son.', 'Nae botha.', 'Success!'];
-            this.wittyRetort = responses[Math.floor(Math.random() * responses.length)];
-            navigator.clipboard.writeText(this.htmlPreview).then(() => {
+            this.wittyRetort = this.getWittyRetort()(navigator).clipboard.writeText(this.htmlPreview).then(() => {
                 this.openSuccessModal = true;
                 setTimeout(() => {
                     this.openSuccessModal = false;
@@ -451,6 +456,11 @@ export default {
                         this.fetchCurrentBuild();
                         setTimeout(() => {
                             this.iframeIsReady = true;
+                            this.wittyRetort = 'File loaded correctly.';
+                            this.openSuccessModal = true;
+                            setTimeout(() => {
+                                this.openSuccessModal = false;
+                            }, 1000);
                         }, 500);
                     }
                     catch (err) {
@@ -476,6 +486,11 @@ export default {
                         yield axios.post('/api/saveFile', { filename: this.io.saveSelected });
                         this.setFilename(this.io.saveSelected);
                         this.openSaveModal = false;
+                        this.wittyRetort = 'File has been saved.';
+                        this.openSuccessModal = true;
+                        setTimeout(() => {
+                            this.openSuccessModal = false;
+                        }, 1000);
                     }
                     catch (err) {
                         console.log(`Error issue: failed to POST.  Error message:  ${err}`);

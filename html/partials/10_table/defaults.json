@@ -29,26 +29,26 @@
     {
       "title": "Entry 1 Image",
       "key": "image1",
-      "value": "http://wpm.ccmp.eu/wpm/100363/ContentUploads/BconnectedMAY18/setup2x.jpg",
-      "type": "input"
+      "value": "/assets/setup2x.jpg",
+      "type": "inputimage"
     },
     {
       "title": "Entry 2 Image",
       "key": "image2",
-      "value": "http://wpm.ccmp.eu/wpm/100363/ContentUploads/BconnectedMAY18/setup2x.jpg",
-      "type": "input"
+      "value": "/assets/setup2x.jpg",
+      "type": "inputimage"
     },
     {
       "title": "Entry 3 Image",
       "key": "image3",
-      "value": "http://wpm.ccmp.eu/wpm/100363/ContentUploads/BconnectedMAY18/setup2x.jpg",
-      "type": "input"
+      "value": "/assets/setup2x.jpg",
+      "type": "inputimage"
     },
     {
       "title": "Entry 4 Image",
       "key": "image4",
-      "value": "http://wpm.ccmp.eu/wpm/100363/ContentUploads/BconnectedMAY18/setup2x.jpg",
-      "type": "input"
+      "value": "/assets/setup2x.jpg",
+      "type": "inputimage"
     },                
     {
       "title": "image size",
@@ -115,7 +115,7 @@
       "title": "bgcolor",
       "key": "bgcolor",
       "value": "[g_color1]",
-      "type": "input"
+      "type": "inputcolor"
     },
     {
       "title": "padding",

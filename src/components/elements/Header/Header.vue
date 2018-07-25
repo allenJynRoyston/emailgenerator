@@ -1,7 +1,7 @@
 <template lang="pug">
   section
-    .custom-header
-      h1 Email Generator
+    // .custom-header
+    //   h1 Email Generator
 </template>
 
 <script src='./header.js'></script>

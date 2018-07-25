@@ -4,8 +4,8 @@
     {
       "title": "height",
       "key": "height",
-      "value": "20",
-      "type": "input"
+      "value": "10",
+      "type": "inputpx"
     },
     {
       "title": "bgcolor",
