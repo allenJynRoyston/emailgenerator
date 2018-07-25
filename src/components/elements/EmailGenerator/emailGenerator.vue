@@ -1,6 +1,6 @@
 <template lang="pug">
   .section
-    #loadModal(v-bind:class='openLoadModal ? "show-modal" : "close-modal"')
+    #loadModal(v-bind:class='openLoadModal ? "show-modal" : "close-modal"' v-if='jsonIsReady')
       .modal-panel(style='text-align: center; width: 400px')  
         .cancel-btn
           i.fas.fa-times.fa-2x(@click='openLoadModal = false; io.loadSelected = io.filename')      
@@ -15,7 +15,7 @@
             br
             button.button-primary(@click='loadFile()' v-show='io.loadSelected !== "default"') Load  
 
-    #saveModal(v-bind:class='openSaveModal ? "show-modal" : "close-modal"')
+    #saveModal(v-bind:class='openSaveModal ? "show-modal" : "close-modal"' v-if='jsonIsReady')
       .modal-panel(style='text-align: center; width: 400px')  
         .cancel-btn
           i.fas.fa-times.fa-2x(@click='openSaveModal = false')      
@@ -29,12 +29,12 @@
             br
             button.button-primary(@click='saveFile()' v-show='io.saveSelected !== "default"') Save        
         
-    #successModal(v-bind:class='openSuccessModal ? "show-modal" : "close-modal"')
+    #successModal(v-bind:class='openSuccessModal ? "show-modal" : "close-modal"' )
       .modal-panel(style='text-align: center')  
         h3 {{wittyRetort}}
         i.fas.fa-thumbs-up.fa-5x
 
-    #previewModal(v-bind:class='openPreviewModal ? "show-modal" : "close-modal"')
+    #previewModal(v-bind:class='openPreviewModal ? "show-modal" : "close-modal"' v-if='jsonIsReady')
       .modal-panel  
         h3 HTML Preview        
         .htmlpreview-container
@@ -49,7 +49,7 @@
           a.button(@click='copyToClipboard()') Copy To Clipboard
           a(href='/output/template.html' target="_blank") View in new window
 
-    #imageModal(v-bind:class='openImageModal ? "show-modal" : "close-modal"')
+    #imageModal(v-bind:class='openImageModal ? "show-modal" : "close-modal"' v-if='jsonIsReady')
       .modal-panel  
         h3 Images   
         .row
@@ -59,17 +59,22 @@
             a(@click='imageModalType  = 1') Use URL 
             | &nbsp;&nbsp;|&nbsp;&nbsp;
             a(@click='imageModalType  = 2') Upload New Image
-          br
-          br
+          hr
         .row(v-show='imageModalType === 0')
-          a(v-for='image in dropdowns.images' style='position: relative' @click='imageSelect(image)')
-            img.image-selectable(v-bind:src='image.src')  
-            a(style='position: absolute; top: -10px; left: 20px; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;') {{image.name}}
+          p Select an available image: 
+          div(style='max-width: 800px; max-height: 600px; overflow: auto')
+            a(v-for='image in dropdowns.images' style='position: relative; margin-right: 10px; display: inline-block')
+              .deleteimage-btn(@click='deleteImage(image)')
+                i.fas.fa-times.fa-2x            
+              img.image-selectable(v-bind:src='image.src' @click='imageSelect(image)')  
+              a.image-name(@click='imageSelect(image)') {{image.name}}
         .row.flex-row(v-show='imageModalType === 1' style='width: 600px')
+          p Enter a valid url:
           input(v-model='imageUrl' placeholder='Enter url:  (i.e. https://picsum.photos/600/300)') 
           span &nbsp;&nbsp;
           button.button(@click='imageSelectUrl(imageUrl)') Enter
         .row.flex-row(v-show='imageModalType === 2' style='width: 600px')     
+          p Drag and drop images you wish to upload:
           .dropbox
             div(v-show='!upload.processing')
               input.input-file(type='file', multiple='' name="images" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file" )
@@ -77,17 +82,16 @@
               ul(v-show='upload.uploadfiles.length > 0') 
                 li( v-for='files in upload.uploadfiles') {{files.name}}
             div(v-if='upload.processing'  style='text-align: center; margin-top: 40px')            
-              i.fas.fa-spinner.fa-spin                  
-          br
+              i.fas.fa-spinner.fa-spin                            
           div(v-show='upload.uploadfiles.length > 0 && !upload.hasError && !upload.processing') 
+            br
             button.button(@click='upload.uploadfiles = []') Clear
             button.button.button-primary(@click='uploadFiles()' style='float: right') Upload     
           p(v-show='upload.hasError') Cannot upload files right now - please try again.
         .cancel-btn
           i.fas.fa-times.fa-2x(@click='openImageModal = false')
       
-
-    #emailmodal(v-bind:class='openModal ? "show-modal" : "close-modal"')
+    #emailmodal(v-bind:class='openModal ? "show-modal" : "close-modal"' v-if='jsonIsReady')
       .modal-panel
         .cancel-btn
           i.fas.fa-times.fa-2x(@click='openModal = false')
@@ -100,6 +104,34 @@
             hr
         .row          
           p * Changing a partial will overwrite your existing properties
+
+
+    #globalColorSelectorModal(v-bind:class='openGlobalColorModal ? "show-modal" : "close-modal"' v-if='jsonIsReady')
+      .modal-panel  
+        h3 Set Global Color
+        .row     
+          p Enter a HEX (i.e. #f2f2f2), RGB value (i.e. rgb(255, 255, 255)), or string (i.e. red, blue, green, etc):
+          input(v-model='colorSelector' style='width: 200px')
+          span &nbsp;&nbsp;
+          button.button(@click='setGlobalColor(colorSelector)') Enter          
+        .cancel-btn
+          i.fas.fa-times.fa-2x(@click='openGlobalColorModal = false')   
+
+    #colorSelectorModal(v-bind:class='openColorModal ? "show-modal" : "close-modal"' v-if='jsonIsReady')
+      .modal-panel  
+        h3 Color Selector   
+        .row     
+          p Select from global colors:             
+          .color-block-large(@click='setColor(field)' v-for="(field, index) in jsonFile.globals.content" v-if='field.type === "inputcolor"' v-bind:style="{ 'background-color': field.value }")   
+        .row.flex-row  
+          hr               
+          br
+          p Or enter a HEX (i.e. #f2f2f2), RGB value (i.e. rgb(255, 255, 255)), or string (i.e. red, blue, green, etc):
+          input(v-model='colorSelector' style='width: 200px')
+          span &nbsp;&nbsp;
+          button.button(@click='colorSelect(colorSelector)') Enter          
+        .cancel-btn
+          i.fas.fa-times.fa-2x(@click='openColorModal = false')               
 
     #emailGenerator
       .row.devwarning(v-if='devBuild')
@@ -114,20 +146,25 @@
           // MASTER CONTENT EDITOR
           div(v-if='activeTab === 0')
             .twelve.columns.minor-padding.center-text
+              button.button-primary.button.large-buttons(@click='resetBuild()') New
+            .twelve.columns.minor-padding.center-text
               button.large-buttons(@click='fetchSavedFiles(); openLoadModal = true') Load
             .twelve.columns.minor-padding.center-text
-              button.button-primary.large-buttons(@click='openSaveModal = true') Save
-            .twelve.columns.minor-padding.center-text
-              button.button.large-buttons(@click='resetBuild()') I broke something - reset everything!               
-
+              button.large-buttons(@click='openSaveModal = true') Save            
 
           // MASTER CONTENT EDITOR
           div(v-if='activeTab === 1')             
-            .row.flex-row(v-for="content in jsonFile.globals.content")              
+            .row.flex-row(v-for="field in jsonFile.globals.content")              
               .four.columns 
-                p.text-right.is-label {{content.title}}
+                p.text-right.is-label {{field.title}}
               .eight.columns 
-                input(v-model='content.value')                           
+                input(v-model='field.value'  v-if='field.type === "input"') 
+                // INPUTPX
+                input(v-model='field.value' type='number' v-if='field.type === "inputpx"' style='width: 100px')  
+                input(v-if='field.type === "inputpx"' value='px' style='width: 20px' disabled)                                            
+                // INPUT COLOR
+                input.color-inputinput(@click='openGlobalColorModal = true; colorSelected = field' v-model='field.value' v-if='field.type === "inputcolor"' style='width: 88px; cursor: pointer')   
+                .color-block(@click='openGlobalColorModal = true' v-if='field.type === "inputcolor"' v-bind:style="{ 'background-color': field.value }")                
             hr             
             .twelve.columns.minor-padding.center-text
               button.large-buttons(@click='restoreGlobalDefaults()') Restore Global Defaults          
@@ -157,7 +194,8 @@
                   // INPUT 
                   input(v-model='field.value' v-if='field.type === "input"')       
                   // INPUT COLOR
-                  input(v-model='field.value' v-if='field.type === "inputcolor"')                                  
+                  input.color-inputinput(@click='openColorModal = true; colorSelected = field' v-model='field.value' v-if='field.type === "inputcolor"' style='width: 88px; cursor: pointer')   
+                  .color-block(@click='openColorModal = true' v-if='field.type === "inputcolor"' v-bind:style="{ 'background-color': returnColorValue(field.value) }")                                
                   // INPUTFONT
                   select(v-model='field.value' v-if='field.type === "inputfont"')
                     option(v-for='font in dropdowns.fontfamilies') {{font}}
@@ -219,7 +257,7 @@
 <script src='./emailGenerator.js'></script>
 
 <style lang="sass" scoped>  
-    #saveModal, #loadModal, #successModal, #emailmodal, #imageModal
+    #saveModal, #loadModal, #successModal, #emailmodal, #imageModal, #colorSelectorModal, #globalColorSelectorModal
       position: fixed
       top: 0
       height: 100%
@@ -266,6 +304,39 @@
       
       .dropbox li
         font-size: 14px
+
+      .color-block-large
+        display: inline-block
+        border: 1px solid black
+        cursor: pointer
+        width: 50px 
+        height: 50px     
+        margin-right: 20px   
+
+      .image-name
+        color: black; 
+        position: absolute
+        bottom: 0px 
+        left: 20px
+        max-width: 120px
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis     
+
+      .deleteimage-btn
+        position: absolute
+        top: 0px
+        left: 10px
+        width: 21px
+        height: 29px
+        background-color: white
+        color: black
+        margin-left: 10px
+        padding: 5px
+
+      .deleteimage-btn:hover
+        background-color: red
+        color: white
 
 
     #previewModal      
@@ -457,6 +528,22 @@
       .image-thumbnail
         max-height: 100px
         width: auto
+
+      .color-input
+        width: 88px
+        cursor: pointer
+        background-color: white
+
+      .color-block  
+        display: block-inline        
+        border-top: 1px solid black
+        border-bottom: 1px solid black
+        border-left: 1px solid black
+        cursor: pointer
+        width: 30px 
+        height: 30px
+        float: left  
+ 
 
 
 

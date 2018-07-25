@@ -5,13 +5,13 @@
       "title": "bgcolor",
       "key": "bgcolor",
       "value": "[g_color2]",
-      "type": "input"
+      "type": "inputcolor"
     },
     {
       "title": "alignment",
       "key": "alignment",
       "value": "center",
-      "type": "alignment"
+      "type": "dropdownalignment"
     },    
     {
       "title": "gap",

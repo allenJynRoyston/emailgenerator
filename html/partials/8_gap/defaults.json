@@ -10,8 +10,8 @@
     {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "#efeeee",
-      "type": "input"
+      "value": "[g_bgcolor]",
+      "type": "inputcolor"
     }    
   ]
 }

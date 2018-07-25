@@ -92,6 +92,18 @@ app.post('/api/loadFile', (req, res) => {
 })
 
 
+app.post('/api/deleteImage', (req, res) => {    
+  try{
+    let filePath = `./assets/${req.body.filename}`; 
+    fs.unlinkSync(filePath);
+    res.send({status: true, message: 'Image has been deleted'})
+  }
+  catch(err){
+    res.send({status: false, message: 'Image does not exist'})
+  }  
+})
+
+
 
 // FILE UPLOAD
 let storage = multer.diskStorage({

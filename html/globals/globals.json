@@ -4,7 +4,7 @@
       "title": "subject line",
       "key": "subjectline",
       "value": "Subject Line",
-      "text": "input"
+      "type": "input"
     },        
     {
       "title": "email width",
@@ -16,55 +16,55 @@
       "title": "body color",
       "key": "g_bgcolor",
       "value": "#f2f2f2",
-      "type": "input"
+      "type": "inputcolor"
     },       
     {
       "title": "global black",
       "key": "g_black",
       "value": "#2c3e50",
-      "type": "input"
+      "type": "inputcolor"
     },    
     {
       "title": "global white",
       "key": "g_white",
       "value": "#ffffff",
-      "type": "input"
+      "type": "inputcolor"
     },        
     {
       "title": "global color 1",
       "key": "g_color1",
       "value": "#c0392b",
-      "type": "input"
+      "type": "inputcolor"
     },
     {
       "title": "global color 2",
       "key": "g_color2",
       "value": "#d35400",
-      "type": "input"
+      "type": "inputcolor"
     },
     {
       "title": "global color 3",
       "key": "g_color3",
       "value": "#f39c12",
-      "type": "input"
+      "type": "inputcolor"
     },
     {
       "title": "global color 4",
       "key": "g_color4",
       "value": "#8e44ad",
-      "type": "input"
+      "type": "inputcolor"
     },
     {
       "title": "global color 5",
       "key": "g_color5",
       "value": "#2980b9",
-      "type": "input"
+      "type": "inputcolor"
     },
     {
       "title": "global color 6",
       "key": "g_color6",
       "value": "#27ae60",
-      "type": "input"
+      "type": "inputcolor"
     }                          
   ]
 }

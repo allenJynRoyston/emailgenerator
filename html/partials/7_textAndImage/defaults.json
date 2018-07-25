@@ -71,7 +71,7 @@
       "title": "bgcolor",
       "key": "bgcolor",
       "value": "[g_color1]",
-      "type": "input"
+      "type": "inputcolor"
     },
     {
       "title": "padding",

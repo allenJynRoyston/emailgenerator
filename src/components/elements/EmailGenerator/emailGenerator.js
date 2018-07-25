@@ -27,6 +27,10 @@ export default {
             openLoadModal: false,
             openPreviewModal: false,
             openSuccessModal: false,
+            openGlobalColorModal: false,
+            openColorModal: false,
+            colorSelected: null,
+            colorSelector: null,
             iframeZoom: 1,
             wittyRetort: null,
             timerId: null,
@@ -64,9 +68,9 @@ export default {
                 images: []
             },
             io: {
-                saveSelected: 'default',
-                filename: 'default',
-                loadSelected: 'default',
+                saveSelected: 'new',
+                filename: 'new',
+                loadSelected: 'new',
                 currentFiles: []
             },
             options: [
@@ -152,6 +156,33 @@ export default {
             this.imageSelected.value = url;
             this.openImageModal = false;
             this.imageUrl = 'https://picsum.photos/600/300';
+        },
+        //---------------------------------
+        //---------------------------------
+        setGlobalColor(color) {
+            this.openGlobalColorModal = false;
+            this.colorSelected.value = color;
+            this.colorSelector = null;
+        },
+        //---------------------------------
+        //---------------------------------
+        setColor(obj) {
+            this.openColorModal = false;
+            this.colorSelected.value = `[${obj.key}]`;
+            this.colorSelector = null;
+        },
+        //---------------------------------
+        //---------------------------------
+        returnColorValue(value) {
+            if (value.includes('g_')) {
+                value = value.replace(/[\[\]]/g, '');
+                let matches = this.jsonFile.globals.content.filter(item => {
+                    return item.key === value;
+                });
+                if (matches.length > 0)
+                    return matches[0].value;
+            }
+            return value;
         },
         //---------------------------------
         //---------------------------------
@@ -306,9 +337,19 @@ export default {
         resetBuild() {
             if (confirm("Continuing will reset all partial data.")) {
                 this.jsonFile = this.resetFile;
-                this.setFilename('default');
-                this.createOutput();
+                this.setFilename('new');
+                this.jsonFile.partials = [];
             }
+        },
+        //---------------------------------    
+        //---------------------------------    
+        deleteImage(image) {
+            return __awaiter(this, void 0, void 0, function* () {
+                if (confirm("You want to delete this image?  It will be permanently destroyed.")) {
+                    let res = yield axios.post('/api/deleteimage', { filename: image.name });
+                    this.fetchImages();
+                }
+            });
         },
         //---------------------------------    
         //---------------------------------    
@@ -384,13 +425,13 @@ export default {
                 }
                 catch (err) {
                     console.log(`Error issue: failed to GET.  Error message:  ${err}`);
-                    build = ["default"];
+                    build = ["new"];
                 }
                 // add as property and remove default 
                 this.io.currentFiles = build.map(item => {
                     return { name: item };
                 }).filter(item => {
-                    if (item.name !== 'default') {
+                    if (item.name !== 'new') {
                         return item;
                     }
                 });

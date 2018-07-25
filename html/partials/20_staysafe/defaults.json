@@ -2,6 +2,60 @@
   "name": "Stay Safe",
   "content": [
     {
+      "title": "image",
+      "key": "image",
+      "value": "/assets/padlock.png",
+      "type": "inputimage"
+    },
+    {
+      "title": "imagealt",
+      "key": "imagealt",
+      "value": "Padlock",
+      "type": "input"
+    },      
+    {
+      "title": "title",
+      "key": "title",
+      "value": "Stay Safe Online",
+      "type": "input"
+    },    
+    {
+      "title": "link 1",
+      "key": "link1",
+      "value": "How to check if an email is genuine",
+      "type": "input"
+    },    
+    {
+      "title": "link 1 href",
+      "key": "link1href",
+      "value": "https://www.youandb.co.uk/help/emails-from-b/?cid=eml_00190",
+      "type": "input"
+    },    
+    {
+      "title": "link 2",
+      "key": "link2",
+      "value": "Visit our Security Centre",
+      "type": "input"
+    },   
+    {
+      "title": "link 2 href",
+      "key": "link2href",
+      "value": "https://www.youandb.co.uk/help/emails-from-b/?cid=eml_00190",
+      "type": "input"
+    },                
+    {
+      "title": "imagewidth",
+      "key": "imagewidth",
+      "value": "30",
+      "type": "inputpx"
+    },     
+    {
+      "title": "imageheight",
+      "key": "imageheight",
+      "value": "35",
+      "type": "inputpx"
+    },        
+    {
       "title": "text color",
       "key": "textcolor",
       "value": "[g_black]",
