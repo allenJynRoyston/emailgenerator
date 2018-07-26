@@ -311,7 +311,8 @@
         cursor: pointer
         width: 50px 
         height: 50px     
-        margin-right: 20px   
+        margin-left: 10px   
+        margin-right: 11px
 
       .image-name
         color: black; 
@@ -536,13 +537,12 @@
 
       .color-block  
         display: block-inline        
-        border-top: 1px solid black
-        border-bottom: 1px solid black
-        border-left: 1px solid black
+        border: 1px solid black
         cursor: pointer
         width: 30px 
         height: 30px
         float: left  
+        margin-right: 5px
  
 
 
