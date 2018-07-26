@@ -124,6 +124,12 @@ export default {
   methods: {
 
     //---------------------------------
+    refreshiframe(){
+      document.getElementById('iframeContainer').contentWindow.window.refreshIframe()
+    },
+    //---------------------------------
+
+    //---------------------------------
     filesChange(fieldName:any, fileList:any){
       const formData = new FormData();
 
@@ -527,8 +533,11 @@ export default {
         let res = await axios.get('/output/template.html')
         let match = res.data.includes('<div id="app"></div>')
         if(!match){
-          this.htmlPreview = res.data
-          this.iframeIsReady = true    
+          setTimeout(() => {
+            this.htmlPreview = res.data
+            this.iframeIsReady = true  
+            this.refreshiframe()  
+          }, 500)
         }
         else{
           // delay between attempts to find template.html

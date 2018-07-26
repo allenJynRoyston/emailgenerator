@@ -1,0 +1,67 @@
+<!-- THIS FILE IS IMPORTANT - DO NOT REMOVE, DELETE OR CHANGE -->
+<div id='__container_jq'>
+</div>
+
+<script src='../../node_modules/axios/dist/axios.min.js'></script>
+<script src='../../node_modules/jquery/dist/jquery.min.js'></script>
+
+<script>
+$(() => {
+  window.refreshIframe = (args) => {
+      axios.get('/output/template.html')
+        .then((response) => {
+          // handle success
+          $('#__container_jq').empty().append(response.data)
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        })
+  }
+  window.refreshIframe()
+})
+</script>
+
+
+<style type="text/css">
+  #__container_jq{
+    min-height: 800px;
+    padding: 50px; 
+    background-image: url("./blueprint.png");
+    background-repeat: repeat;
+    background-attachment: fixed;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5)  ; 
+    -webkit-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5)  ; 
+    -moz-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5)  ; 
+  }
+
+
+  #wrapper{
+    box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.5)  ; 
+    -webkit-box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.5)  ; 
+    -moz-box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.5)  ; 
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px; 
+    background-color: rgba(0,0,0,0);
+    -webkit-border-radius: 100px;
+  }
+
+  ::-webkit-scrollbar:hover {
+    background-color: rgba(0, 0, 0, 0.09);
+  }
+
+
+  ::-webkit-scrollbar-thumb:vertical {
+    background: rgba(0,0,0,0.5);
+    -webkit-border-radius: 100px;
+  }
+  ::-webkit-scrollbar-thumb:vertical:active {
+    background: rgba(0,0,0,0.61); 
+    -webkit-border-radius: 100px;
+  }
+
+
+
+</style>

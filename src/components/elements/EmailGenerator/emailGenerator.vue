@@ -139,112 +139,109 @@
         p This mode is for developing the UI/UX - PREVIEW WILL NOT BE UPDATED
           
       .row        
-        .five.columns(v-if='jsonIsReady')
+        .five.columns(v-if='jsonIsReady')          
           a.button.tabs(v-for='(option, index) in menuOptions' @click='activeTab = index; addToUrlParams(option)' v-bind:class='activeTab === index ? "button-primary" : ""') {{option.title}}        
+          div(style='max-height: 925px; overflow-y: scroll')
+            
+            // MASTER CONTENT EDITOR
+            div(v-if='activeTab === 0')
+              .twelve.columns.minor-padding.center-text
+                button.button-primary.button.large-buttons(@click='resetBuild()') New
+              .twelve.columns.minor-padding.center-text
+                button.large-buttons(@click='fetchSavedFiles(); openLoadModal = true') Load
+              .twelve.columns.minor-padding.center-text
+                button.large-buttons(@click='openSaveModal = true') Save            
 
-          
-          // MASTER CONTENT EDITOR
-          div(v-if='activeTab === 0')
-            .twelve.columns.minor-padding.center-text
-              button.button-primary.button.large-buttons(@click='resetBuild()') New
-            .twelve.columns.minor-padding.center-text
-              button.large-buttons(@click='fetchSavedFiles(); openLoadModal = true') Load
-            .twelve.columns.minor-padding.center-text
-              button.large-buttons(@click='openSaveModal = true') Save            
-
-          // MASTER CONTENT EDITOR
-          div(v-if='activeTab === 1')             
-            .row.flex-row(v-for="field in jsonFile.globals.content")              
-              .four.columns 
-                p.text-right.is-label {{field.title}}
-              .eight.columns 
-                input(v-model='field.value'  v-if='field.type === "input"') 
-                // INPUTPX
-                input(v-model='field.value' type='number' v-if='field.type === "inputpx"' style='width: 100px')  
-                input(v-if='field.type === "inputpx"' value='px' style='width: 20px' disabled)                                            
-                // INPUT COLOR
-                input.color-inputinput(@click='openGlobalColorModal = true; colorSelected = field' v-model='field.value' v-if='field.type === "inputcolor"' style='width: 88px; cursor: pointer')   
-                .color-block(@click='openGlobalColorModal = true' v-if='field.type === "inputcolor"' v-bind:style="{ 'background-color': field.value }")                
-            hr             
-            .twelve.columns.minor-padding.center-text
-              button.large-buttons(@click='restoreGlobalDefaults()') Restore Global Defaults          
-          
-          // PARTIAL CONTENT EDITOR
-          div(v-if='activeTab === 2')             
-            div(v-for='(partial, index) in jsonFile.partials')      
-              .row.flex-row
-                .nine.columns                  
-                  button(@click='indexStored = index; openModal = true') 
-                    | {{partial.name}}             
-                  button(style='margin-left: 10px; float: right' @click='partial.showProps = !partial.showProps') 
-                    i(v-bind:class='partial.showProps ? "fas" : "far"').fa-edit 
-                .two.columns(style='display: flex; justify-content: space-around')                         
-                  i.fas.fa-angle-double-up.pointer.green(@click='moveItemUp(index)' v-bind:class='index === 0 ? "disabled" : ""')             
-                  i.fas.fa-angle-double-down.pointer.green(@click='moveItemDown(index)' v-bind:class='index === jsonFile.partials.length -1 ? "disabled" : ""')             
-                .one.columns
-                  i.far.fa-times-circle.pointer.red(@click='removeItem(index)')                     
-
-              .row.flex-row(v-for="field in partial.content" v-show='partial.showProps')   
+            // MASTER CONTENT EDITOR
+            div(v-if='activeTab === 1')             
+              .row.flex-row(v-for="field in jsonFile.globals.content")              
                 .four.columns 
-                  p.is-label {{field.title}}
-                .seven.columns 
-                  // INPUTIMAGES
-                  a(@click='imageSelected = field; openImageModal = true')
-                    img.image-thumbnail(v-if='field.type === "inputimage"' v-bind:src='field.value')           
-                  // INPUT 
-                  input(v-model='field.value' v-if='field.type === "input"')       
-                  // INPUT COLOR
-                  input.color-inputinput(@click='openColorModal = true; colorSelected = field' v-model='field.value' v-if='field.type === "inputcolor"' style='width: 88px; cursor: pointer')   
-                  .color-block(@click='openColorModal = true' v-if='field.type === "inputcolor"' v-bind:style="{ 'background-color': returnColorValue(field.value) }")                                
-                  // INPUTFONT
-                  select(v-model='field.value' v-if='field.type === "inputfont"')
-                    option(v-for='font in dropdowns.fontfamilies') {{font}}
+                  p.text-right.is-label {{field.title}}
+                .eight.columns 
+                  input(v-model='field.value'  v-if='field.type === "input"') 
                   // INPUTPX
                   input(v-model='field.value' type='number' v-if='field.type === "inputpx"' style='width: 100px')  
-                  input(v-if='field.type === "inputpx"' value='px' style='width: 20px' disabled)  
-                  // INPUTFONTWEIGHT
-                  select(v-model='field.value' v-if='field.type === "inputfontweight"')
-                    option(v-for='weight in dropdowns.fontweight') {{weight}}
-                  // INPUTALIGNMENT
-                  select(v-model='field.value' v-if='field.type === "dropdownalignment"')
-                    option(v-for='weight in dropdowns.alignment') {{weight}}                    
-                  p(v-if='field.key === "content"') 
-                  // TEXTAREA
-                  textarea(v-bind:class='field.focused ? "textarea-open" : ""' placeholder='Insert HTML here' v-model='field.value' v-if='field.type === "textarea"' @focus='field.focused = true' @blur='field.focused = false')                  
-              hr           
-
-            .twelve.columns.minor-padding.center-text
-              button.button-primary.large-buttons(@click='addNewSection()') Add More              
-            hr               
-          
-          
-          // OPTIONS EDITOR
-          div(v-if='activeTab === 3')
-            .row.flex-row(v-for='option in options' )
-              .five.columns
-                p.text-right.is-label(v-if='option.visibleif()') {{option.title}}
-              .seven.columns
-                  button.button(v-if='option.type === "boolean"' v-bind:class='option.value ? "button-primary" : ""' @click='option.value = !option.value; setUserOptions()') {{option.value}}
-                  input(v-if='option.type === "number"' type='number' @change='setUserOptions()' v-model='option.value' v-show='option.visibleif()') 
-              
-                
+                  input(v-if='field.type === "inputpx"' value='px' style='width: 20px' disabled)                                            
+                  // INPUT COLOR
+                  input.color-inputinput(@click='openGlobalColorModal = true; colorSelected = field' v-model='field.value' v-if='field.type === "inputcolor"' style='width: 88px; cursor: pointer')   
+                  .color-block(@click='openGlobalColorModal = true' v-if='field.type === "inputcolor"' v-bind:style="{ 'background-color': field.value }")                
+              hr             
+              .twelve.columns.minor-padding.center-text
+                button.large-buttons(@click='restoreGlobalDefaults()') Restore Global Defaults          
             
+            // PARTIAL CONTENT EDITOR
+            div(v-if='activeTab === 2')             
+              div(v-for='(partial, index) in jsonFile.partials')      
+                .row.flex-row
+                  .nine.columns                  
+                    button(@click='indexStored = index; openModal = true') 
+                      | {{partial.name}}             
+                    button(style='margin-left: 10px; float: right' @click='partial.showProps = !partial.showProps') 
+                      i(v-bind:class='partial.showProps ? "fas" : "far"').fa-edit 
+                  .two.columns(style='display: flex; justify-content: space-around')                         
+                    i.fas.fa-angle-double-up.pointer.green(@click='moveItemUp(index)' v-bind:class='index === 0 ? "disabled" : ""')             
+                    i.fas.fa-angle-double-down.pointer.green(@click='moveItemDown(index)' v-bind:class='index === jsonFile.partials.length -1 ? "disabled" : ""')             
+                  .one.columns
+                    i.far.fa-times-circle.pointer.red(@click='removeItem(index)')                     
+
+                .row.flex-row(v-for="field in partial.content" v-show='partial.showProps')   
+                  .four.columns 
+                    p.is-label {{field.title}}
+                  .seven.columns 
+                    // INPUTIMAGES
+                    a(@click='imageSelected = field; openImageModal = true')
+                      img.image-thumbnail(v-if='field.type === "inputimage"' v-bind:src='field.value')           
+                    // INPUT 
+                    input(v-model='field.value' v-if='field.type === "input"')       
+                    // INPUT COLOR
+                    input.color-inputinput(@click='openColorModal = true; colorSelected = field' v-model='field.value' v-if='field.type === "inputcolor"' style='width: 88px; cursor: pointer')   
+                    .color-block(@click='openColorModal = true' v-if='field.type === "inputcolor"' v-bind:style="{ 'background-color': returnColorValue(field.value) }")                                
+                    // INPUTFONT
+                    select(v-model='field.value' v-if='field.type === "inputfont"')
+                      option(v-for='font in dropdowns.fontfamilies') {{font}}
+                    // INPUTPX
+                    input(v-model='field.value' type='number' v-if='field.type === "inputpx"' style='width: 100px')  
+                    input(v-if='field.type === "inputpx"' value='px' style='width: 20px' disabled)  
+                    // INPUTFONTWEIGHT
+                    select(v-model='field.value' v-if='field.type === "inputfontweight"')
+                      option(v-for='weight in dropdowns.fontweight') {{weight}}
+                    // INPUTALIGNMENT
+                    select(v-model='field.value' v-if='field.type === "dropdownalignment"')
+                      option(v-for='weight in dropdowns.alignment') {{weight}}                    
+                    p(v-if='field.key === "content"') 
+                    // TEXTAREA
+                    textarea(v-bind:class='field.focused ? "textarea-open" : ""' placeholder='Insert HTML here' v-model='field.value' v-if='field.type === "textarea"' @focus='field.focused = true' @blur='field.focused = false')                  
+                hr           
+
+              .twelve.columns.minor-padding.center-text
+                button.button-primary.large-buttons(@click='addNewSection()') Add More              
+              hr               
+            
+            
+            // OPTIONS EDITOR
+            div(v-if='activeTab === 3')
+              .row.flex-row(v-for='option in options' )
+                .five.columns
+                  p.text-right.is-label(v-if='option.visibleif()') {{option.title}}
+                .seven.columns
+                    button.button(v-if='option.type === "boolean"' v-bind:class='option.value ? "button-primary" : ""' @click='option.value = !option.value; setUserOptions()') {{option.value}}
+                    input(v-if='option.type === "number"' type='number' @change='setUserOptions()' v-model='option.value' v-show='option.visibleif()') 
+                
+                  
+              
 
         // PREVIEW SECTION
         #preview-container.seven.columns
           h5.center-text.no-padding Preview 
           p.center-text current file: 
             strong {{io.filename}}.html
-          button.button.preview-btn(@click='openPreviewModal = true') PREVIEW HTML
-          button.button.zoomout-btn(@click='setZoomLevel(-1)')
-            i.fas.fa-minus-circle
-          button.button.zoomin-btn(@click='setZoomLevel(1)') 
-            i.fas.fa-plus-circle
+          button.button.preview-btn(@click='copyToClipboard()') Copy To Clipboard
+          a.newwindow-btn(href='/output/template.html' target="_blank") View in new window
+          .loading-ctn(v-if='!iframeIsReady')    
+            i.fas.fa-spinner.fa-spin 
           #iframecontainer(v-bind:class='iframeZoom === 0 ? "fullframe-xs" : "fullframe-md"')
-            iframe(v-if='iframeIsReady' src="/output/template.html" style='width: 100%; height: 100%' v-bind:class='iframeZoom === 0 ? "iframe-xs" : ""')
-          div(v-if='!iframeIsReady'  style='text-align: center; margin-top: 40px')            
-            h3
-              i.fas.fa-spinner.fa-spin 
+            iframe(id='iframeContainer' src="./html/iframe.html" style='width: 100%; height: 100%' v-bind:class='iframeZoom === 0 ? "iframe-xs" : ""')
+
 
 
       // BUILD BUTTON
@@ -392,22 +389,26 @@
       opacity: 0
       transition: 0.1s      
 
-    #preview-container
-      min-height: 1200px
+    #preview-container      
       position: relative
       z-index: 1
       .preview-btn
         position: absolute
         left: 15px
         top: 10px
-      .zoomout-btn
+      .newwindow-btn
+        position: absolute
+        right: 15px
+        top: 125px      
+        color: white
+        background-color: black
+        padding: 10px
+        text-decoration: none
+      .loading-ctn
         position: absolute
         right: 15px
         top: 10px
-      .zoomin-btn
-        position: absolute
-        right: 100px
-        top: 10px        
+     
 
 
     #emailGenerator
@@ -520,11 +521,8 @@
         transform: scale(.50)
         margin-top: -750px
 
-      #iframecontainer
-        margin-left: 15px     
-        margin-bottom: 20px  
-        width: 95%
-        height: 3000px          
+      #iframecontainer        
+        height: 870px          
 
       .image-thumbnail
         max-height: 100px

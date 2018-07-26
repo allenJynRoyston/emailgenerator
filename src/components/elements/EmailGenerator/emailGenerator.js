@@ -129,6 +129,11 @@ export default {
     },
     methods: {
         //---------------------------------
+        refreshiframe() {
+            document.getElementById('iframeContainer').contentWindow.window.refreshIframe();
+        },
+        //---------------------------------
+        //---------------------------------
         filesChange(fieldName, fileList) {
             const formData = new FormData();
             if (!fileList.length)
@@ -501,8 +506,11 @@ export default {
                     let res = yield axios.get('/output/template.html');
                     let match = res.data.includes('<div id="app"></div>');
                     if (!match) {
-                        this.htmlPreview = res.data;
-                        this.iframeIsReady = true;
+                        setTimeout(() => {
+                            this.htmlPreview = res.data;
+                            this.iframeIsReady = true;
+                            this.refreshiframe();
+                        }, 500);
                     }
                     else {
                         // delay between attempts to find template.html
