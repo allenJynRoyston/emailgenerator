@@ -219,9 +219,9 @@
                   .seven.columns                  
                     button(@click='partial.showProps = !partial.showProps' v-bind:style='{"border-left": "10px solid" + findBGColor(partial)}') 
                       | {{partial.name}}                              
-                  .four.columns(style='display: flex; justify-content: space-around')                            
-                    i.fas.fa-clone.pointer.icon-size(@click='clonePartial(partial, index)' title="Clone partial")
+                  .four.columns(style='display: flex; justify-content: space-around')                                                
                     i.fas.fa-arrows-alt-v.pointer.icon-size(@click='moveIndex = index; openMoveModal = true' title="Move partial")
+                    i.fas.fa-clone.pointer.icon-size(@click='clonePartial(partial, index)' title="Clone partial")
                     i.fas.fa-copy.pointer.icon-size(@click='copyPartial(partial)' title="Copy partial data" )
                     i.fas.fa-paste.pointer.icon-size(@click='pastePartialCheck(index)' title="Paste partial data")
          
