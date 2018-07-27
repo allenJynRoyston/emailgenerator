@@ -30,25 +30,66 @@
             button.button-primary(@click='saveFile()' v-show='io.saveSelected !== "default"') Save        
         
     #successModal(v-bind:class='openSuccessModal ? "show-modal" : "close-modal"' )
-      .modal-panel(style='text-align: center')  
+      .modal-panel.center-text
         h3 {{wittyRetort}}
         i.fas.fa-thumbs-up.fa-5x
 
-    #previewModal(v-bind:class='openPreviewModal ? "show-modal" : "close-modal"' v-if='jsonIsReady')
-      .modal-panel  
-        h3 HTML Preview        
-        .htmlpreview-container
-          pre
-            code(v-if='iframeIsReady' style='width: 3000px;')
-              p {{htmlPreview}}
+    #pasteCheckModal(v-bind:class='openPasteCheckModal ? "show-modal" : "close-modal"' )
+      .modal-panel(style='min-width: 800px; max-width: 1200px')  
         .cancel-btn
-          i.fas.fa-times.fa-2x(@click='openPreviewModal = false')
-        br
-        .row.flex-row          
-          a.button.button-primary(href='/output/template.html' download) Download HTML
-          a.button(@click='copyToClipboard()') Copy To Clipboard
-          a(href='/output/template.html' target="_blank") View in new window
+          i.fas.fa-times.fa-2x(@click='openPasteCheckModal = false')          
+        h3.center-text(v-show='copyCheckMatches.length > 0') Which properties will be overwritten?
+        h3.center-text(v-show='copyCheckMatches.length === 0') No matching properties
+        .row(v-show='copyCheckMatches.length === 0')        
+          p No matching properties to copy from.
+        .row(v-show='copyCheckMatches.length > 0')
+          .columns.two.center-text     
+            strong Selected       
+          .columns.two
+            strong Property
+          .columns.three
+            strong Current Value
+          .columns.two
+            p &nbsp;
+          .columns.three
+            strong New Value    
+        .row(v-show='copyCheckMatches.length > 0' v-for='item in copyCheckMatches')
+          .columns.two.center-text
+            a(v-show='!item.same' @click='item.active = !item.active')              
+              i.fas.icon-size(v-bind:class='item.active ? "fa-check-square" : "fa-square"')
+            a(v-show='item.same')   &nbsp;              
+          .columns.two
+            p.red(style='text-transform: uppercase') {{item.current.key}}
+          .columns.three
+            p {{item.current.value}}
+          .columns.two
+            p(v-show='!item.same').center-text
+              strong.blue(v-show='item.active')
+                i.fas.fa-long-arrow-alt-right.icon-size
+            p(v-show='item.same') &nbsp;
+          .columns.three
+            p(v-bind:class='item.active && !item.same ? "blue" : ""') 
+              span(v-show='item.active') {{item.changeto.value}}
+              span(v-show='!item.active') {{item.current.value}}
+        .row(v-show='copyCheckMatches.length > 0')
+          .twelve.columns
+            br
+            button.button-primary(@click='pastePartial()' v-show='io.saveSelected !== "default"' style='float: right') Update      
+              
 
+    #cloneModal(v-bind:class='openMoveModal ? "show-modal" : "close-modal"' v-if='jsonIsReady')
+      .modal-panel(style='width: 600px; max-height: 800px; overflow-y: scroll')  
+        .cancel-btn
+          i.fas.fa-times.fa-2x(@click='openMoveModal = false')        
+        h3.center-text Move partial to...
+        div(v-for='(partial, index) in jsonFile.partials')      
+          .row             
+            .nine.columns           
+              button(@click='moveIndex = index' v-bind:class='moveIndex === index ? "button-primary animate-movebtn" : ""' v-bind:style='{"border-left": "10px solid" + findBGColor(partial)}') 
+                | {{partial.name}}    
+            .three.columns.center-text                         
+              button(@click='movePartialTo(index)') Here                       
+          
     #imageModal(v-bind:class='openImageModal ? "show-modal" : "close-modal"' v-if='jsonIsReady')
       .modal-panel  
         h3 Images   
@@ -129,7 +170,7 @@
           p Or enter a HEX (i.e. #f2f2f2), RGB value (i.e. rgb(255, 255, 255)), or string (i.e. red, blue, green, etc):
           input(v-model='colorSelector' style='width: 200px')
           span &nbsp;&nbsp;
-          button.button(@click='colorSelect(colorSelector)') Enter          
+          button.button(@click='setColor(null, colorSelector)') Enter          
         .cancel-btn
           i.fas.fa-times.fa-2x(@click='openColorModal = false')               
 
@@ -146,7 +187,7 @@
             // MASTER CONTENT EDITOR
             div(v-if='activeTab === 0')
               .twelve.columns.minor-padding.center-text
-                button.button-primary.button.large-buttons(@click='resetBuild()') New
+                button.large-buttons(@click='resetBuild()') New
               .twelve.columns.minor-padding.center-text
                 button.large-buttons(@click='fetchSavedFiles(); openLoadModal = true') Load
               .twelve.columns.minor-padding.center-text
@@ -167,27 +208,28 @@
                   .color-block(@click='openGlobalColorModal = true' v-if='field.type === "inputcolor"' v-bind:style="{ 'background-color': field.value }")                
               hr             
               .twelve.columns.minor-padding.center-text
-                button.large-buttons(@click='restoreGlobalDefaults()') Restore Global Defaults          
+                button.button-primary.large-buttons(@click='restoreGlobalDefaults()') Restore Global Defaults          
             
             // PARTIAL CONTENT EDITOR
             div(v-if='activeTab === 2')             
               div(v-for='(partial, index) in jsonFile.partials')      
                 .row.flex-row
-                  .nine.columns                  
-                    button(@click='indexStored = index; openModal = true') 
-                      | {{partial.name}}             
-                    button(style='margin-left: 10px; float: right' @click='partial.showProps = !partial.showProps') 
-                      i(v-bind:class='partial.showProps ? "fas" : "far"').fa-edit 
-                  .two.columns(style='display: flex; justify-content: space-around')                         
-                    i.fas.fa-angle-double-up.pointer.green(@click='moveItemUp(index)' v-bind:class='index === 0 ? "disabled" : ""')             
-                    i.fas.fa-angle-double-down.pointer.green(@click='moveItemDown(index)' v-bind:class='index === jsonFile.partials.length -1 ? "disabled" : ""')             
-                  .one.columns
-                    i.far.fa-times-circle.pointer.red(@click='removeItem(index)')                     
+                  .one.columns.center-text
+                    i.fas.fa-trash-alt.red.pointer.icon-size(@click='removeItem(index)' title="Delete partial")                     
+                  .seven.columns                  
+                    button(@click='partial.showProps = !partial.showProps' v-bind:style='{"border-left": "10px solid" + findBGColor(partial)}') 
+                      | {{partial.name}}                              
+                  .four.columns(style='display: flex; justify-content: space-around')                            
+                    i.fas.fa-clone.pointer.icon-size(@click='clonePartial(partial, index)' title="Clone partial")
+                    i.fas.fa-arrows-alt-v.pointer.icon-size(@click='moveIndex = index; openMoveModal = true' title="Move partial")
+                    i.fas.fa-copy.pointer.icon-size(@click='copyPartial(partial)' title="Copy partial data" )
+                    i.fas.fa-paste.pointer.icon-size(@click='pastePartialCheck(index)' title="Paste partial data")
+         
 
                 .row.flex-row(v-for="field in partial.content" v-show='partial.showProps')   
                   .four.columns 
                     p.is-label {{field.title}}
-                  .seven.columns 
+                  .eight.columns 
                     // INPUTIMAGES
                     a(@click='imageSelected = field; openImageModal = true')
                       img.image-thumbnail(v-if='field.type === "inputimage"' v-bind:src='field.value')           
@@ -215,7 +257,7 @@
 
               .twelve.columns.minor-padding.center-text
                 button.button-primary.large-buttons(@click='addNewSection()') Add More              
-              hr               
+              
             
             
             // OPTIONS EDITOR
@@ -226,17 +268,15 @@
                 .seven.columns
                     button.button(v-if='option.type === "boolean"' v-bind:class='option.value ? "button-primary" : ""' @click='option.value = !option.value; setUserOptions()') {{option.value}}
                     input(v-if='option.type === "number"' type='number' @change='setUserOptions()' v-model='option.value' v-show='option.visibleif()') 
-                
-                  
-              
-
+                                  
         // PREVIEW SECTION
         #preview-container.seven.columns
           h5.center-text.no-padding Preview 
           p.center-text current file: 
             strong {{io.filename}}.html
-          button.button.preview-btn(@click='copyToClipboard()') Copy To Clipboard
+          button.preview-btn(v-show='iframeIsReady' @click='copyToClipboard()') Copy To Clipboard
           a.newwindow-btn(href='/output/template.html' target="_blank") View in new window
+          a.refresh-btn(@click='refreshiframe()') Force refresh
           .loading-ctn(v-if='!iframeIsReady')    
             i.fas.fa-spinner.fa-spin 
           #iframecontainer(v-bind:class='iframeZoom === 0 ? "fullframe-xs" : "fullframe-md"')
@@ -254,7 +294,7 @@
 <script src='./emailGenerator.js'></script>
 
 <style lang="sass" scoped>  
-    #saveModal, #loadModal, #successModal, #emailmodal, #imageModal, #colorSelectorModal, #globalColorSelectorModal
+    #saveModal, #loadModal, #successModal, #emailmodal, #imageModal, #colorSelectorModal, #globalColorSelectorModal, #cloneModal, #pasteCheckModal
       position: fixed
       top: 0
       height: 100%
@@ -371,6 +411,9 @@
       background-color: white
       color: black
       border-radius: 10px
+      box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.25)  ; 
+      -webkit-box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.25)  ; 
+      -moz-box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.25)  ;             
 
       .cancel-btn
         position: absolute
@@ -398,12 +441,20 @@
         top: 10px
       .newwindow-btn
         position: absolute
-        right: 15px
-        top: 125px      
+        right: 10px
+        bottom: 10px      
         color: white
         background-color: black
         padding: 10px
         text-decoration: none
+      .refresh-btn
+        position: absolute
+        left: 10px
+        bottom: 10px      
+        color: white
+        background-color: black
+        padding: 10px
+        text-decoration: none        
       .loading-ctn
         position: absolute
         right: 15px
@@ -543,8 +594,27 @@
         margin-right: 5px
  
 
+    @-webkit-keyframes bounce
+      0% {-webkit-transform: translateX(-10px);}       
+      50% {-webkit-transform: translateX(10px);}
+      0% {-webkit-transform: translateX(-10px);}  
 
+    
+    @-moz-keyframes bounce 
+      0% {-moz-transform: translateX(-10px);} 
+      50% {-moz-transform: translateX(10px);}
+      100% {-moz-transform: translateX(-10px);} 
+      
+    @keyframes bounce 
+      0% {transform: translateX(-10px);} 
+      50% {transform: translateX(0px);}
+      100% {transform: translateX(-10px);} 
+      
 
-        
+    .animate-movebtn
+      animation: bounce 1s infinite;
+      -webkit-animation: bounce 1s infinite;
+      -moz-animation: bounce 1s infinite;
+      -o-animation: bounce 1s infinite;
 
 </style>

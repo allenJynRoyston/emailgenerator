@@ -1,5 +1,8 @@
 {
   "name": "Disclosure",
+  "metadata": {
+    "type": "prebuilt"
+  },     
   "content": [
     {
       "title": "paragraph 1",

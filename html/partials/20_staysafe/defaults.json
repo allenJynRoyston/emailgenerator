@@ -1,5 +1,8 @@
 {
   "name": "Stay Safe",
+  "metadata": {
+    "type": "prebuilt"
+  },       
   "content": [
     {
       "title": "image",

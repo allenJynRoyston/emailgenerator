@@ -14,7 +14,6 @@ export default new Vuex.Store({
         drawerIsOpen: false,
         routes: [
             { title: 'Home', goto: '/', expand: false },
-            { title: 'About', goto: '/about', expand: true }
         ]
     },
     getters: {

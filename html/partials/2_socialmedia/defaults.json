@@ -1,5 +1,8 @@
 {
   "name": "Social Media Buttons",
+  "metadata": {
+    "type": "prebuilt"
+  },  
   "content": [
     {
       "title": "bgcolor",

@@ -1,5 +1,8 @@
 {
   "name": "Button Section",
+  "metadata": {
+    "type": "button"
+  },    
   "content": [
     {
       "title": "Text",

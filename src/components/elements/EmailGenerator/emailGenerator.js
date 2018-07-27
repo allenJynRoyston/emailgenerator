@@ -16,16 +16,20 @@ export default {
             jsonIsReady: false,
             jsonFile: null,
             resetFile: null,
+            moveIndex: null,
+            copyContents: null,
+            copyCheckMatches: [],
             devBuild: false,
             imageSelected: null,
             imageUrl: 'https://picsum.photos/600/300',
             imageModalType: 0,
             imageFile: null,
             openModal: false,
+            openPasteCheckModal: false,
+            openMoveModal: false,
             openImageModal: false,
             openSaveModal: false,
             openLoadModal: false,
-            openPreviewModal: false,
             openSuccessModal: false,
             openGlobalColorModal: false,
             openColorModal: false,
@@ -129,6 +133,88 @@ export default {
     },
     methods: {
         //---------------------------------
+        copyPartial(partial) {
+            this.copyContents = partial;
+            this.wittyRetort = 'Contents copied';
+            this.openSuccessModal = true;
+            setTimeout(() => {
+                this.openSuccessModal = false;
+            }, 1000);
+        },
+        //---------------------------------
+        //---------------------------------
+        movePartialTo(index) {
+            if (index === -1) {
+                index = 0;
+            }
+            this.array_move(this.jsonFile.partials, this.moveIndex, index);
+            this.moveIndex = index;
+            // this.openMoveModal = false
+        },
+        //---------------------------------
+        //---------------------------------
+        clonePartial(partial, index) {
+            this.jsonFile.partials.push(partial);
+            this.array_move(this.jsonFile.partials, this.jsonFile.partials.length - 1, index + 1);
+            this.wittyRetort = 'Partial duplicated';
+            this.openSuccessModal = true;
+            setTimeout(() => {
+                this.openSuccessModal = false;
+            }, 1000);
+        },
+        //---------------------------------
+        //---------------------------------
+        pastePartialCheck(index) {
+            this.copyCheckMatches = [];
+            this.jsonFile.partials[index].content.forEach(item => {
+                this.copyContents.content.forEach(_item => {
+                    if (_item.key === item.key && (_item.value !== item.value)) {
+                        this.copyCheckMatches.push({
+                            active: true,
+                            same: (_item.value === item.value),
+                            current: { key: item.key, value: item.value },
+                            changeto: { key: _item.key, value: _item.value },
+                            data: item,
+                            value: _item.value,
+                            index
+                        });
+                    }
+                });
+            });
+            this.openPasteCheckModal = true;
+        },
+        //---------------------------------
+        //---------------------------------
+        pastePartial() {
+            this.openPasteCheckModal = false;
+            let index = this.copyCheckMatches[0].index;
+            this.jsonFile.partials[index].content.forEach(item => {
+                this.copyCheckMatches.forEach(_item => {
+                    if (_item.data.key === item.key && (_item.active && !_item.same)) {
+                        item.value = _item.value;
+                    }
+                });
+            });
+            console.log(this.jsonFile.partials[index]);
+            this.wittyRetort = 'Matching properties pasted';
+            this.openSuccessModal = true;
+            setTimeout(() => {
+                this.openSuccessModal = false;
+            }, 1000);
+        },
+        //---------------------------------
+        //---------------------------------
+        findBGColor(partial) {
+            let match = partial.content.filter(item => {
+                return item.key === 'bgcolor';
+            });
+            if (match.length > 0) {
+                return this.returnColorValue(match[0].value);
+            }
+            return null;
+        },
+        //---------------------------------
+        //---------------------------------
         refreshiframe() {
             document.getElementById('iframeContainer').contentWindow.window.refreshIframe();
         },
@@ -171,9 +257,14 @@ export default {
         },
         //---------------------------------
         //---------------------------------
-        setColor(obj) {
+        setColor(obj, force = null) {
+            if (!!force) {
+                this.colorSelected.value = force;
+            }
+            else {
+                this.colorSelected.value = `[${obj.key}]`;
+            }
             this.openColorModal = false;
-            this.colorSelected.value = `[${obj.key}]`;
             this.colorSelector = null;
         },
         //---------------------------------
@@ -273,6 +364,7 @@ export default {
                 });
             });
             this.jsonFile = data;
+            console.log(this.jsonFile);
             this.jsonIsReady = true;
         },
         //---------------------------------
@@ -335,7 +427,9 @@ export default {
         //---------------------------------
         //---------------------------------
         removeItem(index) {
-            this.jsonFile.partials.splice(index, 1);
+            if (confirm("Delete this partial?")) {
+                this.jsonFile.partials.splice(index, 1);
+            }
         },
         //---------------------------------
         //---------------------------------

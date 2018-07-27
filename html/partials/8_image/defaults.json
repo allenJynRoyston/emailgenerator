@@ -1,5 +1,8 @@
 {
   "name": "Image Only",
+  "metadata": {
+    "type": "images"
+  },     
   "content": [
     {
       "title": "image",

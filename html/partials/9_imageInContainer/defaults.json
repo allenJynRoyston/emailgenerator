@@ -1,5 +1,8 @@
 {
   "name": "Image In Container",
+  "metadata": {
+    "type": "images"
+  },       
   "content": [
     {
       "title": "image",

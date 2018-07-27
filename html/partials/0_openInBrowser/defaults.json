@@ -1,5 +1,8 @@
 {
   "name": "Open In Browser",
+  "metadata": {
+    "type": "prebuilt"
+  },
   "content": [
     {
       "title": "text color",
@@ -30,13 +33,7 @@
       "key": "alignment",
       "value": "center",
       "type": "dropdownalignment"
-    },      
-    {
-      "title": "padding",
-      "key": "padding",
-      "value": "10px 10px 10px 10px",
-      "type": "input"
-    },  
+    },       
     {
       "title": "link 1",
       "key": "link1",
@@ -61,6 +58,12 @@
       "value": "http://www.google.com",
       "type": "input"     
     },
+    {
+      "title": "padding",
+      "key": "padding",
+      "value": "10px 10px 10px 10px",
+      "type": "input"
+    },     
     {
       "title": "bgcolor",
       "key": "bgcolor",

@@ -1,5 +1,8 @@
 {
   "name": "Text Section",
+  "metadata": {
+    "type": "text"
+  },  
   "content": [
     {
       "title": "HTML",
