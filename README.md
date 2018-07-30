@@ -43,6 +43,8 @@ Gmail:
 Coming soon
 
 ## Install instructions:
+Install the [cache killer](https://chrome.google.com/webstore/detail/classic-cache-killer/kkmknnnjliniefekpicbaaobdnjjikfp) for Chrome before proceeding. (See below in Super Important)
+
 ```sh
 $ git clone https://github.com/allenRoyston/emailgenerator.git
 $ cd emailGenerator
