@@ -194,9 +194,7 @@ export default {
           }  
         })        
       })      
-
-      console.log(this.jsonFile.partials[index])
-
+    
       this.wittyRetort = 'Matching properties pasted'
       this.openSuccessModal = true
       setTimeout( () => {
@@ -389,8 +387,7 @@ export default {
         })
       })     
             
-      this.jsonFile = data;         
-      console.log(this.jsonFile)
+      this.jsonFile = data;       
       this.jsonIsReady = true;    
     },
     //---------------------------------
