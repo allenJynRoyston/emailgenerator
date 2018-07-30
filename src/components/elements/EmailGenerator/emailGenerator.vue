@@ -88,7 +88,7 @@
               button(@click='moveIndex = index' v-bind:class='moveIndex === index ? "button-primary animate-movebtn" : ""' v-bind:style='{"border-left": "10px solid" + findBGColor(partial)}') 
                 | {{partial.name}}    
             .three.columns.center-text                         
-              button(@click='movePartialTo(index)') Here                       
+              button(@click='movePartialTo(index)') Move to here                       
           
     #imageModal(v-bind:class='openImageModal ? "show-modal" : "close-modal"' v-if='jsonIsReady')
       .modal-panel  
@@ -133,13 +133,18 @@
           i.fas.fa-times.fa-2x(@click='openImageModal = false')
       
     #emailmodal(v-bind:class='openModal ? "show-modal" : "close-modal"' v-if='jsonIsReady')
-      .modal-panel
+      .modal-panel(style='width: 900px')
         .cancel-btn
           i.fas.fa-times.fa-2x(@click='openModal = false')
         .row
           .columns.twelve
             h3 Select a partial        
-          .columns.twelve(v-for="option in componentOptions" style='padding: 0px 10px; width: 25%')
+        .row
+          p Filter by: &nbsp;&nbsp;            
+            a.filter-catagory(v-for='type in componentOptions.catagories' @click='componentOptionsType = type' v-bind:class='componentOptionsType == type ? "filter-active" : ""') {{type}}
+              
+        .row        
+          .columns.twelve(v-for="option in componentOptions[componentOptionsType]" style='padding: 0px 10px; width: 25%')
             button.button(@click='selectedOption(option)' style='width: 100%' v-bind:class='option.active ? "button-primary" : ""' v-on:mouseover="option.active = true" v-on:mouseout="option.active = false") {{option.name}}                    
           .columns.twelve
             hr
@@ -306,6 +311,13 @@
       justify-content: center
       z-index: 15
 
+      .filter-catagory
+        margin-left: 10px
+
+      .filter-active
+        text-decoration: underline
+        color: black
+
       .image-selectable
         width: auto
         min-width: 100px
@@ -449,8 +461,8 @@
         text-decoration: none
       .refresh-btn
         position: absolute
-        left: 10px
-        bottom: 10px      
+        right: 10px
+        top: 115px      
         color: white
         background-color: black
         padding: 10px
@@ -491,12 +503,11 @@
 
       .tabs
         border-radius: 0px!important
-        width: 25%
-        color: #0a3d62
+        width: 25%        
       
       .full-width
-        width: 100%          
-      
+        width: 100%              
+
       .large-buttons
         width: 80%
         max-width: 400px

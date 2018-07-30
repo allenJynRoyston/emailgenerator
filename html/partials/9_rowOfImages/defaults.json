@@ -1,0 +1,120 @@
+{
+  "name": "Row Of Images",
+  "metadata": {
+    "type": "images"
+  },       
+  "content": [
+    {
+      "title": "Image 1",
+      "key": "image1",
+      "value": "https://picsum.photos/100/50",
+      "type": "inputimage"
+    },
+    {
+      "title": "Alt 1",
+      "key": "alt1",
+      "value": "Image 1 alt tag",
+      "type": "input"
+    },    
+    {
+      "title": "Image 1 Width",
+      "key": "width1",
+      "value": "100",
+      "type": "inputpx"
+    },
+    {
+      "title": "Image 1 Height",
+      "key": "height1",
+      "value": "50",
+      "type": "inputpx"
+    },
+
+    {
+      "title": "Image 2",
+      "key": "image2",
+      "value": "https://picsum.photos/100/50",
+      "type": "inputimage"
+    },
+    {
+      "title": "Alt 2",
+      "key": "alt2",
+      "value": "Image 2 alt tag",
+      "type": "input"
+    },    
+    {
+      "title": "Image 2 Width",
+      "key": "width2",
+      "value": "100",
+      "type": "inputpx"
+    },
+    {
+      "title": "Image 2 Height",
+      "key": "height2",
+      "value": "50",
+      "type": "inputpx"
+    },
+
+    {
+      "title": "Image 3",
+      "key": "image3",
+      "value": "https://picsum.photos/100/50",
+      "type": "inputimage"
+    },
+    {
+      "title": "Alt 3",
+      "key": "alt3",
+      "value": "Image 3 alt tag",
+      "type": "input"
+    },    
+    {
+      "title": "Image 3 Width",
+      "key": "width3",
+      "value": "100",
+      "type": "inputpx"
+    },
+    {
+      "title": "Image 3 Height",
+      "key": "height3",
+      "value": "50",
+      "type": "inputpx"
+    },  
+    
+    {
+      "title": "Image 4",
+      "key": "image4",
+      "value": "https://picsum.photos/100/50",
+      "type": "inputimage"
+    },
+    {
+      "title": "Alt 4",
+      "key": "alt4",
+      "value": "Image 4 alt tag",
+      "type": "input"
+    },    
+    {
+      "title": "Image 4 Width",
+      "key": "width4",
+      "value": "100",
+      "type": "inputpx"
+    },
+    {
+      "title": "Image 4 Height",
+      "key": "height4",
+      "value": "50",
+      "type": "inputpx"
+    },      
+
+    {
+      "title": "padding",
+      "key": "padding",
+      "value": "20px 20px 20px 20px",
+      "type": "input"      
+    },    
+    {
+      "title": "bgcolor",
+      "key": "bgcolor",
+      "value": "[g_color2]",
+      "type": "inputcolor"
+    }
+  ]
+}

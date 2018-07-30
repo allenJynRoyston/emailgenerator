@@ -99,8 +99,10 @@ export default {
                 hasError: false,
                 message: null
             },
+            screenHeight: screen.availHeight,
             indexStored: null,
-            componentOptions: []
+            componentOptions: { all: [], catagories: ['all'] },
+            componentOptionsType: 'all'
         };
     },
     watch: {
@@ -373,7 +375,13 @@ export default {
             let partials = JSON.parse(list).partials;
             partials.map(partial => {
                 partial.active = false;
-                this.componentOptions.push(partial);
+                let check = partial.metadata.type in this.componentOptions;
+                if (!check) {
+                    this.componentOptions.catagories.push(partial.metadata.type);
+                    this.componentOptions[partial.metadata.type] = [];
+                }
+                this.componentOptions.all.push(partial);
+                this.componentOptions[partial.metadata.type].push(partial);
             });
         },
         //---------------------------------
