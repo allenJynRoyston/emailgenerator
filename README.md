@@ -1,5 +1,5 @@
 ## What am I?
-An email generator tool used to construct email templates quickly using somewhat predefined templates.  The HTML can then be exported for testing in Litmus tests.  The following templates have been tested to work in the following email clients:
+An email generator tool used to construct email templates quickly using somewhat predefined templates.  The commpiled HTML can then be exported for immediate use.  The following email clients have been proven to work under various scenarios:
 
 Apple Mail:
 - Apple Mail 9
