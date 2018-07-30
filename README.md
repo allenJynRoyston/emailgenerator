@@ -39,8 +39,8 @@ Gmail:
 - Yahoo! Mail (Firefox, Chrome, Explorer)
 
 
-## Preview
-Coming soon
+## Wiki
+[Click here](https://github.com/allenRoyston/emailgenerator/wiki) for a much more indepth look on how to use or expand it's functionality.
 
 ## Install instructions:
 Install the [cache killer](https://chrome.google.com/webstore/detail/classic-cache-killer/kkmknnnjliniefekpicbaaobdnjjikfp) for Chrome before proceeding. (See below in Super Important)
