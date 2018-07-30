@@ -53,5 +53,5 @@ $ gulp
 ```
 
 ## SUPER IMPORTANT
-This webapp is still very early in development and has only been tested to work on Windows 10 on Chrome.  There might be issues using other development platforms.  In addition, you'll need the [cache killer](https://chrome.google.com/webstore/detail/classic-cache-killer/kkmknnnjliniefekpicbaaobdnjjikfp) plugin for everything to work correctly.  Please install and turn it on before using the app.
+This webapp is still very early in development and has only been tested to work on Windows 10 on Chrome.  There might be graphical gliches or other issues using other development platforms such as MacOS.  In addition, you'll need the [cache killer](https://chrome.google.com/webstore/detail/classic-cache-killer/kkmknnnjliniefekpicbaaobdnjjikfp) plugin for everything to work correctly.  Please install and turn it on before starting the app.
 
