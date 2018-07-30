@@ -217,7 +217,15 @@ export default {
         //---------------------------------
         //---------------------------------
         refreshiframe() {
-            document.getElementById('iframeContainer').contentWindow.window.refreshIframe();
+            let _window = document.getElementById('iframeContainer').contentWindow.window;
+            if (!!_window.refreshIframeIsReady && _window.refreshIframeIsReady) {
+                _window.refreshIframe();
+            }
+            else {
+                setTimeout(() => {
+                    this.refreshiframe();
+                }, 50);
+            }
         },
         //---------------------------------
         //---------------------------------

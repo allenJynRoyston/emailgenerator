@@ -210,7 +210,7 @@
                   input(v-if='field.type === "inputpx"' value='px' style='width: 20px' disabled)                                            
                   // INPUT COLOR
                   input.color-inputinput(@click='openGlobalColorModal = true; colorSelected = field' v-model='field.value' v-if='field.type === "inputcolor"' style='width: 88px; cursor: pointer')   
-                  .color-block(@click='openGlobalColorModal = true' v-if='field.type === "inputcolor"' v-bind:style="{ 'background-color': field.value }")                
+                  .color-block(v-if='field.type === "inputcolor"' v-bind:style="{ 'background-color': field.value }")                
               hr             
               .twelve.columns.minor-padding.center-text
                 button.button-primary.large-buttons(@click='restoreGlobalDefaults()') Restore Global Defaults          
@@ -242,7 +242,7 @@
                     input(v-model='field.value' v-if='field.type === "input"')       
                     // INPUT COLOR
                     input.color-inputinput(@click='openColorModal = true; colorSelected = field' v-model='field.value' v-if='field.type === "inputcolor"' style='width: 88px; cursor: pointer')   
-                    .color-block(@click='openColorModal = true' v-if='field.type === "inputcolor"' v-bind:style="{ 'background-color': returnColorValue(field.value) }")                                
+                    .color-block(v-if='field.type === "inputcolor"' v-bind:style="{ 'background-color': returnColorValue(field.value) }")                                
                     // INPUTFONT
                     select(v-model='field.value' v-if='field.type === "inputfont"')
                       option(v-for='font in dropdowns.fontfamilies') {{font}}
@@ -597,8 +597,7 @@
 
       .color-block  
         display: block-inline        
-        border: 1px solid black
-        cursor: pointer
+        border: 1px solid black        
         width: 30px 
         height: 30px
         float: left  
