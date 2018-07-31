@@ -6,23 +6,33 @@
 <script src='../../node_modules/jquery/dist/jquery.min.js'></script>
 
 <script>
-let defer = (method) => {
+let defer = () => {
     if (window.jQuery && axios) {
       window.refreshIframeIsReady = true
+      
+      // create function that can be called outside of iframe
       window.refreshIframe = (args) => {
-      axios.get('/output/template.html')
-        .then((response) => {
-          // handle success
-          $('#__container_jq').empty().append(response.data)
-        })
-        .catch((error) => {
-          // handle error
-          console.log(error);
-        })
-  }
-  window.refreshIframe()
+        axios.get('/output/template.html')
+          .then((response) => {
+            // handle success    
+            $('#__container_jq').empty()      
+            setTimeout(() => {
+              $('#__container_jq').append(response.data)
+            }, 100)            
+          })
+          .catch((error) => {
+            // handle error
+            console.log(error);
+            setTimeout(() => { 
+              window.refreshIframe()
+            }, 50);
+          })
+      }
+      window.refreshIframe()
     } else {
-        setTimeout(function() { defer(method) }, 50);
+      setTimeout(() => { 
+        defer() 
+      }, 50);
     }
 }
 defer()

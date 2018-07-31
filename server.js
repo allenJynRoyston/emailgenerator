@@ -10,6 +10,13 @@ const jsonfile = require('jsonfile')
 const mkdirp = require('mkdirp');
 const multer = require('multer');
 
+
+// route setup
+let routes = ['html', 'src', 'dist', 'assets', 'uploads', 'output', 'instructions', 'node_modules']
+routes.forEach((route) => {
+  app.use(`/${route}`, express.static(`./${route}`))
+})
+
 // setup compression
 app.use(compression())
 app.use(bodyParser.json({limit: '50mb'}));
@@ -23,15 +30,7 @@ app.use(function (req, res, next) {
   next()
 })
 
-// allows server to fetch/read from these folders
-app.use('/html', express.static(path.join(__dirname, './html')))
-app.use('/src', express.static(path.join(__dirname, './src')))
-app.use('/dist', express.static(path.join(__dirname, './dist')))
-app.use('/assets', express.static(path.join(__dirname, './assets')))
-app.use('/uploads', express.static(path.join(__dirname, './uploads')))
-app.use('/output', express.static(path.join(__dirname, './output')))
-app.use('/instructions', express.static(path.join(__dirname, './instructions')))
-app.use('/node_modules', express.static(path.join(__dirname, './node_modules')))
+
 
 
 // UTILITIES  **********************
