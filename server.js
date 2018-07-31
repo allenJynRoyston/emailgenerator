@@ -31,8 +31,6 @@ app.use(function (req, res, next) {
 })
 
 
-
-
 // UTILITIES  **********************
 const copyFile = (src, dest) => {
   let readStream = fs.createReadStream(src);
@@ -117,8 +115,6 @@ let upload = multer({storage: storage});
 app.post('/api/upload', upload.any(), (req, res) => {    
   res.send({status: true, message: 'Images uploaded successfully'})
 });  
-
-
 // end POSTS 
 
 
