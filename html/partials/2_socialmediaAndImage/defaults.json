@@ -37,7 +37,7 @@
     {
       "title": "fbimage",
       "key": "fbimage",
-      "value": "https://s3.eu-west-2.amazonaws.com/cyb-239/images/facebook-black.png",
+      "value": "",
       "type": "inputimage"      
     },    
     {
@@ -49,31 +49,31 @@
     {
       "title": "twitterimage",
       "key": "twitterimage",
-      "value": "https://s3.eu-west-2.amazonaws.com/cyb-239/images/twitter-black.png",
+      "value": "",
       "type": "inputimage"      
     },       
     {
       "title": "youtubelink",
       "key": "youtubelink",
-      "value": "https://www.youtube.com/channel/UCg_mnQfUUE_veP6LXydTybQ",
+      "value": "",
       "type": "input"      
     },
     {
       "title": "youtubeimage",
       "key": "youtubeimage",
-      "value": "https://s3.eu-west-2.amazonaws.com/cyb-239/images/youtube-black.png",
+      "value": "",
       "type": "inputimage"      
     },       
     {
       "title": "instagramlink",
       "key": "instagramlink",
-      "value": "https://www.instagram.com/youandb/",
+      "value": "",
       "type": "input"      
     },
     {
       "title": "instagramimage",
       "key": "instagramimage",
-      "value": "https://s3.eu-west-2.amazonaws.com/cyb-239/images/instagram-black.png",
+      "value": "",
       "type": "inputimage"      
     }        
   ]
