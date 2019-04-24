@@ -4,7 +4,7 @@
       .modal-panel(style='text-align: center; width: 400px')  
         .cancel-btn
           i.fas.fa-times.fa-2x(@click='openLoadModal = false; io.loadSelected = io.filename')      
-        h3 Load File
+        h5 Load File
         .row.flex-row
           .columns.two
             label Filename
@@ -19,7 +19,7 @@
       .modal-panel(style='text-align: center; width: 400px')  
         .cancel-btn
           i.fas.fa-times.fa-2x(@click='openSaveModal = false')      
-        h3 Save As...
+        h5 Save As...
         .row.flex-row
           .columns.two
             label Filename
@@ -31,7 +31,7 @@
         
     #successModal(v-bind:class='openSuccessModal ? "show-modal" : "close-modal"' )
       .modal-panel.center-text
-        h3 {{wittyRetort}}
+        h5 {{wittyRetort}}
         i.fas.fa-thumbs-up.fa-5x
 
     #pasteCheckModal(v-bind:class='openPasteCheckModal ? "show-modal" : "close-modal"' )
@@ -92,7 +92,7 @@
           
     #imageModal(v-bind:class='openImageModal ? "show-modal" : "close-modal"' v-if='jsonIsReady')
       .modal-panel  
-        h3 Images   
+        h5 Images   
         .row
           span
             a(@click='imageModalType  = 0') Select Images
@@ -138,7 +138,7 @@
           i.fas.fa-times.fa-2x(@click='openModal = false')
         .row
           .columns.twelve
-            h3 Select a partial        
+            h5 Select a partial        
         .row
           p Filter by: &nbsp;&nbsp;            
             a.filter-catagory(v-for='type in componentOptions.catagories' @click='componentOptionsType = type' v-bind:class='componentOptionsType == type ? "filter-active" : ""') {{type}}
@@ -154,7 +154,7 @@
 
     #globalColorSelectorModal(v-bind:class='openGlobalColorModal ? "show-modal" : "close-modal"' v-if='jsonIsReady')
       .modal-panel  
-        h3 Set Global Color
+        h5 Set Global Color
         .row     
           p Enter a HEX (i.e. #f2f2f2), RGB value (i.e. rgb(255, 255, 255)), or string (i.e. red, blue, green, etc):
           input(v-model='colorSelector' style='width: 200px')
@@ -165,7 +165,7 @@
 
     #colorSelectorModal(v-bind:class='openColorModal ? "show-modal" : "close-modal"' v-if='jsonIsReady')
       .modal-panel  
-        h3 Color Selector   
+        h5 Color Selector   
         .row     
           p Select from global colors:             
           .color-block-large(@click='setColor(field)' v-for="(field, index) in jsonFile.globals.content" v-if='field.type === "inputcolor"' v-bind:style="{ 'background-color': field.value }")   
@@ -184,22 +184,21 @@
         h3.center-text DEV MODE ENABLED         
         p This mode is for developing the UI/UX - PREVIEW WILL NOT BE UPDATED
           
-      .row        
-        .five.columns(v-if='jsonIsReady')          
-          a.button.tabs(v-for='(option, index) in menuOptions' @click='activeTab = index; addToUrlParams(option)' v-bind:class='activeTab === index ? "button-primary" : ""') {{option.title}}        
-          div(style='max-height: 925px; overflow-y: scroll')
+      .email-gen-container        
+        .options(v-if='jsonIsReady')     
+          .tab-header
+            a.tabs(v-for='(option, index) in menuOptions' @click='activeTab = index; addToUrlParams(option)' v-bind:class='activeTab === index ? "button-primary active" : ""')
+              | {{option.title}}        
+          div(style='margin-top: -10px')
             
             // MASTER CONTENT EDITOR
-            div(v-if='activeTab === 0')
-              .twelve.columns.minor-padding.center-text
-                button.large-buttons(@click='resetBuild()') New
-              .twelve.columns.minor-padding.center-text
-                button.large-buttons(@click='fetchSavedFiles(); openLoadModal = true') Load
-              .twelve.columns.minor-padding.center-text
-                button.large-buttons(@click='openSaveModal = true') Save            
+            .tab-container.center-content(v-if='activeTab === 0')              
+              button.large-buttons(@click='resetBuild()') New              
+              button.large-buttons(@click='fetchSavedFiles(); openLoadModal = true') Load              
+              button.large-buttons(@click='openSaveModal = true') Save            
 
             // MASTER CONTENT EDITOR
-            div(v-if='activeTab === 1')             
+            .tab-container(v-if='activeTab === 1')             
               .row.flex-row(v-for="field in jsonFile.globals.content")              
                 .four.columns 
                   p.text-right.is-label {{field.title}}
@@ -212,11 +211,11 @@
                   input.color-inputinput(@click='openGlobalColorModal = true; colorSelected = field' v-model='field.value' v-if='field.type === "inputcolor"' style='width: 88px; cursor: pointer')   
                   .color-block(v-if='field.type === "inputcolor"' v-bind:style="{ 'background-color': field.value }")                
               hr             
-              .twelve.columns.minor-padding.center-text
+              .center-content
                 button.button-primary.large-buttons(@click='restoreGlobalDefaults()') Restore Global Defaults          
             
             // PARTIAL CONTENT EDITOR
-            div(v-if='activeTab === 2')             
+            .tab-container(v-if='activeTab === 2')             
               div(v-for='(partial, index) in jsonFile.partials')      
                 .row.flex-row
                   .one.columns.center-text
@@ -260,13 +259,13 @@
                     textarea(v-bind:class='field.focused ? "textarea-open" : ""' placeholder='Insert HTML here' v-model='field.value' v-if='field.type === "textarea"' @focus='field.focused = true' @blur='field.focused = false')                  
                 hr           
 
-              .twelve.columns.minor-padding.center-text
+              .center-content
                 button.button-primary.large-buttons(@click='addNewSection()') Add More              
               
             
             
             // OPTIONS EDITOR
-            div(v-if='activeTab === 3')
+            .tab-container(v-if='activeTab === 3')
               .row.flex-row(v-for='option in options' )
                 .five.columns
                   p.text-right.is-label(v-if='option.visibleif()') {{option.title}}
@@ -275,8 +274,7 @@
                     input(v-if='option.type === "number"' type='number' @change='setUserOptions()' v-model='option.value' v-show='option.visibleif()') 
                                   
         // PREVIEW SECTION
-        #preview-container.seven.columns
-          h5.center-text.no-padding Preview 
+        #preview-container        
           p.center-text current file: 
             strong {{io.filename}}.html
           button.preview-btn(v-show='iframeIsReady' @click='copyToClipboard()') Copy To Clipboard
@@ -313,10 +311,13 @@
 
       .filter-catagory
         margin-left: 10px
+        text-transform: uppercase
+        color: lightgrey
+        padding: 0 5px
 
       .filter-active
-        text-decoration: underline
         color: black
+        border-bottom: 1px solid green
 
       .image-selectable
         width: auto
@@ -400,19 +401,22 @@
       align-items: center
       justify-content: center
       z-index: 10
+      padding-top: 10px
 
       .htmlpreview-container
         width: 800px
         height: 800px
         overflow-y: scroll
+        
 
       .button
         float: right
         margin-left: 20px
-      
+        background-color: white
       a 
         text-decoration: none
         margin-top: -10px
+
          
     .modal-panel
       position: relative
@@ -447,6 +451,13 @@
     #preview-container      
       position: relative
       z-index: 1
+      min-width: 800px
+      margin-left: 50px
+      background-color: white
+      border-radius: 5px
+      padding: 20px 0 0 0 
+      
+      
       .preview-btn
         position: absolute
         left: 15px
@@ -454,19 +465,26 @@
       .newwindow-btn
         position: absolute
         right: 10px
-        bottom: 10px      
+        top: 85px      
         color: white
         background-color: black
         padding: 10px
-        text-decoration: none
+        text-decoration: none     
+        opacity: 0.1
+        transition: 0.3s
+      .newwindow-btn:hover
+        opacity: 1
+
       .refresh-btn
         position: absolute
         right: 10px
-        top: 115px      
+        top: 12px      
         color: white
         background-color: black
         padding: 10px
-        text-decoration: none        
+        text-decoration: none     
+        opacity: 1
+
       .loading-ctn
         position: absolute
         right: 15px
@@ -476,6 +494,43 @@
 
     #emailGenerator
       padding: 50px!important
+      
+
+      .email-gen-container
+        display: flex
+        justify-content: center
+        padding: 10px
+
+        .tab-header
+          width: calc(100%)
+          display: flex;
+          text-align: center
+          text-transform: uppercase     
+
+          a
+            padding: 10px     
+            color: lightgrey
+          
+          a.active
+            color: black
+            border-bottom: 1px solid green
+          
+
+
+        .options
+          width: 500px
+          height: auto;
+          border-radius: 5px
+          
+        .tab-container          
+          background-color: white
+          padding: 20px 0;
+
+        .center-content
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column        
             
       .devwarning
         background-color: orange
@@ -485,7 +540,7 @@
         justify-content: center
         margin-bottom: 20px
         margin-top: -50px
-        h3 
+        h5 
           padding: 20px
           margin: 0px
 
@@ -504,6 +559,8 @@
       .tabs
         border-radius: 0px!important
         width: 25%        
+        background: white
+        color: black
       
       .full-width
         width: 100%              
@@ -528,7 +585,7 @@
         margin: 0px
 
       .columns
-        background-color: #dcdde1
+        //background-color: #dcdde1
         color: #2f3640
         overflow: hidden
       
@@ -577,14 +634,15 @@
           border: none
         button:hover
           background-color: #576574       
-          color: white        
+          color: darkgray        
 
       .iframe-xs
         transform: scale(.50)
         margin-top: -750px
 
       #iframecontainer        
-        height: 870px          
+        height: 870px 
+        overflow: hidden         
 
       .image-thumbnail
         max-height: 100px

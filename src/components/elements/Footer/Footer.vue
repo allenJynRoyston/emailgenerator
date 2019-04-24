@@ -1,6 +1,6 @@
 <template lang="pug">
   #footer-panel.u-full-width    
-    img(v-bind:src='kcode.default')
+    //img(v-bind:src='kcode.default')
 </template>
 
 <script src='./footer.js'></script>

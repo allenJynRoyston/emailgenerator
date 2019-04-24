@@ -1,14 +1,11 @@
 <template lang='pug'>
   #app-layout
     .curtain(v-if='d.tell')
-    PixiComponent.bg-canvas.pixi(v-if='!d.tell' v-bind:files='pixiFiles' type='GROW' fullscreen autoplay orderdelay='1')      
-    youtube.yt(v-if='d.tell' v-bind:video-id="pickrandom()" :player-vars="{ autoplay: 1 }" @ready="ready" v-bind:player-width="d.width" v-bind:player-height="d.height")
     SiteOverlay
     DrawerComponent
     SiteHeader
     SiteNavigation
-    router-view#site-layout
-    SiteFooter
+    router-view#site-layout    
 </template>
 
 <script>
@@ -103,6 +100,9 @@ export default {
 </style>
 
 <style lang="sass" scoped>
+  #app-layout
+    background-color: #c8d6e5;
+
   #site-layout
     min-height: 1200px    
   
