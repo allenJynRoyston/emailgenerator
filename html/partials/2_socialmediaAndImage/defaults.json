@@ -1,27 +1,21 @@
 {
-  "name": "Social Media + Image",
+  "name": "Logo + Social Media",
   "metadata": {
-    "type": "prebuilt"
+    "type": "social media"
   },  
   "content": [
     {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "[g_color2]",
+      "value": "[g_black]",
       "type": "inputcolor"
-    },
+    },   
     {
-      "title": "alignment",
-      "key": "alignment",
-      "value": "center",
-      "type": "dropdownalignment"
-    },    
-    {
-      "title": "gap",
-      "key": "gap",
+      "title": "space between",
+      "key": "spacebetween",
       "value": "20",
       "type": "inputpx"
-    },
+    },      
     {
       "title": "iconsize",
       "key": "iconsize",
@@ -31,50 +25,32 @@
     {
       "title": "fblink",
       "key": "fblink",
-      "value": "https://www.facebook.com/youandb",
+      "value": "https://www.facebook.com/",
       "type": "input"      
-    },
-    {
-      "title": "fbimage",
-      "key": "fbimage",
-      "value": "",
-      "type": "inputimage"      
-    },    
+    }, 
     {
       "title": "twitterlink",
       "key": "twitterlink",
-      "value": "https://twitter.com/HelloB",
+      "value": "https://twitter.com/",
       "type": "input"
-    },
-    {
-      "title": "twitterimage",
-      "key": "twitterimage",
-      "value": "",
-      "type": "inputimage"      
-    },       
+    },   
     {
       "title": "youtubelink",
       "key": "youtubelink",
-      "value": "",
+      "value": "https://www.youtube.com/",
       "type": "input"      
     },
-    {
-      "title": "youtubeimage",
-      "key": "youtubeimage",
-      "value": "",
-      "type": "inputimage"      
-    },       
     {
       "title": "instagramlink",
       "key": "instagramlink",
-      "value": "",
+      "value": "https://www.instagram.com/",
       "type": "input"      
-    },
+    },    
     {
-      "title": "instagramimage",
-      "key": "instagramimage",
-      "value": "",
-      "type": "inputimage"      
-    }        
+      "title": "gap",
+      "key": "gap",
+      "value": "0",
+      "type": "inputpx"
+    }      
   ]
 }

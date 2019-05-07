@@ -1,5 +1,5 @@
 {
-  "name": "Text Section",
+  "name": "Text In Bubble",
   "metadata": {
     "type": "text"
   },  
@@ -13,7 +13,7 @@
     {
       "title": "text color",
       "key": "textcolor",
-      "value": "[g_white]",
+      "value": "[g_black]",
       "type": "inputcolor"
     },    
     {
@@ -45,12 +45,24 @@
       "key": "alignment",
       "value": "left",
       "type": "dropdownalignment"
-    },      
+    },   
+    {
+      "title": "borderradius",
+      "key": "borderradius",
+      "value": "5",
+      "type": "inputpx"
+    },          
     {
       "title": "padding",
       "key": "padding",
       "value": "20px 20px 20px 20px",
       "type": "input"
+    },    
+    {
+      "title": "bubblecolor",
+      "key": "bubblecolor",
+      "value": "[g_white]",
+      "type": "inputcolor"
     },     
     {
       "title": "bgcolor",
@@ -63,7 +75,7 @@
       "key": "gap",
       "value": "0",
       "type": "inputpx"
-    }               
+    }          
   ]
 }
 

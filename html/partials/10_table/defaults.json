@@ -28,31 +28,7 @@
       "key": "entry4",
       "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "type": "textarea"
-    },    
-    {
-      "title": "Entry 1 Image",
-      "key": "image1",
-      "value": "/assets/setup2x.jpg",
-      "type": "inputimage"
-    },
-    {
-      "title": "Entry 2 Image",
-      "key": "image2",
-      "value": "/assets/setup2x.jpg",
-      "type": "inputimage"
-    },
-    {
-      "title": "Entry 3 Image",
-      "key": "image3",
-      "value": "/assets/setup2x.jpg",
-      "type": "inputimage"
-    },
-    {
-      "title": "Entry 4 Image",
-      "key": "image4",
-      "value": "/assets/setup2x.jpg",
-      "type": "inputimage"
-    },                
+    },                  
     {
       "title": "image size",
       "key": "imagesize",
@@ -89,24 +65,18 @@
       "key": "lineheight",
       "value": "18",
       "type": "inputpx"
-    },           
-    {
-      "title": "table fill",
-      "key": "tablefill",
-      "value": "75%",
-      "type": "input"
-    },       
+    },               
     {
       "title": "tablebordercolor",
       "key": "tablebordercolor",
-      "value": "[g_white]",
-      "type": "input"
+      "value": "[g_color2]",
+      "type": "inputcolor"
     },      
     {
       "title": "tablecolor",
       "key": "tablecolor",
       "value": "[g_white]",
-      "type": "input"
+      "type": "inputcolor"
     },   
     {
       "title": "table radius",
@@ -123,8 +93,14 @@
     {
       "title": "padding",
       "key": "padding",
-      "value": "20px 20px 20px 20px",
+      "value": "20px",
       "type": "input"
-    }     
+    },
+    {
+      "title": "gap",
+      "key": "gap",
+      "value": "20",
+      "type": "inputpx"
+    }         
   ]
 }

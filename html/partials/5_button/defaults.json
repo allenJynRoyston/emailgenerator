@@ -55,7 +55,7 @@
     {
       "title": "btn border color",
       "key": "buttonradiuscolor",
-      "value": "[g_white]",
+      "value": "[g_black]",
       "type": "input"
     },       
     {
@@ -63,17 +63,11 @@
       "key": "buttonpadding",
       "value": "10",
       "type": "inputpx"
-    },    
-    {
-      "title": "padding",
-      "key": "padding",
-      "value": "20px 20px 20px 20px",
-      "type": "input"
-    },      
+    },        
     {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "[g_color2]",
+      "value": "[g_white]",
       "type": "inputcolor"
     },      
     {
@@ -81,6 +75,12 @@
       "key": "link",
       "value": "https://www.google.com/",
       "type": "input"
-    }        
+    },
+    {
+      "title": "gap",
+      "key": "gap",
+      "value": "20",
+      "type": "inputpx"
+    }                  
   ]
 }

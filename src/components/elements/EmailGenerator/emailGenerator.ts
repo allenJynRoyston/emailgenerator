@@ -37,6 +37,7 @@ export default {
         processing: false,
         formData: null,        
       },
+      showOptions: false,
       dropdowns: {
         fontfamilies: [          
           'Georgia, serif',
@@ -384,13 +385,15 @@ export default {
     //---------------------------------
 
     //---------------------------------
-    assignJsonFile(data:any){      
+    assignJsonFile(data:any){     
       data.partials.map(partial => {
+        partial.render = true
         partial.showProps = false
         partial.content.map(item => {
           if(item.type === 'textarea'){
             item.focused = false
           }
+          item.render = true
         })
       })     
             
@@ -420,14 +423,14 @@ export default {
     selectedOption(selected:any){
       this.openModal = false;
       let delinked = JSON.stringify(selected)
-      let {content, location, name} = JSON.parse(delinked)
+      let {content, location, name, render} = JSON.parse(delinked)
 
       if(this.indexStored !== 'new'){
         this.jsonFile.partials[this.indexStored].content = content;
         this.jsonFile.partials[this.indexStored].name = name;
         this.jsonFile.partials[this.indexStored].location = location;
       } else {
-        let newContent = {content, name, location, showProps: false}
+        let newContent = {content, name, location, render, showProps: false}
         this.jsonFile.partials.push(newContent)            
       }
     },
@@ -612,6 +615,9 @@ export default {
 
     //---------------------------------
     async saveFile(){
+
+      console.log("save file")
+
       let matches = this.io.currentFiles.filter(filename => {
         return filename === this.io.saveSelected
       })
@@ -642,7 +648,7 @@ export default {
     //---------------------------------    
 
     //---------------------------------
-    async fetchPreview(){              
+    async fetchPreview(){          
       try{
         let res = await axios.get('/output/template.html')
         let match = res.data.includes('<div id="app"></div>')
@@ -724,6 +730,10 @@ export default {
     async createOutput(){     
       this.iframeIsReady = false;       
       const delay = 500 // <!-- 500 seems to be the minimal threshold that will work - do not change
+
+      // let useFile = JSON.parse(JSON.stringify(this.jsonFile))
+      // useFile.partials = useFile.partials.filter(x => x.render)
+
       try{
         await axios.post('/api/buildJSON', this.jsonFile)
       }

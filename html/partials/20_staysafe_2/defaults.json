@@ -1,9 +1,9 @@
 {
-  "name": "Stay Safe (Bordered)",
+  "name": "Stay Safe",
   "metadata": {
     "type": "footer"
   },       
-  "content": [    
+  "content": [     
     {
       "title": "title",
       "key": "title",
@@ -33,13 +33,13 @@
       "key": "link2href",
       "value": "https://www.youandb.co.uk/help/emails-from-b/?cid=eml_00190",
       "type": "input"
-    },                  
+    },                
     {
       "title": "imagesize",
       "key": "imagesize",
-      "value": "50",
+      "value": "30",
       "type": "inputpx"
-    },        
+    },           
     {
       "title": "text color",
       "key": "textcolor",
@@ -65,12 +65,6 @@
       "type": "inputfontweight"
     },   
     {
-      "title": "line height",
-      "key": "lineheight",
-      "value": "18",
-      "type": "inputpx"
-    },     
-    {
       "title": "bgcolor",
       "key": "bgcolor",
       "value": "[g_black]",
@@ -85,8 +79,8 @@
     {
       "title": "gap",
       "key": "gap",
-      "value": "25",
+      "value": "0",
       "type": "inputpx"
-    }         
+    }       
   ]
 }

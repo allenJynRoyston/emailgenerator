@@ -102,9 +102,10 @@ export default {
 <style lang="sass" scoped>
   #app-layout
     background-color: #c8d6e5;
+    min-height: 100vh
 
   #site-layout
-    min-height: 1200px    
+    
   
   .pixi
     z-index: -1

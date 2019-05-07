@@ -1,0 +1,107 @@
+{
+  "name": "Hollow Table",
+  "metadata": {
+    "type": "layout"
+  },       
+  "content": [ 
+    {
+      "title": "image size",
+      "key": "imagesize",
+      "value": "50",
+      "type": "inputpx"
+    },     
+    {
+      "title": "font family",
+      "key": "fontfamily",
+      "value": "Calibri, Arial, sans-serif",
+      "type": "inputfont"
+    }, 
+
+    {
+      "title": "Header",
+      "key": "header",
+      "value": "Header",
+      "type": "textarea"
+    },   
+    {
+      "title": "header size",
+      "key": "headersize",
+      "value": "32",
+      "type": "inputpx"
+    },     
+    {
+      "title": "header weight",
+      "key": "headerweight",
+      "value": "normal",
+      "type": "inputfontweight"
+    },      
+    {
+      "title": "header text color",
+      "key": "headertextcolor",
+      "value": "[g_black]",
+      "type": "inputcolor"
+    },      
+    {
+      "title": "Body",
+      "key": "body",
+      "value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "type": "textarea"
+    },                 
+    {
+      "title": "body size",
+      "key": "bodysize",
+      "value": "16",
+      "type": "inputpx"
+    }, 
+    {
+      "title": "body weight",
+      "key": "bodyweight",
+      "value": "normal",
+      "type": "inputfontweight"
+    },       
+    {
+      "title": "body text color",
+      "key": "bodytextcolor",
+      "value": "[g_black]",
+      "type": "inputcolor"
+    },    
+    
+    {
+      "title": "bgcolor",
+      "key": "bgcolor",
+      "value": "[g_color1]",
+      "type": "inputcolor"
+    },        
+    {
+      "title": "table border color",
+      "key": "tablebordercolor",
+      "value": "[g_black]",
+      "type": "inputcolor"
+    },       
+    {
+      "title": "table colors",
+      "key": "tablefill",
+      "value": "[g_white]",
+      "type": "inputcolor"
+    },       
+   
+    {
+      "title": "border radius",
+      "key": "borderradius",
+      "value": "5",
+      "type": "inputpx"
+    },        
+    {
+      "title": "padding",
+      "key": "padding",
+      "value": "20px",
+      "type": "input"
+    },
+    {
+      "title": "gap",
+      "key": "gap",
+      "value": "5",
+      "type": "inputpx"
+    }            
+  ]
+}

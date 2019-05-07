@@ -1,5 +1,10 @@
 <template lang="pug">
   .section
+    .showoptions-btn(@click='showOptions = !showOptions')
+      i.fas.fa-bars.fa-3x
+
+    .backdrop(@click='showOptions = false' :class='showOptions ? "active" : ""')
+
     #loadModal(v-bind:class='openLoadModal ? "show-modal" : "close-modal"' v-if='jsonIsReady')
       .modal-panel(style='text-align: center; width: 400px')  
         .cancel-btn
@@ -180,12 +185,11 @@
           i.fas.fa-times.fa-2x(@click='openColorModal = false')               
 
     #emailGenerator
-      .row.devwarning(v-if='devBuild')
-        h3.center-text DEV MODE ENABLED         
-        p This mode is for developing the UI/UX - PREVIEW WILL NOT BE UPDATED
-          
-      .email-gen-container        
-        .options(v-if='jsonIsReady')     
+      //- .row.devwarning(v-if='devBuild')
+      //-   h3.center-text DEV MODE ENABLED         
+      //-   p This mode is for developing the UI/UX - PREVIEW WILL NOT BE UPDATED      
+      .email-gen-container   
+        .options(v-if='jsonIsReady' :class='showOptions ? "show" : ""')     
           .tab-header
             a.tabs(v-for='(option, index) in menuOptions' @click='activeTab = index; addToUrlParams(option)' v-bind:class='activeTab === index ? "button-primary active" : ""')
               | {{option.title}}        
@@ -223,7 +227,8 @@
                   .seven.columns                  
                     button(@click='partial.showProps = !partial.showProps' v-bind:style='{"border-left": "10px solid" + findBGColor(partial)}') 
                       | {{partial.name}}                              
-                  .four.columns(style='display: flex; justify-content: space-around')                                                
+                  .four.columns(style='display: flex; justify-content: space-around')     
+                    i.far.pointer.icon-size(:class='partial.render ? "far fa-check-square" : "fa-square"' @click='partial.render = !partial.render')                               
                     i.fas.fa-arrows-alt-v.pointer.icon-size(@click='moveIndex = index; openMoveModal = true' title="Move partial")
                     i.fas.fa-clone.pointer.icon-size(@click='clonePartial(partial, index)' title="Clone partial")
                     i.fas.fa-copy.pointer.icon-size(@click='copyPartial(partial)' title="Copy partial data" )
@@ -274,7 +279,7 @@
                     input(v-if='option.type === "number"' type='number' @change='setUserOptions()' v-model='option.value' v-show='option.visibleif()') 
                                   
         // PREVIEW SECTION
-        #preview-container        
+        #preview-container(:class='showOptions ? "shift" : ""')               
           p.center-text current file: 
             strong {{io.filename}}.html
           button.preview-btn(v-show='iframeIsReady' @click='copyToClipboard()') Copy To Clipboard
@@ -297,6 +302,37 @@
 <script src='./emailGenerator.js'></script>
 
 <style lang="sass" scoped>  
+    .showoptions-btn
+      position: fixed
+      bottom: calc(50% - 25px);
+      left: 0;
+      height: 50px
+      width: 50px
+      display: flex
+      align-items: center
+      justify-content: center     
+      cursor: pointer
+      opacity: 0.5
+      transition: 0.3s;
+
+    .showoptions-btn:hover
+      opacity: 1 
+    
+    .backdrop
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, .25)      
+      z-index: 10
+      pointer-events: none
+      opacity: 0
+      &.active
+        pointer-events: auto
+        opacity: 1
+        cursor: pointer
+      
+
+
     #saveModal, #loadModal, #successModal, #emailmodal, #imageModal, #colorSelectorModal, #globalColorSelectorModal, #cloneModal, #pasteCheckModal
       position: fixed
       top: 0
@@ -407,7 +443,8 @@
         width: 800px
         height: 800px
         overflow-y: scroll
-        
+        border: 1px solid red
+   
 
       .button
         float: right
@@ -456,7 +493,10 @@
       background-color: white
       border-radius: 5px
       padding: 20px 0 0 0 
+      transition: 0.3s
       
+      &.shift
+        transform: translateX(100px)
       
       .preview-btn
         position: absolute
@@ -493,7 +533,8 @@
 
 
     #emailGenerator
-      padding: 50px!important
+      padding: 20px!important
+
       
 
       .email-gen-container
@@ -518,9 +559,24 @@
 
 
         .options
+          position: fixed;
+          top: 0
+          left: 0
           width: 500px
-          height: auto;
-          border-radius: 5px
+          height: 100vh;          
+          overflow-y: auto;
+          transform: translateX(calc(-100% +  200px));
+          transition: 0.3s;
+          opacity: 0;
+          z-index: 11
+          filter: drop-shadow(5px 2px 2px rgba(0, 0, 0, .5));
+          pointer-events: none;
+          &.show
+            transform: translateX(0);
+            opacity: 1   
+            pointer-events: auto
+       
+
           
         .tab-container          
           background-color: white
@@ -641,7 +697,7 @@
         margin-top: -750px
 
       #iframecontainer        
-        height: 870px 
+        height: 700px 
         overflow: hidden         
 
       .image-thumbnail

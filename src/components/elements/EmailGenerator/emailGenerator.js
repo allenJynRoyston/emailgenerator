@@ -44,6 +44,7 @@ export default {
                 processing: false,
                 formData: null,
             },
+            showOptions: false,
             dropdowns: {
                 fontfamilies: [
                     'Georgia, serif',
@@ -365,11 +366,13 @@ export default {
         //---------------------------------
         assignJsonFile(data) {
             data.partials.map(partial => {
+                partial.render = true;
                 partial.showProps = false;
                 partial.content.map(item => {
                     if (item.type === 'textarea') {
                         item.focused = false;
                     }
+                    item.render = true;
                 });
             });
             this.jsonFile = data;
@@ -395,14 +398,14 @@ export default {
         selectedOption(selected) {
             this.openModal = false;
             let delinked = JSON.stringify(selected);
-            let { content, location, name } = JSON.parse(delinked);
+            let { content, location, name, render } = JSON.parse(delinked);
             if (this.indexStored !== 'new') {
                 this.jsonFile.partials[this.indexStored].content = content;
                 this.jsonFile.partials[this.indexStored].name = name;
                 this.jsonFile.partials[this.indexStored].location = location;
             }
             else {
-                let newContent = { content, name, location, showProps: false };
+                let newContent = { content, name, location, render, showProps: false };
                 this.jsonFile.partials.push(newContent);
             }
         },
@@ -582,6 +585,7 @@ export default {
         //---------------------------------
         saveFile() {
             return __awaiter(this, void 0, void 0, function* () {
+                console.log("save file");
                 let matches = this.io.currentFiles.filter(filename => {
                     return filename === this.io.saveSelected;
                 });
@@ -694,6 +698,8 @@ export default {
             return __awaiter(this, void 0, void 0, function* () {
                 this.iframeIsReady = false;
                 const delay = 500; // <!-- 500 seems to be the minimal threshold that will work - do not change
+                // let useFile = JSON.parse(JSON.stringify(this.jsonFile))
+                // useFile.partials = useFile.partials.filter(x => x.render)
                 try {
                     yield axios.post('/api/buildJSON', this.jsonFile);
                 }

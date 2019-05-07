@@ -1,19 +1,13 @@
 {
-  "name": "Security Panel",
+  "name": "Terms and Conditions",
   "metadata": {
-    "type": "headers"
-  },  
-  "content": [
-    {
-      "title": "HTML",
-      "key": "content",
-      "value": "We have included your postcode at the top so you can be sure this email is from <strong> The team at B<\/strong>. To see how you can stay safe online, visit the <a style='color: [g_white]; text-decoration: underline;' href='' target='_blank'> <strong>Security&nbsp;Centre<\/strong><\/a>.",
-      "type": "textarea"
-    },
+    "type": "footer"
+  },     
+  "content": [           
     {
       "title": "text color",
       "key": "textcolor",
-      "value": "[g_white]",
+      "value": "[g_black]",
       "type": "inputcolor"
     },    
     {
@@ -25,7 +19,7 @@
     {
       "title": "font size",
       "key": "fontsize",
-      "value": "14",
+      "value": "16",
       "type": "inputpx"
     }, 
     {
@@ -49,14 +43,14 @@
     {
       "title": "padding",
       "key": "padding",
-      "value": "10px 10px 10px 10px",
+      "value": "20px",
       "type": "input"
     },     
     {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "[g_color1]",
+      "value": "[g_white]",
       "type": "inputcolor"
-    }        
+    }      
   ]
 }
