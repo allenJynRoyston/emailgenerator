@@ -1,0 +1,81 @@
+{
+  "name": "Link in Box",
+  "metadata": {
+    "type": "text",
+    "thumbnail": "/html/partials/4_textLink/textlink.png"
+  },    
+  "content": [
+    {
+      "title": "header",
+      "key": "header",
+      "value": "Visit Yorkshire Bank online",
+      "type": "textarea"
+    },
+    {
+      "title": "link text",
+      "key": "linktext",
+      "value": "www.ybonline.co.uk",
+      "type": "textarea"
+    },            
+    {
+      "title": "text color",
+      "key": "textcolor",
+      "value": "[g_black]",
+      "type": "inputcolor"
+    },    
+    {
+      "title": "font family",
+      "key": "fontfamily",
+      "value": "Calibri, Arial, sans-serif",
+      "type": "inputfont"
+    }, 
+    {
+      "title": "font size",
+      "key": "fontsize",
+      "value": "16",
+      "type": "inputpx"
+    }, 
+    {
+      "title": "font weight",
+      "key": "fontweight",
+      "value": "normal",
+      "type": "inputfontweight"
+    },   
+    {
+      "title": "line height",
+      "key": "lineheight",
+      "value": "18",
+      "type": "inputpx"
+    },     
+    {
+      "title": "bordercolor",
+      "key": "bordercolor",
+      "value": "[g_black]",
+      "type": "inputcolor"
+    },     
+    {
+      "title": "bgcolor",
+      "key": "bgcolor",
+      "value": "[g_white]",
+      "type": "inputcolor"
+    },
+    {
+      "title": "content bg color",
+      "key": "contentbgcolor",
+      "value": "[g_white]",
+      "type": "inputcolor"
+    },    
+    {
+      "title": "alignment",
+      "key": "alignment",
+      "value": "left",
+      "type": "dropdownalignment"
+    },       
+    {
+      "title": "gap",
+      "key": "gap",
+      "value": "20",
+      "type": "inputpx"
+    }          
+  ]
+}

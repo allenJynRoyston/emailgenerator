@@ -1,7 +1,8 @@
 {
   "name": "Logo + Social Media",
   "metadata": {
-    "type": "social media"
+    "type": "social media",
+    "thumbnail": "/html/partials/2_socialmediaAndImage/socialmediaandimage.png"
   },  
   "content": [
     {

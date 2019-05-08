@@ -1,21 +1,10 @@
 {
-  "name": "Image and Text",
+  "name": "Text and Image (L)",
   "metadata": {
-    "type": "images"
+    "type": "images",
+    "thumbnail": "/html/partials/7_textAndImage/textandimage.png"
   },    
   "content": [
-    {
-      "title": "image",
-      "key": "image",
-      "value": "https://picsum.photos/200/150",
-      "type": "inputimage"
-    },
-    {
-      "title": "imagealt",
-      "key": "imagealt",
-      "value": "Image Alt Text",
-      "type": "input"
-    },      
     {
       "title": "imagewidth",
       "key": "imagewidth",
@@ -37,7 +26,7 @@
     {
       "title": "text color",
       "key": "textcolor",
-      "value": "[g_white]",
+      "value": "[g_black]",
       "type": "inputcolor"
     },    
     {
@@ -73,14 +62,20 @@
     {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "[g_color1]",
+      "value": "[g_white]",
       "type": "inputcolor"
     },
     {
       "title": "padding",
       "key": "padding",
-      "value": "20px 20px 20px 20px",
+      "value": "20px",
       "type": "input"
-    }     
+    },
+    {
+      "title": "gap",
+      "key": "gap",
+      "value": "0",
+      "type": "inputpx"
+    }         
   ]
 }

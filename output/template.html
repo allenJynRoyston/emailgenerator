@@ -19,22 +19,62 @@
     
     <style type="text/css">
         /******************** CSS Fix ********************/
+
         body {
             height: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
             width: 100% !important;
-            background-color: [m_bgcolor];
         }
-    
+
         table td {
             border-collapse: collapse !important;
             mso-table-lspace: 0pt;
             mso-table-rspace: 0pt;
-            font-size: 0px;          
-        } 
+            font-size: 0px;
+        }
 
+        th {
+            padding: 0 !important;
+            margin: 0 !important;
+            font-weight: normal !important;
+            font-size: 0px;
+        }
+
+        img {
+            outline: none;
+            text-decoration: none;
+            -ms-interpolation-mode: bicubic;
+            user-drag: none;
+            -webkit-user-select: none;
+            /* SAFARI, CHROME */
+            -khtml-user-select: none;
+            /* KONQUEROR */
+            -moz-user-select: none;
+            /* FIREFOX */
+            -ms-user-select: none;
+            /* IE */
+            user-select: none;
+            /* CSS3 */
+            font-size: 12px;
+        }
+        /******************** MICROSOFT TWEEK ********************/
+
+        @-ms-viewport {
+            width: device-width
+        }
+
+        #outlook a {
+            padding: 0;
+        }
+        /******************** ANDROID TWEEK ********************/
+
+        div[style*="margin: 16px 0"] {
+            margin: 0 !important;
+            font-size: 100% !important;
+        }
         /******************** iOS AUTO LINKS ********************/
+
         a[x-apple-data-detectors] {
             color: inherit !important;
             text-decoration: none !important;
@@ -43,10 +83,151 @@
             font-weight: inherit !important;
             line-height: inherit !important;
         }
-        
-        strong{
-            font-weight: bold;
-            color: inherit
+
+        @media screen and (min-width: 320px) and (max-width: 620px) {
+            /******************** STANDARD MOBILE CSS ********************/
+            body {
+                margin: 0 !important;
+            }
+            table[id=wrapper] {
+                width: 100% !important;
+                padding: 0px 0px !important;
+            }
+            table[id=wrapper] .inner {
+                width: 100% !important;
+                max-width: 600px !important;
+            }
+
+            img[class=scale] {
+                width: 100% !important;
+                height: auto !important;
+                display: block !important;
+            }
+
+            /******************** PADDING ********************/
+            table[id=wrapper] .nopad {
+                padding: 0 !important;
+            }
+
+            table[id=wrapper] .textpad20 {
+                padding-left: 20px !important;
+                padding-right: 20px !important;
+            }
+
+            /******************** FONT ********************/
+            table[id=wrapper] .font18 {
+                font-size: 18px !important;
+                line-height: 21px !important;
+            }
+            table[id=wrapper] .f23 {
+                padding-bottom: 30px !important;
+            }
+        }
+
+        @media (max-width:450px) {
+            /* For Dropping Spacing On Mobile */
+            .drop-sides {
+                display: none;
+            }
+
+            .font-decrease {
+                font-size: 25px !important;
+                line-height: 30px !important;
+            }
+
+            .top-font-decrease {
+                font-size: 22px !important;
+                line-height: 25px !important;
+            }
+        }
+
+        @media( max-width:499px) {
+            /* Single Line On Mobile */
+            .responsive-mob {
+                width: 100%;
+                display: block;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                text-align: center !important;
+            }
+
+            .textpadnormal {
+                padding-left: 40px !important;
+                padding-right: 40px !important;
+            }
+
+            .icon-table--stack {
+                display: block !important;
+                width: 100% !important;
+                text-align: center !important;
+            }
+
+            .icon-table--stack-center {
+                display: block !important;
+                margin: 0 auto !important;
+            }
+
+            .icon-table--hide {
+                display: none !important;
+            }
+
+            .height-20 {
+                height: 15px !important;
+            }
+
+            .reduce-mobile-width {
+                width: 20px !important;
+            }
+
+            .increase-mobile-font-size {
+                font-size: 24px !important;
+                line-height: 34px !important;
+            }
+        }
+
+        @media(max-width: 599px) {
+            .responsive-check {
+                width: 100% !important;
+                min-width: 100% !important;
+            }
+
+            .width100 {
+                width: 100%;
+            }
+
+            .show-mobile {
+                display: block !important;
+                max-height: none !important;
+                width: 100% !important;
+                height: auto !important;
+                visibility: visible !important;
+            }
+
+            .hide-mobile {
+                max-height: 0px;
+                /* Gmail*/
+                display: none;
+                /* Generic*/
+                mso-hide: all;
+                /* Outlook clients*/
+                overflow: hidden;
+                /* Generic */
+                font-size: 0;
+                /* Be careful with this one, only use if absolutely required */
+            }
+        }
+
+        .hide{
+            max-height: 0px;
+                /* Gmail*/
+                display: none;
+                /* Generic*/
+                mso-hide: all;
+                /* Outlook clients*/
+                overflow: hidden;
+                /* Generic */
+                font-size: 0;
+                /* Be careful with this one, only use if absolutely required */ 
         }
     </style>
 
@@ -461,9 +642,36 @@
 
 
                   
+<tr>
+    <td width="600" height='10' bgcolor="#ffffff">
+    </td>
+</tr>
+
+
+<tr>
+  <td align="center" bgcolor="#ffffff">
+      <table align="center" border="0" cellspacing="0" cellpadding="0">
+          <tbody>
+              <tr>
+                  <td align="right" style="color: rgb(0, 0, 0); line-height: 11px; font-family:Calibri, Arial, sans-serif; font-size: 14px;">
+                    <a style="color: #2c3e50; font-weight: normal; font-family:Calibri, Arial, sans-serif; font-size: 14px; text-decoration: none" href="http://www.google.com" target="_blank">Open in browser</a>
+                      &nbsp;&nbsp;|&nbsp;&nbsp;
+                      <a style="color: #2c3e50; font-weight: normal; font-family:Calibri, Arial, sans-serif; font-size: 14px; text-decoration: none;" href="http://www.google.com" target="_blank">Unsubscribe</a>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </td>
+</tr>
+
+<tr>
+    <td width="600" height='10' bgcolor="#ffffff">
+    </td>
+</tr>
+
 <!-- SECURITY PANEL -->
 <tr>
-  <td align="center" bgcolor="#2c3e50">
+  <td align="center" bgcolor="#ffffff">
       <table width="600" align="center" class="inner" border="0" cellspacing="0" cellpadding="0">
           <tbody>
               <tr>
@@ -478,7 +686,7 @@
                                                   <td>
                                                       <img width="19" height="26" style="display: block;" alt="Padlock" src="http://via.placeholder.com/19x26" border="0">
                                                   </td>
-                                                  <td align="left" valign="bottom" style="padding: 0px 0px 0px 7px; color:#ffffff; font-family: Calibri, Arial, sans-serif; font-size: 14px; font-weight: normal">Your partial postcode is XXX
+                                                  <td align="left" valign="bottom" style="padding: 0px 0px 0px 7px; color:#2c3e50; font-family: Calibri, Arial, sans-serif; font-size: 14px; font-weight: normal">Your partial postcode is XXX
                                                   </td>
                                               </tr>
                                           </tbody>
@@ -499,7 +707,7 @@
                                   </td>
                               </tr>
                               <tr>
-                                  <td align="center" class="header" style="padding: 15px 4px; color:#ffffff; font-family: Calibri, Arial, sans-serif; font-size: 14px; font-weight: normal;">We’ve included your postcode at the top so you can be sure
+                                  <td align="center" class="header" style="padding: 15px 4px; color:#2c3e50; font-family: Calibri, Arial, sans-serif; font-size: 14px; font-weight: normal;">We’ve included your postcode at the top so you can be sure
                                     We have included your postcode at the top so you can be sure this email is from <strong> The team at B</strong>. To see how you can stay safe online, visit the <a style='color: #ffffff; text-decoration: underline;' href='' target='_blank'> <strong>Security&nbsp;Centre</strong></a>.
                                   </td>
                               </tr>
@@ -512,39 +720,114 @@
   </td>
 </tr>
 <!-- /SECURITY PANEL -->
-
 <!-- GAP -->
 <tr>
-    <td width="600" height='20' bgcolor="#ffffff">
+    <td width="600" height='20' bgcolor="#2c3e50">
     </td>
 </tr>
 <!-- /GAP -->
 
-
-<!-- Button -->
+<!-- Table -->
 <tr>
-  <td align="center" bgcolor='#ffffff' style='border: 1px solid #ffffff'>
-      <table border="0" cellspacing="0" cellpadding="0" bgcolor='#ffffff'>
-          <tbody>
-              <tr>
-                <td align="center" style="border-radius: 10px">
-                    <div><!--[if mso]>
-                        <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://" style="height:[height]px;v-text-anchor:middle;width:300px;" arcsize="13%" strokecolor="#2c3e50" fillcolor="#2c3e50">
-                        <w:anchorlock/>
-                        <center style="color:#ffffff;font-family:Calibri, Arial, sans-serif;font-size:20;font-weight:normal;">Button Text</center>
-                      </v:roundrect>
-                    <![endif]-->
-                    <a href="https://www.google.com/" style="padding: 10px; background-color: #2c3e50;border:2px solid #2c3e50; border-radius:10px; color:#ffffff;display:inline-block;font-family: Calibri, Arial, sans-serif;font-size:20px;font-weight:normal; text-align:center;text-decoration:none;width:300px; height:auto;-webkit-text-size-adjust:none;mso-hide:all;">
-                        Button Text
-                    </a>
-                  </div>
-                </td>
-              </tr>
-          </tbody>
-      </table>
+  <td align="center" bgcolor="#2c3e50" style='padding: 20px'>
+      <table width='100%'  bgcolor='#ffffff' style="table-layout:fixed; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; border: 1px solid #2c3e50" border="0" cellspacing="0" cellpadding="0">              
+        <tr>
+            <td>
+                <table border="0" cellspacing="0" cellpadding="0" >
+
+                        <tr>
+                            <td align="center" style='padding: 20px'>
+                                <img src="https://via.placeholder.com/75x75" width="75" height="75">
+                            </td>
+                            <td align="left" style="padding: 10px 20px 10px 0px">
+                                <p style="color:#2c3e50; font-family: Calibri, Arial, sans-serif; font-size: 16px; font-weight: normal; margin: 0px">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="center" style='padding: 20px'>
+                                <img src="https://via.placeholder.com/75x75" width="75" height="75">
+                            </td>
+                            <td align="left" style="padding: 10px 20px 10px 0px">
+                                <p style="color:#2c3e50; font-family: Calibri, Arial, sans-serif; font-size: 16px; font-weight: normal; margin: 0px">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="center" style='padding: 20px'>
+                                    <img src="https://via.placeholder.com/75x75" width="75" height="75">
+                            </td>
+                            <td align="left" style="padding: 10px 20px 10px 0px">
+                                <p style="color:#2c3e50; font-family: Calibri, Arial, sans-serif; font-size: 16px; font-weight: normal; margin: 0px">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="center" style='padding: 20px'>
+                                <img src="https://via.placeholder.com/75x75" width="75" height="75">
+                            </td>
+                            <td align="left" style="padding: 10px 20px 10px 0px">
+                                <p style="color:#2c3e50; font-family: Calibri, Arial, sans-serif; font-size: 16px; font-weight: normal; margin: 0px">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                </p>
+                            </td>
+                        </tr>
+
+                </table>
+            </td>
+        </tr>
+     
+      </table>   
   </td>
 </tr>
-<!-- / Button -->
+<!-- /Table -->
+
+<!-- GAP -->
+<tr>
+    <td width="600" height='20' bgcolor="#2c3e50">
+    </td>
+</tr>
+<!-- /GAP -->
+<!-- GAP -->
+<tr>
+  <td width="600" height='20' bgcolor="#ffffff">
+  </td>
+</tr>
+<!-- /GAP -->
+<!-- GAP -->
+<tr>
+    <td width="600" height='0' bgcolor="#ffffff">
+    </td>
+</tr>
+<!-- /GAP -->
+
+<!-- Full image -->
+<tr>
+    <td align="center" bgcolor="#ffffff">
+        <table width="600" align="center" class="inner" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <td align="center">
+                        <img width="200" height="200" style="display:block; width:200px; height: 200px; margin: 0 auto;" alt="[imagealt]" src="http://via.placeholder.com/200x200" border="0">                     
+                    </td>
+                </tr>
+            </tbody>
+          </table>
+      </td>
+</tr>
+
+<!-- GAP -->
+<tr>
+    <td width="600" height='0' bgcolor="#ffffff">
+    </td>
+</tr>
+<!-- /GAP -->
 
 <!-- GAP -->
 <tr>
@@ -552,6 +835,346 @@
     </td>
 </tr>
 <!-- /GAP -->
+    
+
+<tr>
+    <td>
+        <table width="600" class="inner" style="width: 100%; min-width:100%; table-layout:fixed; padding: 0px 0px 0px 0px" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+            <tbody>
+                <tr>
+                    <td align="left" class="container__50" style="padding: 0px 50px" bgcolor="#ffffff">
+                        <table width="500" class="inner mobile-remove__border mobile-remove__padding-left" style="width: 500px;" border="0" cellspacing="0" cellpadding="0" bgcolor='#2c3e50'>
+                            <tbody>
+                                <tr>
+                                    <td width="100%" align="center" class="font18 mobile-remove__padding-left" style="padding: 20px;">                                                                    
+                                        <table width="450" class="inner" style="width: 450px;margin: auto!important;" border="0" cellspacing="0" cellpadding="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <table align="center" border="0" cellspacing="0" cellpadding="0">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td align="left">
+                                                                        <p style="color:#ffffff; font-family: Calibri, Arial, sans-serif; font-size: 16px; font-weight: normal; margin: 0px; padding: 0px">
+                                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                                                        </p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>                                                              
+                                </tr>                                         
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+
+
+
+<!-- GAP -->
+<tr>
+    <td width="600" height='20' bgcolor="#ffffff">
+    </td>
+</tr>
+<!-- /GAP -->
+
+<!-- GAP -->
+<tr>
+    <td width="600" height='20' bgcolor="#2c3e50">
+    </td>
+</tr>
+<!-- /GAP -->
+
+
+<!-- TEXT IN BUBBLE -->
+<tr>
+    <td>
+        <table width="100%" class="inner" style="width: 100%; min-width:100%; table-layout:fixed; padding: 0px 0px 0px 0px" border="0" cellspacing="0" cellpadding="0" bgcolor="#2c3e50">
+            <tbody>
+                <tr>
+                    <td align="left" class="container__50" style="padding: 0px 50px 5px 50px;" bgcolor="#2c3e50">
+                        <table width="500" class="inner mobile-remove__border mobile-remove__padding-left" style="width: 500px;" border="0" cellspacing="0" cellpadding="0">
+                            <tbody>
+                                <tr>
+                                    <td width="100%" align="center" class="font18 mobile-remove__padding-left" style="color: #000000; padding: 20px; line-height: 27px; font-family: Calibri, Arial, sans-serif; font-size: 16px; font-weight: normal;background: #ffffff;border-radius: 5px!important;-moz-border-radius: 5px!important;-webkit-border-radius: 5px!important;">                                                                    
+                                        <table width="460" class="inner" style="width: 460px;margin: auto!important;" border="0" cellspacing="0" cellpadding="0">
+                                            <tbody>
+                                                <!-- NEW - Fullwidth Image -->
+                                                    <tr>
+                                                        <td valign="top" align="left"> 
+                                                            <h2 style="color:#2c3e50; font-family: Calibri, Arial, sans-serif; font-size: 16px; font-weight: normal; margin: 0px; padding: 0px">
+                                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                                            </h2>   
+                                                        </td>
+                                                    </tr>
+                                                    <!-- ./ New - Fullwidth Image -->
+                                            </tbody>
+                                        </table>
+                                    </td>                                                              
+                                </tr>                                         
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>
+<!-- /TEXT IN BUBBLE -->
+
+<!-- GAP -->
+<tr>
+    <td width="600" height='20' bgcolor="#2c3e50">
+    </td>
+</tr>
+<!-- /GAP -->
+
+<!-- GAP -->
+<tr>
+    <td width="600" height='25' bgcolor="#2c3e50">
+    </td>
+</tr>
+<!-- /GAP -->
+<!-- 
+<tr>
+    <td>
+        <table align="center" width="600" class="inner" style="width: 100%; min-width:100%; table-layout:fixed; padding: 0px 0px 0px 0px" border="0" cellspacing="0" cellpadding="0" bgcolor="#2c3e50">
+            <tbody>
+                <tr>
+                    <td align="center" class="container__50" style="padding: 0px 0px;" bgcolor="#2c3e50">
+                        <table width="500" class="inner mobile-remove__border mobile-remove__padding-left" style="width: 500px;" border="0" cellspacing="0" cellpadding="0" bgcolor='#ffffff'>
+                            <tbody>
+                                <tr>
+                                    <td width="500" align="center" class="font18 mobile-remove__padding-left" style="padding: 0px 0; border-radius: [borderradius]px!important;-moz-border-radius: [borderradius]px!important;-webkit-border-radius: [borderradius]px!important;">                                                                    
+                                        <table width="500" class="inner" style="width: 500px;margin: auto!important;" border="0" cellspacing="0" cellpadding="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td width='499' bgcolor='#ffffff'>
+                                                            <table align="left" cellspacing="0" cellpadding="0">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <table align="left" border="0" cellspacing="0" cellpadding="0">
+                                                                                <tbody>
+
+
+                                                                                    <tr>
+                                                                                        <td align="left" style="padding: 0 20px ">
+                                                                                            <p style="color:#2c3e50; font-family: Calibri, Arial, sans-serif; font-size: 16px; font-weight: bold; margin: 0px; padding: 0px">
+                                                                                                Stay Safe Online
+                                                                                            </p>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                                                                                                                            
+                                                                                    <tr>
+                                                                                        <td align="left"  style="padding: 10px 20px">
+                                                                                            <a style="color:#2c3e50; font-family: Calibri, Arial, sans-serif; font-size: 16px; font-weight: normal; text-decoration: underline; line-height: 1em" href="https://www.youandb.co.uk/help/emails-from-b/?cid=eml_00190" target="_blank">
+                                                                                                How to check if an email is genuine
+                                                                                            </a>                  
+                                                                                        </td>
+                                                                                    </tr>
+
+                                                                                    <tr>
+                                                                                        <td align="left"  style="padding: 0 20px">
+                                                                                            <a style="color:#2c3e50; font-family: Calibri, Arial, sans-serif; font-size: 16px; font-weight: normal; text-decoration: underline; line-height: 1em;" href="https://www.youandb.co.uk/help/emails-from-b/?cid=eml_00190" target="_blank">
+                                                                                                Visit our Security Centre
+                                                                                            </a>
+                                                                                        </td>
+                                                                                    </tr>  
+                                                                                    
+                          
+                                                                                                                                                                                        
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                        <td width="1" bgcolor='#ffffff' style='background-color: #ffffff' style="vertical-align: middle;">
+                                                            <table width="1" align="left" style="width: 1px;" border="0" cellspacing="0" cellpadding="0">
+                                                                <tbody>                                                                                                                                                   
+                                                                    <tr>
+                                                                        <td width="1" height="80" bgcolor="#2c3e50">                                                                            
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                        <td width='100' bgcolor='#ffffff' style='background-color: #ffffff' style="vertical-align: middle;">
+                                                            <table width="100" align="left" style="width: 100px;" border="0" cellspacing="0" cellpadding="0">
+                                                                <tbody>
+                                                                                                                                        
+                                                                    <tr>
+                                                                        <td width="100" height="105" align="center" valign="middle" style="vertical-align: middle;">
+                                                                            <img width="50" height="50" style="display: block;" alt="" src="http://via.placeholder.com/50x50" border="0">
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                        </table>
+                                    </td>                                                              
+                                </tr>                                         
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </td>
+</tr> -->
+
+
+<tr>
+    <td>
+        <table width="600" class="inner" style="min-width:100%; width: 600px; table-layout:fixed;" border="0" cellspacing="0" cellpadding="0" bgcolor="#2c3e50">
+            <tr>
+                <!-- Space -->
+                <td width="25" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                <!-- / Space -->
+                <!-- Safe Online -->
+                <td>
+                    <table width="100%" class="inner" style="min-width:100%; table-layout:fixed;" border="0" cellspacing="0" cellpadding="0"
+                        bgcolor="#ffffff">
+                        <!-- Top Border -->
+                        <tr>
+                            <td width="100%" height="1" style="font-size:1px; line-height:1px; background:#2c3e50;">&nbsp;</td>
+                        </tr>
+                        <!-- / Top Border -->
+                        <!-- Content -->
+                        <tr>
+                            <td>
+                                <table width="100%" class="inner" style="min-width:100%; table-layout:fixed;" border="0" cellspacing="0" cellpadding="0"
+                                    bgcolor="#ffffff">
+                                    <tr>
+                                        <!-- Border Left -->
+                                        <td width="1" style="font-size:1px; line-height:1px; background:#2c3e50;">&nbsp;</td>
+                                        <!-- / Border Left -->
+                                        <!-- Copy -->
+                                        <td>
+                                            <table width="100%" class="inner" style="min-width:100%; table-layout:fixed;" border="0" cellspacing="0" cellpadding="0"
+                                                bgcolor="#ffffff">
+                                                <tr>
+                                                    <td width="100%" height="20" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <table width="100%" class="inner" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" style="min-width:100%; table-layout:fixed;">
+                                                            <tr>
+                                                                <td align="left" width="20" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                <td align="left" style="color:#373737; line-height: 19px; font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; text-decoration:none;">
+                                                                    <span style="color:#2c3e50; line-height: 19px; font-family: Calibri, Arial, sans-serif; font-size: 19px; font-weight: bold; text-decoration:none;">Stay Safe Online</span>
+                                                                    <br><br>
+                                                                    <a href=""><span style="color:#2c3e50; font-family: Calibri, Arial, sans-serif; font-size: 16px; font-weight: normal; text-decoration: underline; line-height: 1em">How to check if an email is genuine</span></a>
+                                                                    <br>
+                                                                    <a href=""><span style="color:#2c3e50; font-family: Calibri, Arial, sans-serif; font-size: 16px; font-weight: normal; text-decoration: underline; line-height: 1em">Visit our Security Centre</span></a>
+                                                                </td>
+                                                                <td align="right" width="1" style="font-size:1px; line-height:1px; background:black;">&nbsp;</td>
+                                                                <td width="100" align="center" valign="middle" style="vertical-align: middle;">
+                                                                    <img width="50" height="50" style="display: block;" alt="" src="http://via.placeholder.com/50x50" border="0">
+                                                                </td>
+                                                                <td align="right" class="drop-sides" width="20" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="100%" height="20" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <!-- / Copy -->
+                                        <!-- Border Right -->
+                                        <td width="1" style="font-size:1px; line-height:1px; background:#2c3e50;">&nbsp;</td>
+                                        <!-- / Border Right -->
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <!-- / Content -->
+                        <!-- Bottom Border -->
+                        <tr>
+                            <td width="100%" height="1" style="font-size:1px; line-height:1px; background:#2c3e50;">&nbsp;</td>
+                        </tr>
+                        <!-- / Bottom Border -->
+                    </table>
+                </td>
+                <!-- / Safe Online -->
+                <!-- Space -->
+                <td width="25" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                <!-- / Space -->
+            </tr>
+        </table>
+    </td>
+</tr>
+
+
+<!-- GAP -->
+<tr>
+    <td width="600" height='25' bgcolor="#2c3e50">
+    </td>
+</tr>
+<!-- /GAP -->
+<!-- T'S & C's -->
+<tr>
+        <td align="center" bgcolor="#ffffff">
+            <table width="600" class="inner" style="min-width:100%; width: 100%;" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr>
+                        <td align="left"  style="padding: 20px; color: #2c3e50; line-height: 18px; font-family: Calibri, Arial, sans-serif; font-size:  16px;" bgcolor="#ffffff">
+                            If you have received this email in error, or no longer wish to receive emails asdffrom The team at B, Unsubscribe
+                            <span style="color: #2c3e50">
+                                <a href="https://www.google.com" style="color: #2c3e50;text-decoration: underline !important;"> here.</a>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left"  style="padding: 20px; color: #2c3e50; line-height: 18px; font-family: Calibri, Arial, sans-serif; font-size:  16px;" bgcolor="#ffffff">
+                            To reassure you this email is from us, we&#x2019;ve included the second part of your postcode at the top. If you have not provided us with this information or you have changed address recently please contact The team at B on 
+                            <span style="color: #2c3e50">
+                                <a href="tel:08001217365" style="color: #2c3e50;">0800&nbsp;121&nbsp;7365</a>
+                            </span> to update your details.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left"  style="padding: 20px; color: #2c3e50; line-height: 18px; font-family: Calibri, Arial, sans-serif; font-size:  16px;" bgcolor="#ffffff">
+                            Please note, we will never contact you via email asking for any personal, security or account information such as your PIN, full banking password or Internet Banking login details.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left"  style="padding: 20px; color: #2c3e50; line-height: 18px; font-family: Calibri, Arial, sans-serif; font-size:  16px;" bgcolor="#ffffff">
+                            If for any reason you think this email is not from The team at B please forward it to us at 
+                            <span style="color: #2c3e50">
+                                <a href="mailto:reportphishing@cybg.com" style="color: #2c3e50; text-decoration: underline !important;">reportphishing@cybg.com</a>
+                            </span> (please note no acknowledgement will be sent).
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left"  style="padding: 20px; color: #2c3e50; line-height: 18px; font-family: Calibri, Arial, sans-serif; font-size:  16px;" bgcolor="#ffffff">
+                            Clydesdale Bank PLC (which also trades as Yorkshire Bank and B) is authorised by the Prudential Regulation Authority and regulated by the Financial Conduct Authority and the Prudential Regulation Authority. Financial Services Register No. 121873. Credit facilities other than regulated mortgages and regulated credit agreements are not regulated by the Financial Conduct Authority. Clydesdale Bank PLC is registered in Scotland (No. SC001111). Registered Office: 30 St Vincent Place, Glasgow G1 2HL.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left"  style="padding: 20px; color: #2c3e50; line-height: 18px; font-family: Calibri, Arial, sans-serif; font-size:  16px;" bgcolor="#ffffff">
+                            This message and any attachments have been scanned for viruses prior to leaving our network. However, we cannot guarantee the security of this message and will not be responsible for any damage as a result of any virus being passed on by a third party. We may monitor emails sent to and from this email account.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <!-- ./ T'S & C's -->
 
                 </tbody>
               </table>

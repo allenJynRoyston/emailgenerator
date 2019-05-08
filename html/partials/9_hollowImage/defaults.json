@@ -1,0 +1,77 @@
+{
+  "name": "Hollow Image",
+  "metadata": {
+    "type": "layout",
+    "thumbnail": "/html/partials/9_hollowImage/hollowimage.png"
+  },       
+  "content": [ 
+    {
+      "title": "image size",
+      "key": "imagesize",
+      "value": "50",
+      "type": "inputpx"
+    },     
+    {
+      "title": "content",
+      "key": "content",
+      "value": "lorem ipsum dolor sit amet, consectetur",
+      "type": "textarea"
+    },        
+    {
+      "title": "text color",
+      "key": "contentcolor",
+      "value": "[g_black]",
+      "type": "inputcolor"
+    }, 
+    {
+      "title": "font family",
+      "key": "fontfamily",
+      "value": "Calibri, Arial, sans-serif",
+      "type": "inputfont"
+    },                           
+    {
+      "title": "text size",
+      "key": "contentsize",
+      "value": "16",
+      "type": "inputpx"
+    }, 
+    {
+      "title": "text weight",
+      "key": "contentweight",
+      "value": "normal",
+      "type": "inputfontweight"
+    },       
+    
+    {
+      "title": "bgcolor",
+      "key": "bgcolor",
+      "value": "[g_white]",
+      "type": "inputcolor"
+    },        
+    {
+      "title": "table border color",
+      "key": "tablebordercolor",
+      "value": "[g_black]",
+      "type": "inputcolor"
+    },       
+    {
+      "title": "table colors",
+      "key": "tablefill",
+      "value": "[g_white]",
+      "type": "inputcolor"
+    },       
+   
+    {
+      "title": "border radius",
+      "key": "borderradius",
+      "value": "5",
+      "type": "inputpx"
+    },        
+    {
+      "title": "gap",
+      "key": "gap",
+      "value": "20",
+      "type": "inputpx"
+    }            
+  ]
+}

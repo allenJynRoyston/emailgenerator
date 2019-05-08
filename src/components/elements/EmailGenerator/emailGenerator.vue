@@ -146,15 +146,15 @@
             h5 Select a partial        
         .row
           p Filter by: &nbsp;&nbsp;            
-            a.filter-catagory(v-for='type in componentOptions.catagories' @click='componentOptionsType = type' v-bind:class='componentOptionsType == type ? "filter-active" : ""') {{type}}
-              
+            a.filter-catagory(v-for='type in componentOptions.catagories' @click='componentOptionsType = type' v-bind:class='componentOptionsType == type ? "filter-active" : ""') {{type}}              
         .row        
           .columns.twelve(v-for="option in componentOptions[componentOptionsType]" style='padding: 0px 10px; width: 25%')
             button.button(@click='selectedOption(option)' style='width: 100%' v-bind:class='option.active ? "button-primary" : ""' v-on:mouseover="option.active = true" v-on:mouseout="option.active = false") {{option.name}}                    
+            .image-preview(@click='selectedOption(option)')
+              img(:src='option.metadata.thumbnail')
           .columns.twelve
             hr
-        .row          
-          p * Changing a partial will overwrite your existing properties
+
 
 
     #globalColorSelectorModal(v-bind:class='openGlobalColorModal ? "show-modal" : "close-modal"' v-if='jsonIsReady')
@@ -466,7 +466,18 @@
       border-radius: 10px
       box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.25)  ; 
       -webkit-box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.25)  ; 
-      -moz-box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.25)  ;             
+      -moz-box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.25)  ;    
+      max-height: 600px
+      overflow-y: auto         
+
+      .image-preview
+        width: 100%
+        height: 153px
+        cursor: pointer
+        transform: translateY(-12px)
+        img
+          width: 100%
+          border-radius: 0 0 10px 10px
 
       .cancel-btn
         position: absolute

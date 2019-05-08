@@ -1,7 +1,8 @@
 {
   "name": "Hollow Table",
   "metadata": {
-    "type": "layout"
+    "type": "layout",
+    "thumbnail": "/html/partials/10_hollow/hollow.png"
   },       
   "content": [ 
     {

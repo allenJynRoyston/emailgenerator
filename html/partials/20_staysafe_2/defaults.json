@@ -1,7 +1,8 @@
 {
   "name": "Stay Safe",
   "metadata": {
-    "type": "footer"
+    "type": "footer",
+    "thumbnail": "/html/partials/20_staysafe_2/staysafe2.png"
   },       
   "content": [     
     {

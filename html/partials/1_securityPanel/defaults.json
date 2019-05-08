@@ -1,11 +1,12 @@
 {
   "name": "Security Panel",
   "metadata": {
-    "type": "headers"
+    "type": "headers",
+    "thumbnail": "/html/partials/1_securityPanel/securitypanel.png"
   },  
   "content": [
     {
-      "title": "HTML",
+      "title": "content",
       "key": "content",
       "value": "We have included your postcode at the top so you can be sure this email is from <strong> The team at B<\/strong>. To see how you can stay safe online, visit the <a style='color: [g_white]; text-decoration: underline;' href='' target='_blank'> <strong>Security&nbsp;Centre<\/strong><\/a>.",
       "type": "textarea"
@@ -13,7 +14,7 @@
     {
       "title": "text color",
       "key": "textcolor",
-      "value": "[g_white]",
+      "value": "[g_black]",
       "type": "inputcolor"
     },    
     {
@@ -33,29 +34,17 @@
       "key": "fontweight",
       "value": "normal",
       "type": "inputfontweight"
-    },   
-    {
-      "title": "line height",
-      "key": "lineheight",
-      "value": "18",
-      "type": "inputpx"
-    },     
+    },      
     {
       "title": "alignment",
       "key": "alignment",
       "value": "left",
       "type": "dropdownalignment"
-    },      
-    {
-      "title": "padding",
-      "key": "padding",
-      "value": "10px 10px 10px 10px",
-      "type": "input"
-    },     
+    },       
     {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "[g_color1]",
+      "value": "[g_white]",
       "type": "inputcolor"
     }        
   ]

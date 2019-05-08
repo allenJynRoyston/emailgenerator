@@ -1,56 +1,51 @@
 {
   "name": "Image In Container",
   "metadata": {
-    "type": "images"
+    "type": "images",
+    "thumbnail": "/html/partials/9_imageInContainer/imageincontainer.png"
   },       
   "content": [
     {
-      "title": "image",
-      "key": "image",
-      "value": "https://picsum.photos/520/200",
-      "type": "inputimage"
-    },
-    {
-      "title": "alt",
-      "key": "alt",
-      "value": "Image alt tag",
-      "type": "input"
-    },    
-    {
-      "title": "width",
-      "key": "width",
+      "title": "imagewidth",
+      "key": "imagewidth",
       "value": "520",
       "type": "inputpx"
     },
     {
-      "title": "height",
-      "key": "height",
+      "title": "imageheight",
+      "key": "imageheight",
       "value": "200",
       "type": "inputpx"
     },
     {
       "title": "padding",
       "key": "padding",
-      "value": "20px 20px 20px 20px",
+      "value": "20px",
       "type": "input"      
     },    
     {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "[g_color2]",
+      "value": "[g_black]",
       "type": "inputcolor"
     },
     {
+      "title": "blocksize",
+      "key": "blocksize",
+      "value": "500px",
+      "type": "inputpx"   
+    },    
+    {
       "title": "content bg color",
       "key": "contentbgcolor",
-      "value": "[g_black]",
+      "value": "[g_white]",
       "type": "inputcolor"
     },    
     {
-      "title": "block padding",
-      "key": "blockpadding",
-      "value": "20px 20px 20px 20px",
-      "type": "input"   
-    }    
+      "title": "gap",
+      "key": "gap",
+      "value": "20",
+      "type": "inputpx"
+    }         
   ]
 }

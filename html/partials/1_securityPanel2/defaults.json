@@ -1,0 +1,45 @@
+{
+  "name": "Security Panel 2",
+  "metadata": {
+    "type": "headers",
+    "thumbnail": "/html/partials/1_securityPanel2/securitypanel2.png"
+  },  
+  "content": [
+    {
+      "title": "text color",
+      "key": "textcolor",
+      "value": "[g_black]",
+      "type": "inputcolor"
+    },    
+    {
+      "title": "font family",
+      "key": "fontfamily",
+      "value": "Calibri, Arial, sans-serif",
+      "type": "inputfont"
+    }, 
+    {
+      "title": "font size",
+      "key": "fontsize",
+      "value": "14",
+      "type": "inputpx"
+    }, 
+    {
+      "title": "font weight",
+      "key": "fontweight",
+      "value": "normal",
+      "type": "inputfontweight"
+    },      
+    {
+      "title": "alignment",
+      "key": "alignment",
+      "value": "left",
+      "type": "dropdownalignment"
+    },        
+    {
+      "title": "bgcolor",
+      "key": "bgcolor",
+      "value": "[g_white]",
+      "type": "inputcolor"
+    }        
+  ]
+}

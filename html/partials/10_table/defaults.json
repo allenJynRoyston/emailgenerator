@@ -1,10 +1,10 @@
 {
   "name": "Table",
   "metadata": {
-    "type": "layout"
+    "type": "layout",
+    "thumbnail": "/html/partials/10_table/table.png"
   },       
   "content": [
-
     {
       "title": "Entry 1 Text",
       "key": "entry1",
@@ -69,7 +69,7 @@
     {
       "title": "tablebordercolor",
       "key": "tablebordercolor",
-      "value": "[g_color2]",
+      "value": "[g_black]",
       "type": "inputcolor"
     },      
     {
@@ -87,7 +87,7 @@
     {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "[g_color1]",
+      "value": "[g_black]",
       "type": "inputcolor"
     },
     {

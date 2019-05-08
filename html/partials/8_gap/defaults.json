@@ -1,7 +1,8 @@
 {
   "name": "Gap",
   "metadata": {
-    "type": "prebuilt"
+    "type": "other",
+    "thumbnail": "/html/partials/8_gap/gap.png"
   },    
   "content": [
     {
@@ -13,7 +14,7 @@
     {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "[g_bgcolor]",
+      "value": "[g_white]",
       "type": "inputcolor"
     }    
   ]

@@ -1,7 +1,9 @@
 {
   "name": "Terms and Conditions",
   "metadata": {
-    "type": "footer"
+    "type": "footer",
+    "thumbnail": "/html/partials/21_termsandconditions/tc.png"
+
   },     
   "content": [           
     {

@@ -1,7 +1,8 @@
 {
   "name": "Social Media (centered)",
   "metadata": {
-    "type": "social media"
+    "type": "social media",
+    "thumbnail": "/html/partials/2_socialmedia/socialmedia.png"
   },  
   "content": [
     {

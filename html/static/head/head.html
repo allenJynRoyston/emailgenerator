@@ -17,22 +17,62 @@
     
     <style type="text/css">
         /******************** CSS Fix ********************/
+
         body {
             height: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
             width: 100% !important;
-            background-color: [m_bgcolor];
         }
-    
+
         table td {
             border-collapse: collapse !important;
             mso-table-lspace: 0pt;
             mso-table-rspace: 0pt;
-            font-size: 0px;          
-        } 
+            font-size: 0px;
+        }
 
+        th {
+            padding: 0 !important;
+            margin: 0 !important;
+            font-weight: normal !important;
+            font-size: 0px;
+        }
+
+        img {
+            outline: none;
+            text-decoration: none;
+            -ms-interpolation-mode: bicubic;
+            user-drag: none;
+            -webkit-user-select: none;
+            /* SAFARI, CHROME */
+            -khtml-user-select: none;
+            /* KONQUEROR */
+            -moz-user-select: none;
+            /* FIREFOX */
+            -ms-user-select: none;
+            /* IE */
+            user-select: none;
+            /* CSS3 */
+            font-size: 12px;
+        }
+        /******************** MICROSOFT TWEEK ********************/
+
+        @-ms-viewport {
+            width: device-width
+        }
+
+        #outlook a {
+            padding: 0;
+        }
+        /******************** ANDROID TWEEK ********************/
+
+        div[style*="margin: 16px 0"] {
+            margin: 0 !important;
+            font-size: 100% !important;
+        }
         /******************** iOS AUTO LINKS ********************/
+
         a[x-apple-data-detectors] {
             color: inherit !important;
             text-decoration: none !important;
@@ -41,10 +81,151 @@
             font-weight: inherit !important;
             line-height: inherit !important;
         }
-        
-        strong{
-            font-weight: bold;
-            color: inherit
+
+        @media screen and (min-width: 320px) and (max-width: 620px) {
+            /******************** STANDARD MOBILE CSS ********************/
+            body {
+                margin: 0 !important;
+            }
+            table[id=wrapper] {
+                width: 100% !important;
+                padding: 0px 0px !important;
+            }
+            table[id=wrapper] .inner {
+                width: 100% !important;
+                max-width: 600px !important;
+            }
+
+            img[class=scale] {
+                width: 100% !important;
+                height: auto !important;
+                display: block !important;
+            }
+
+            /******************** PADDING ********************/
+            table[id=wrapper] .nopad {
+                padding: 0 !important;
+            }
+
+            table[id=wrapper] .textpad20 {
+                padding-left: 20px !important;
+                padding-right: 20px !important;
+            }
+
+            /******************** FONT ********************/
+            table[id=wrapper] .font18 {
+                font-size: 18px !important;
+                line-height: 21px !important;
+            }
+            table[id=wrapper] .f23 {
+                padding-bottom: 30px !important;
+            }
+        }
+
+        @media (max-width:450px) {
+            /* For Dropping Spacing On Mobile */
+            .drop-sides {
+                display: none;
+            }
+
+            .font-decrease {
+                font-size: 25px !important;
+                line-height: 30px !important;
+            }
+
+            .top-font-decrease {
+                font-size: 22px !important;
+                line-height: 25px !important;
+            }
+        }
+
+        @media( max-width:499px) {
+            /* Single Line On Mobile */
+            .responsive-mob {
+                width: 100%;
+                display: block;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                text-align: center !important;
+            }
+
+            .textpadnormal {
+                padding-left: 40px !important;
+                padding-right: 40px !important;
+            }
+
+            .icon-table--stack {
+                display: block !important;
+                width: 100% !important;
+                text-align: center !important;
+            }
+
+            .icon-table--stack-center {
+                display: block !important;
+                margin: 0 auto !important;
+            }
+
+            .icon-table--hide {
+                display: none !important;
+            }
+
+            .height-20 {
+                height: 15px !important;
+            }
+
+            .reduce-mobile-width {
+                width: 20px !important;
+            }
+
+            .increase-mobile-font-size {
+                font-size: 24px !important;
+                line-height: 34px !important;
+            }
+        }
+
+        @media(max-width: 599px) {
+            .responsive-check {
+                width: 100% !important;
+                min-width: 100% !important;
+            }
+
+            .width100 {
+                width: 100%;
+            }
+
+            .show-mobile {
+                display: block !important;
+                max-height: none !important;
+                width: 100% !important;
+                height: auto !important;
+                visibility: visible !important;
+            }
+
+            .hide-mobile {
+                max-height: 0px;
+                /* Gmail*/
+                display: none;
+                /* Generic*/
+                mso-hide: all;
+                /* Outlook clients*/
+                overflow: hidden;
+                /* Generic */
+                font-size: 0;
+                /* Be careful with this one, only use if absolutely required */
+            }
+        }
+
+        .hide{
+            max-height: 0px;
+                /* Gmail*/
+                display: none;
+                /* Generic*/
+                mso-hide: all;
+                /* Outlook clients*/
+                overflow: hidden;
+                /* Generic */
+                font-size: 0;
+                /* Be careful with this one, only use if absolutely required */ 
         }
     </style>
 

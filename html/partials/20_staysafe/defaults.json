@@ -1,7 +1,8 @@
 {
   "name": "Stay Safe (Bordered)",
   "metadata": {
-    "type": "footer"
+    "type": "footer",
+    "thumbnail": "/html/partials/20_staysafe/staysafe.png"
   },       
   "content": [    
     {
@@ -69,7 +70,13 @@
       "key": "lineheight",
       "value": "18",
       "type": "inputpx"
-    },     
+    },   
+    {
+      "title": "bordercolor",
+      "key": "bordercolor",
+      "value": "[g_black]",
+      "type": "inputcolor"
+    },      
     {
       "title": "bgcolor",
       "key": "bgcolor",

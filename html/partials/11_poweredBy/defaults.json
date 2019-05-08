@@ -1,7 +1,8 @@
 {
   "name": "Powered by",
   "metadata": {
-    "type": "footer"
+    "type": "footer",
+    "thumbnail": "/html/partials/11_poweredBy/poweredby.png"
   },       
   "content": [
 

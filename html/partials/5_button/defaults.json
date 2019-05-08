@@ -1,7 +1,8 @@
 {
   "name": "Button Section",
   "metadata": {
-    "type": "button"
+    "type": "button",
+    "thumbnail": "/html/partials/5_button/button.png"
   },    
   "content": [
     {

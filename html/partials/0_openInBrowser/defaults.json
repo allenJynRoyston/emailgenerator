@@ -1,13 +1,14 @@
 {
   "name": "Open In Browser",
   "metadata": {
-    "type": "headers"
+    "type": "headers",
+    "thumbnail": "/html/partials/0_openInBrowser/openinbrowser.png"
   },
   "content": [
     {
       "title": "text color",
       "key": "textcolor",
-      "value": "[g_white]",
+      "value": "[g_black]",
       "type": "inputcolor"
     },    
     {
@@ -67,7 +68,7 @@
     {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "[g_color1]",
+      "value": "[g_white]",
       "type": "inputcolor"
     }           
   ]

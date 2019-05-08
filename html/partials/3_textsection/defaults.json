@@ -1,7 +1,8 @@
 {
   "name": "Text Section",
   "metadata": {
-    "type": "text"
+    "type": "text",
+    "thumbnail": "/html/partials/3_textsection/textsection.png"
   },  
   "content": [
     {

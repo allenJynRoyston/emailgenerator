@@ -1,0 +1,33 @@
+{
+  "name": "Centered Image",
+  "metadata": {
+    "type": "images",
+    "thumbnail": "/html/partials/9_imageCentered/imagecentered.png"
+  },     
+  "content": [    
+    {
+      "title": "width",
+      "key": "width",
+      "value": "200",
+      "type": "inputpx"
+    },
+    {
+      "title": "height",
+      "key": "height",
+      "value": "200",
+      "type": "inputpx"
+    },
+    {
+      "title": "bgcolor",
+      "key": "bgcolor",
+      "value": "[g_white]",
+      "type": "inputcolor"
+    },
+    {
+      "title": "gap",
+      "key": "gap",
+      "value": "0",
+      "type": "inputpx"
+    }         
+  ]
+}

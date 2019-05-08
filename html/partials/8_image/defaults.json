@@ -1,44 +1,33 @@
 {
-  "name": "Image Only",
+  "name": "Full Image",
   "metadata": {
-    "type": "images"
+    "type": "images",
+    "thumbnail": "/html/partials/8_image/image.png"
   },     
-  "content": [
-    {
-      "title": "image",
-      "key": "image",
-      "value": "https://picsum.photos/500/366",
-      "type": "inputimage"
-    },
-    {
-      "title": "alt",
-      "key": "alt",
-      "value": "B Banking Logo",
-      "type": "input"
-    },    
+  "content": [    
     {
       "title": "width",
       "key": "width",
-      "value": "560",
+      "value": "600",
       "type": "inputpx"
     },
     {
       "title": "height",
       "key": "height",
-      "value": "366",
+      "value": "350",
       "type": "inputpx"
     },
     {
-      "title": "padding",
-      "key": "padding",
-      "value": "20px 20px 20px 20px",
-      "type": "input"      
-    },    
-    {
       "title": "bgcolor",
       "key": "bgcolor",
-      "value": "[g_color1]",
+      "value": "[g_white]",
       "type": "inputcolor"
-    }
+    },
+    {
+      "title": "gap",
+      "key": "gap",
+      "value": "0",
+      "type": "inputpx"
+    }         
   ]
 }
